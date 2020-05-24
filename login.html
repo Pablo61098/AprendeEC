@@ -10,44 +10,43 @@
     <body>
 
         <div class="container">
-            <!-- <div class="row  flex-column justify-content-center align-items-center"> -->
-                <div class="row  flex-column justify-content-around align-items-center">
-                    <div class="col-md-6">
-                        <div id="contenido">
-                            <h1>AprendeEC</h1>
-                        </div>
-                    </div>
-                    <div class="col-md-9 col-lg-7 col-xl-6 iniciarSesion">
-                        <form action="" class="p-4">
-                            <div id="camposIniciarSesion" class="mb-2">
-                                <p>Nombre de usuario</p>
-                                <input type="text" class="form-control" name="username" aria-describedby="usernameHelp">
-                                <small id="usernameHelp" class="form-text text-muted">Ingrese el nombre de usaurio con el cual esta registrado.</small>
-                                <p>Contraseña</p>
-                                <input type="password" class="form-control" name="password" required>
-                            </div>
-                                <button class="btn btn-success">Iniciar Sesión</button>    
-                        </form>                        
-                    </div>
-                    <div class="col-md-9 col-lg-7 col-xl-6" >
-                        <a type="button" href="http://www.google.com" type="button" class="btn btn-outline-secondary btn-block">
-                            <i class="fab fa-google"></i>
-                            <span class=""></span> Google</span>
-                        </a>   
-                        <a type="button" href="http://www.facebook.com" class="btn btn-outline-secondary btn-block">
-                            <i class="fab fa-facebook"></i>
-                            <span class=""></span> Facebook</span>
-                        </a>   
-                        <a type="button" href="index.html" class="btn btn-outline-secondary btn-block">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span class=""></span>Correo institucional</span>
-                        </a>   
+<!-- <div class="row  flex-column justify-content-center align-items-center"> -->
+            <div class="row  flex-column justify-content-around align-items-center">
+                <div class="col-md-6">
+                    <div id="contenido">
+                        <h1>AprendeEC</h1>
                     </div>
                 </div>
-        </div>
-
-       <div class="container">
-            
+                <div class="col-md-9 col-lg-7 col-xl-6 iniciarSesion">
+                    <form action="" class="row flex-column p-4">
+                        <div id="camposIniciarSesion" class="col-xs-12 mb-3 align-self-around">
+                            <p>Nombre de usuario</p>
+                            <input type="text" class="form-control" name="username" aria-describedby="usernameHelp">
+                            <small id="usernameHelp" class="form-text text-muted">Ingrese el nombre de usaurio con el cual esta registrado.</small>
+                            <p>Contraseña</p>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="row align-items-end col-xs-12 justify-content-start">
+                            <a href="#" class="ml-3">Olvide mi contraseña</a>
+                            <button class=" mr-3 ml-auto btn btn-success">Iniciar Sesión</button>    
+                        </div>
+                    </form>                        
+                </div>
+                <div class="col-md-9 col-lg-7 col-xl-6 linksRedesSociales" >
+                    <a type="button" href="http://www.google.com" type="button" class="btn btn-outline-secondary btn-block">
+                        <i class="fab fa-google"></i>
+                        <span class="">Google</span>
+                    </a>   
+                    <a type="button" href="http://www.facebook.com" class="btn btn-outline-secondary btn-block">
+                        <i class="fab fa-facebook"></i>
+                        <span class="">Facebook</span>
+                    </a>   
+                    <a type="button" href="index.html" class="btn btn-outline-secondary btn-block">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="">Correo institucional</span>
+                    </a>   
+                </div>
+            </div>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

@@ -30,19 +30,22 @@ h1{
 
 form {
     box-shadow: 20px 8px 10px 5px rgba(0, 0, 0, 0.4);
-    background-color: rgba(255, 255, 255, 0.6);
+    
 }
 
 
 .iniciarSesion{
     margin-bottom: 25px;
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
-button, a{
+button, .linksRedesSociales a {
     box-shadow: 20px 8px 10px 5px rgba(0, 0, 0, 0.4);
 }
 
-
+.iniciarSesion a{    
+    font-size: 80%;
+}
 
 a i {
     margin-right: 15px;
