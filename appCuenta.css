@@ -1,0 +1,83 @@
+
+body {
+    background: linear-gradient(-45deg, #3f51b1 0%, #5a55ae 13%, #7b5fac 25%, #8f6aae 38%, #a86aa4 50%, #cc6b8e 62%, #f18271 75%, #f3a469 87%, #f7c978 100%);
+    background-size:  400% 400%;
+    animation: gradient 20s ease infinite;
+    height: 100vh;
+    color: white;
+    letter-spacing:  0.3rem;
+  }
+  
+  @keyframes gradient {
+    0% {
+      background-position: 0%;
+    }
+    50% {
+      background-position: 100%;
+    }
+    100% {
+      background-position: 0%;
+    }
+  }
+  
+
+
+#pageName{
+    border-bottom: 2px solid white;
+    font-weight: 150;
+    letter-spacing:  1rem;
+}
+
+
+h1{
+    
+}
+
+a { font-size: 1rem; }
+
+@media (min-width: 0px) {
+    #pageName { font-size: 2rem; }
+    .informacionCuenta img {
+        width:75px;
+        height:75px;
+     }
+}
+@media (min-width: 576px) {
+    a { font-size: 1rem; }
+    #pageName { font-size: 4rem; }
+    .informacionCuenta img {
+        width:150px;
+        height:150px;
+     }
+}
+@media (min-width: 768px) {
+    .informacionCuenta img {
+        width:200px;
+        height:200px;
+     }
+}
+@media (min-width: 992px) {
+    
+}
+@media (min-width: 1200px) {
+    
+}
+
+.informacionCuenta{
+    margin-top: 7%;
+    
+}
+
+textarea{
+    min-width: 100%;
+}
+
+#cambiarContrasena{
+    color: white;
+}
+
+
+    
+
+
+
