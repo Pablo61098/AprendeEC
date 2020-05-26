@@ -1,0 +1,107 @@
+
+body {
+    /* background: linear-gradient(45deg, #09ADEA,rgb(25, 135, 209),#2299ED,#15A5EC, #6464F6  ,#A92BFE,#B225FF, #b721ff); */
+    background-size:  400% 400%;
+    animation: gradient 5s ease infinite;
+    height: 100vh;
+    
+    letter-spacing:  0.2rem;
+  }
+  
+@keyframes gradient {
+    0% {
+        background-position: 0%;
+    }
+    50% {
+        background-position: 100%;
+    }
+    100% {
+        background-position: 0%;
+    }
+}
+  
+
+
+#lineaBaja{
+    position: relative;
+}
+
+#lineaBaja span {
+    background-color: ;
+    padding-right: 10px;
+}
+
+#lineaBaja:after {
+    content:"";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0.1em;
+    border-top: 1px solid black;
+    z-index: -1;
+}
+
+
+
+@media (min-width: 0px) {
+    input[type="text"]{
+        width: 100%;
+    }
+}
+@media (min-width: 576px) {
+    
+}
+@media (min-width: 768px) {
+    
+}
+@media (min-width: 992px) {
+    
+}
+@media (min-width: 1200px) {
+    
+}
+
+#checkboxAceptar{
+    font-size: 15px;
+}
+
+.formHeader{
+    background-color: black;
+    color: white;
+    width: 100%;
+}
+
+.formBody {
+    /* background-color: rgba(255,255,255,0.6); */
+    border-left: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    background-color: transparent;
+    color: black;
+    transition: background-color 0.7s;
+}
+.formBody:hover {
+    background-color: rgba(255,255,255,0.3);
+    transition: background-color 0.7s;
+}
+
+.allForm{
+    box-shadow: 20px -8px 10px 5px rgba(0, 0, 0, 0.4);
+}
+
+.btn {
+    background-color: rgb(253, 75, 89);
+    border: 0;
+}
+
+input[type="text"]{
+    background-color: rgb(230, 230, 230);
+    border-radius: 10px;
+}
+
+a{
+    color:white;
+}
+a:hover{
+    color:white;
+}
