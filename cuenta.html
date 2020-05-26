@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="appCuenta.css">
+    <meta name="viewport" content="width=device-width, initial-scale-1">
     
 </head> 
   
@@ -13,9 +14,9 @@
     <!--NAVBAR STARTING-->
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark"> 
         <div class="container"> 
-            <a class="navbar-brand mx-auto mr-sm-5 " href="#">AprendEC</a>
+            <a class="navbar-brand mx-auto mr-md-3 " href="#">AprendEC</a>
             
-            <button class="navbar-toggler mx-auto mb-1" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
+            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
   
@@ -23,13 +24,13 @@
                  id="colapsado"> 
                  <ul class="navbar-nav mx-xs-auto ml-md-3">
                     <li class="nav-item">
-                        <form class="form-inline">
-                            <input class=" form-control mr-sm-2 " type="search" placeholder="Buscar" name="busqueda">
-                            <button class=" btn btn-outline-success mx-auto my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                        <form >
+                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
+                            <!-- <button class=" btn btn-outline-success mx-auto my-2 my-sm-0"  type="submit"><i class="fas fa-search"></i></button> -->
                         </form>
                     </li>                    
                 </ul>
-                <ul class="navbar-nav ml-md-auto mx-xs-auto">
+                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
                     <li class="nav-item  mx-auto">
                         <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
                     </li>
@@ -57,8 +58,8 @@
 
     <div class="container">
             <h1 class="text-left" id="pageName">Cuenta</h1>
-            <div class="row border justify-content-around align-items-start informacionCuenta text-center p-5">
-                <div class="col-sm-4">
+            <div class="row border justify-content-around align-items-start informacionCuenta text-center p-5 ">
+                <div class="col-sm-4 mb-3">
                     <div class="row flex-column align-items-center mt-5">
                         <div class="col-xs-12 mb-3">
                             <img src="./images/default-user.jpeg" class="rounded-circle"  alt="">
@@ -68,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-8 ">
+                <div class="col-sm-8 border-left pl-md-5">
                     <div class="row flex-column">
                         <div class="col-sm-12">
                             <div class="row flex-row">
@@ -80,7 +81,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 mb-2">
                             <div class="row flex-row justify-content-center align-items-center">
                                 <div class="col-sm-4 text-left mt-2">
                                     <label for="">Acerca de ti</label>
@@ -121,19 +122,19 @@
                                     </div> -->
                                     <div class="row flex-column justify-content-center align-items-center mt-1">
                                             <div class="col-sm-12 mb-1 ">
-                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn btn-secondary btn-block"><i class="fab fa-google"></i></a>
+                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn  btn-block"><i class="fab fa-google"></i></a>
                                             </div>
                                             <div class="col-sm-12 mb-1 ">
-                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn btn-secondary btn-block"><i class="fab fa-google"></i></a>
+                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn  btn-block"><i class="fab fa-google"></i></a>
                                             </div>
                                             <div class="col-sm-12 mb-1">
-                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn btn-secondary btn-block"><i class="fab fa-google"></i></a>
+                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn  btn-block"><i class="fab fa-google"></i></a>
                                             </div>
                                             <div class="col-sm-12 mb-1">
-                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn btn-secondary btn-block"><i class="fab fa-google"></i></a>
+                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn  btn-block"><i class="fab fa-google"></i></a>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn btn-secondary rounded-circle"><i class="fas fa-plus"></i></a>
+                                            <div class="col-sm-12">
+                                                <a href="https://www.facebook.com/tuckerbudzyn" type="button" class="btn rounded-circle"><i class="ml-1 my-2 fas fa-plus"></i></a>
                                             </div>
                                             
                                         
@@ -189,8 +190,8 @@
                                 <div class="col-sm-4 ">
                                 </div>
                                 <div class="col-sm-8 justify-self-end my-1 text-right">
-                                    <button type="button" class="btn btn-secondary btn-sm">Cancelar</button>
-                                    <button type="button" class="btn btn-secondary btn-sm">Guardar</button>
+                                    <button type="button" class="btn  btn-sm">Cancelar</button>
+                                    <button type="button" class="btn ml-4  btn-sm">Guardar</button>
                                 </div>
                             </div>
                         </div>

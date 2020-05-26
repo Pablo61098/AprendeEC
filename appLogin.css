@@ -53,3 +53,18 @@ a i {
 .hola {
     width: 120%;
 }
+
+#btnGoogle:hover {
+    background-color: rgba(40, 167, 69, 1);
+    border: 0;
+}
+
+#btnFacebook:hover {
+    background-color: rgba(17, 152, 245, 1);
+    border: 0;
+}
+
+#btnCorreo:hover {
+    background-color: #212121;
+    border: 0;
+}
