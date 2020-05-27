@@ -1,0 +1,22 @@
+
+
+#primerLugar{
+    width: 250px;
+    height: 250px;
+}
+#segundoLugar{
+    width: 200px;
+    height: 200px;
+}
+#tercerLugar{
+    width: 100px;
+    height: 100px;
+}
+
+.posicion{
+    border-bottom: 2px solid rgba(52, 58, 64, 0.2);
+}
+
+.header{
+    font-size: 100px;
+}
