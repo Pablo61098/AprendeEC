@@ -1,0 +1,26 @@
+input[type="text"]{
+    width: 100%;
+    background-color: rgb(230, 230, 230);
+    border-radius: 5px;
+}
+
+#formaIngresoContasena{
+    margin-top: 25%;
+    border-radius: 15px;
+    border: 2px solid rgba(128, 128, 128, 0.4);
+    transition: border 0.2s;
+}
+
+#formaIngresoContasena:hover{  
+    border: 2px solid rgba(128, 128, 128, 1);
+    transition: border 0.2s;
+}
+
+.formHeader{
+    border-top: 2px solid black;
+    transition: border 0.2s;
+    background-color: black;
+    color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}

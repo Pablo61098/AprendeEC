@@ -19,17 +19,18 @@
                 </div>
                 
                 <div class="col-md-9 col-lg-7 col-xl-6 iniciarSesion">
-                    <form action="" class="row flex-column p-4">
+                    <form  action="" class="row flex-column p-4" id="formaIniciarSesion">
                         <div id="camposIniciarSesion" class="col-sm-12 mb-3 align-self-around">
                             <p>Nombre de usuario</p>
-                            <input type="text" class="form-control" name="username" aria-describedby="usernameHelp">
+                            <input type="text" class="form-control"  name="username" aria-describedby="usernameHelp">
                             <small id="usernameHelp" class="form-text text-muted">Ingrese el nombre de usaurio con el cual esta registrado.</small>
                             <p>Contraseña</p>
                             <input type="password" class="form-control" name="password" required>
                         </div>
                         <div class="row align-items-end col-sm-12 justify-content-start">
                             <a href="#" class="ml-3">Olvide mi contraseña</a>
-                            <button class=" mr-3 ml-auto btn btn-success">Iniciar Sesión</button>    
+                            <a href="iniciarSesionPrimeraVez.html" class="mr-3 ml-auto btn btn-success" id="btnIniciarSesion" form="formaIniciarSesion">Iniciar Sesión</a>    
+                            <!-- <button href="iniciarSesionPrimeraVez.html" class="mr-3 ml-auto btn btn-success" id="btnIniciarSesion" form="formaIniciarSesion">Iniciar Sesión</button>     -->
                         </div>
                     </form>                        
                 </div>
@@ -42,7 +43,7 @@
                         <i class="fab fa-facebook"></i>
                         <span class="">Facebook</span>
                     </a>   
-                    <a type="button" href="index.html" class="btn btn-outline-secondary btn-block" id="btnCorreo">
+                    <a type="button" href="registroUsuario.html" class="btn btn-outline-secondary btn-block" id="btnCorreo">
                         <i class="fas fa-graduation-cap"></i>
                         <span class="">Correo institucional</span>
                     </a>   

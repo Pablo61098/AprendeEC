@@ -92,6 +92,7 @@ body {
 .btn {
     background-color: rgb(253, 75, 89);
     border: 0;
+    letter-spacing:  0.1rem;
 }
 
 input[type="text"]{

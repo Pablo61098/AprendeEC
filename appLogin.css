@@ -38,8 +38,14 @@ form {
     background-color: rgba(255, 255, 255, 0.6);
 }
 
-button, .linksRedesSociales a {
+.linksRedesSociales a {
     box-shadow: 20px 8px 10px 5px rgba(0, 0, 0, 0.4);
+
+}
+
+#btnIniciarSesion{
+    box-shadow: 20px 8px 10px 5px rgba(0, 0, 0, 0.4);
+    color: white;;
 }
 
 .iniciarSesion a{    
