@@ -28,9 +28,14 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-sm-4 mt-4 mb-4">
+            <div class="col-sm-12 mt-4 mb-4">
                 <h1>Pregunta algo</h1>
                 <p>Recuerda ser directo...</p>
+                <h5>Título</h5>
+                <div class="container-expand ">
+                    <input id="tituloForo" type="text" size="100" placeholder="Título que describa tu problema. Sé breve." >    
+                </div>
+                    
             </div>
         </div>
     </div>
@@ -53,7 +58,22 @@
         $(function () {
             $('#barraNavegacion').load('navbar.html');
             $('#btnGuardar').click(function(){
-                alert('Se ha guardado los cambios')
+                var contenido=CKEDITOR.instances.editor1.getData();
+                var centi=0;
+                if(tituloForo.value.length==0){
+                    centi=centi+1;
+                }
+                if(contenido.length==0){
+                    centi=centi+1;
+                }
+                
+                if(centi!=0){
+                    alert('Verifique que los campos no estén vacíos.');
+                }
+                else{
+                    alert('Se ha guardado los cambios');    
+                }
+                
             });
             $('#btnSalir').click(function(){
                 window.open('modPubForos.html','_self');

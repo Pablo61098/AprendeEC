@@ -43,7 +43,7 @@
                 </div>
                 <div class="container mt-4">
                     <!-- Ejemplo de como debería verse después de guardarse en la base de datos -->
-                    <div class="row">
+                    <div class="row" id="showPost1">
                         <div class="col-sm-1 mt-5">
                             <input type="checkbox" id="revisor1" name="checkBox1">
                         </div>
@@ -53,15 +53,13 @@
                                 <strong>Vistas: </strong>0 <br>
                                 <strong>Calificación: </strong>0.0 <br>
                                 <strong>Estado: </strong> <em id="estadoPost1">No publicado</em><br>
-                                <strong>Tags:</strong> <em>#SistemasOperativos #SystemAdministration</em>
+                                <strong>Tags:</strong> <em>#SistemasOperativos #SystemAdministration</em><br>
                             </p>
                         </div>
-
-                        
+                        <div class="container"> 
+                            <hr>
+                        </div>               
                     </div>
-
-                    
-
                 </div>
             </div>
         </div>
@@ -74,10 +72,54 @@
                 window.open('editorForo.html','_self')
             });
             $('#btnPublicar').click(function(){
-                var respuesta=confirm('¿Está seguro de publicar el foro?');
                 //Debajo debe ir el evento que se genera. En este caso la publicación del foro en el sitio
+                var revisarCheck=revisor1.checked;
+                //Antes de revisar el ckecked, debe verificar si ese post ya ha sido publicado. Para eso 
+                //Necesitamos lectura de la base de datos
+                if(revisarCheck==true){;
+                    //Aquí se debería verificar en la base de datos por motivos de seguridad
+                    if($('#estadoPost1').text()!='Publicado'){
+                        var respuesta=confirm('¿Está seguro de publicar el foro?',revisarCheck);
+                        if(respuesta==true){
+                            revisor1.checked=false;
+                            $('#estadoPost1').text('Publicado');
+                        }
+                    }else{
+                        alert('EL foro ya fue publicado');
+                    }
+                    
+                }       
+                else{
+                    alert('Debe estar marcado al menos un foro');
+                }
             });
             
+            $('#btnEliminar').click(function(){
+                var revisarCheck=revisor1.checked;
+                if(revisarCheck==true){
+                    var respuesta=confirm('¿Esta seguro de eliminar el/los post/s?. Si acepta se eliminará permanentemente.');
+                    if(respuesta==true){
+                        $('#showPost1').remove();
+                    }
+                }else{
+                    alert('Debe seleccionar al menos un foro');
+                }
+                
+            });
+
+            $('#btnEditar').click(function(){
+                //Aquí se debe obtener de la base de datos el foro publicado y mandarlo al editor de texto
+            });
+
+            $('#btnVer').click(function(){
+                //Aquí se debe obtener de la base de datos lo que se debe mostrar y mandarlo al html vista para visualizarlo. 
+                var revisarCheck=revisor1.checked;
+                if(revisarCheck==true){
+                    window.open('viewForo.html','_blank');
+                }else{
+                    alert('Debe seleccionar un foro.');
+                }
+            });
 
         });
     </script>
