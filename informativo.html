@@ -21,9 +21,9 @@
         <div class="col-sm-2">
             <ul class="list-group">
                 <div class="list-group list-group-flush ">
-                    <a href="#" class="list-group-item list-group-item-action">Últimos posts publicados</a>
-                    <a href="#" class="list-group-item list-group-item-action">Últimos foros publicados</a>
-                    <a href="#" class="list-group-item list-group-item-action">Lo más destacado</a>
+                    <a id="linkLastPost" href="#" class="list-group-item list-group-item-action">Últimos posts publicados</a>
+                    <a id="linkLastForos"  href="#" class="list-group-item list-group-item-action">Últimos foros publicados</a>
+                    <a id="linkDestacado"  href="#" class="list-group-item list-group-item-action">Lo más destacado</a>
                 </div>
             </ul>
             <div class="text-center mt-4">
@@ -45,7 +45,22 @@
 <script>
     $(function () {
         $('#barraNavegacion').load('navbar.html');
-    })
+        $('#linkLastPost').click(function(){
+            $(this).attr('class','list-group-item list-group-item-action active');
+            $('#linkLastForos').attr('class','list-group-item list-group-item-action');
+            $('#linkDestacado').attr('class','list-group-item list-group-item-action');
+        });
+        $('#linkLastForos').click(function(){
+            $(this).attr('class','list-group-item list-group-item-action active');
+            $('#linkLastPost').attr('class','list-group-item list-group-item-action');
+            $('#linkDestacado').attr('class','list-group-item list-group-item-action');
+        });
+        $('#linkDestacado').click(function(){
+            $(this).attr('class','list-group-item list-group-item-action active');
+            $('#linkLastForos').attr('class','list-group-item list-group-item-action');
+            $('#linkLastPost').attr('class','list-group-item list-group-item-action');
+        });
+    });
 </script>
 </body>
 
