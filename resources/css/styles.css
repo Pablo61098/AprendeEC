@@ -1,0 +1,63 @@
+@font-face {
+    font-family: headerfont;
+    src: url(../../resources/fonts/sansation_light.woff);
+}
+
+@font-face {
+    font-family: headerfont;
+    src: url(../../resources/fonts/sansation_bold.woff);
+    font-weight: bold;
+}
+
+body {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+.jumbotron {
+    padding-top: 1em;
+    padding-bottom: 1.4em;
+}
+
+.head_foot {
+    font-family: headerfont;
+    margin-bottom: 0;
+}
+
+.imagen_header {
+    width: 75px;
+    height: 75px;
+}
+
+.imagen_carrito {
+    width: 150px;
+    height: 150px;
+}
+
+.hr_br {
+    border-color: rgb(255, 255, 255)
+}
+
+.pago {
+    font-size: 100px;
+}
+
+.vacio {
+    color: gray;
+    text-align: center;
+}
+
+.icono_vacio {
+    font-size: 150px;
+}
+
+.tabla {
+    font-size: 14.8px;
+}
+
+.star_checked {
+    color: orange;
+}
+
+.imagen_tienda {
+    width: 75%;
+}

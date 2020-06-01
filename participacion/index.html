@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <title>Participación</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="../resources/css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="jumbotron head_foot">
+            <img src="../resources/images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <h1><b>@prendEC</b></h1>
+        </div>
+    </header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand mx-auto mr-md-3 " href="#">AprendEC</a>
+
+            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="colapsado">
+                <ul class="navbar-nav mx-xs-auto ml-md-3">
+                    <li class="nav-item">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
+                            <button class="btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
+                                    class="fas fa-search"></i></button>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
+                    <li class="nav-item  mx-auto">
+                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown mx-auto">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            <i class="far fa-user"></i>
+                            <span>Nombre de Usuario</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">Publicaciones</a>
+                            <a class="dropdown-item" href="#">Campos</a>
+                            <a class="dropdown-item" href="../participacion/">Participación</a>
+                            <a class="dropdown-item" href="#">Cuenta</a>
+                            <a class="dropdown-item" href="../compras/">Compras</a>
+                            <a class="dropdown-item" href="../tienda/">Tienda</a>
+                            <a class="dropdown-item" href="#">Gestión de ventas</a>
+                            <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <!-- Cuerpo -->
+    <div class="container-fluid pt-4 pb-4">
+        <div class="row">
+            <!-- Barra Lateral -->
+            <aside class="col-sm-4 pt-4 pb-4 bg-light navbar-light rounded">
+                <ul class="nav nav-pills flex-column" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#posts"><i
+                                class="fas fa-file-signature"></i>&nbsp;&nbsp;Posts</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#foros"><i
+                                class="fas fa-question-circle"></i>&nbsp;&nbsp;Foros</a></li>
+                </ul>
+            </aside>
+            <!-- Secciones de Pestañas -->
+            <div class="tab-content col-sm-8 pt-4 pb-4">
+                <!-- Sección de Posts -->
+                <section class="tab-pane container active" id="posts">
+                    <div class="ml-4">
+                        <h2>Posts</h2>
+                        <br>
+                        <!-- Acordión -->
+                        <div id="accordion">
+                            <!-- Comentarios  -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                                        Comentarios
+                                    </a>
+                                </div>
+                                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <!-- Instancia de Comentario  -->
+                                        <div>
+                                            <p>Post: Compilación del Kernel de Linux <small>(LuchoCode | 08/05/20
+                                                    15:56)</small></p>
+                                            <p>Comentario: Me fue de mucha utilidad. Gracias.</p>
+                                            <p><small>09/05/20 20:30</small></p>
+                                            <div class="float-right align-self-sm-end btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-link">Editar</button>
+                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                            </div>
+                                            <br>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin de Instancia de Comentario  -->
+                                        <!-- Instancia de Comentarios Vacía -->
+                                        <div class="vacio">
+                                            <br>
+                                            <p><i class="fas fa-ban icono_vacio"></i></p>
+                                            <h5>Aún no ha comentado ningún post.</h5>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin Instancia de Comentarios Vacía -->
+                                        <button type="button" class="btn btn-link">Ver Más</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Calificaciones  -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                                        Calificaciones
+                                    </a>
+                                </div>
+                                <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <!-- Instancia de Calificación  -->
+                                        <div>
+                                            <p>Post: Compilación del Kernel de Linux <small>(LuchoCode | 08/05/20
+                                                    15:56)</small></p>
+                                            <p>Calificación: <span class="fa fa-star star_checked"></span>
+                                                <span class="fa fa-star star_checked"></span>
+                                                <span class="fa fa-star star_checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span></p>
+                                            <p><small>09/05/20 20:35</small></p>
+                                            <div class="float-right align-self-sm-end btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-link">Editar</button>
+                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                            </div>
+                                            <br>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin de Instancia de Calificación  -->
+                                        <!-- Instancia de Calificación Vacía -->
+                                        <div class="vacio">
+                                            <br>
+                                            <p><i class="fas fa-ban icono_vacio"></i></p>
+                                            <h5>Aún no ha calificado ningún post.</h5>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin Instancia de Calificación Vacía -->
+                                        <button type="button" class="btn btn-link">Ver Más</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="tab-pane container fade" id="foros">
+                    <div class="ml-1">
+                        <h2>Foros</h2>
+                        <br>
+                        <!-- Acordión -->
+                        <div id="accordion_foros">
+                            <!-- Comentarios  -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="card-link" data-toggle="collapse" href="#collapseOne_foros">
+                                        Comentarios
+                                    </a>
+                                </div>
+                                <div id="collapseOne_foros" class="collapse show" data-parent="#accordion_foros">
+                                    <div class="card-body">
+                                        <!-- Instancia de Comentario  -->
+                                        <div>
+                                            <p>Foro: ¿Por qué no puedo entrar a mi Facebook? <small>(NoobCode | 28/07/20
+                                                    23:09)</small></p>
+                                            <p>Comentario: ¿Le diste permiso a algún juego?</p>
+                                            <p><small>28/07/20 23:30</small></p>
+                                            <div class="float-right align-self-sm-end btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-link">Editar</button>
+                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                            </div>
+                                            <br>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin de Instancia de Comentario  -->
+                                        <!-- Instancia de Comentarios Vacía -->
+                                        <div class="vacio">
+                                            <br>
+                                            <p><i class="fas fa-ban icono_vacio"></i></p>
+                                            <h5>Aún no ha comentado ningún foro.</h5>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin Instancia de Comentarios Vacía -->
+                                        <button type="button" class="btn btn-link">Ver Más</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Respuestas  -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo_foros">
+                                        Respuestas
+                                    </a>
+                                </div>
+                                <div id="collapseTwo_foros" class="collapse" data-parent="#accordion_foros">
+                                    <div class="card-body">
+                                        <!-- Instancia de Comentario  -->
+                                        <div>
+                                            <p>Foro: ¿Por qué no puedo entrar a mi Facebook? <small>(NoobCode | 28/07/20
+                                                    23:09)</small></p>
+                                            <p>Respuesta: Te puede servir la opción de Olvidé Mi Contraseña.</p>
+                                            <p><small>28/07/20 23:48</small></p>
+                                            <div class="float-right align-self-sm-end btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-link">Editar</button>
+                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                            </div>
+                                            <br>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin de Instancia de Comentario  -->
+                                        <!-- Instancia de Comentarios Vacía -->
+                                        <div class="vacio">
+                                            <br>
+                                            <p><i class="fas fa-ban icono_vacio"></i></p>
+                                            <h5>Aún no ha respondido ningún foro.</h5>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin Instancia de Comentarios Vacía -->
+                                        <button type="button" class="btn btn-link">Ver Más</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Calificaciones  -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree_foros">
+                                        Calificaciones de Respuestas
+                                    </a>
+                                </div>
+                                <div id="collapseThree_foros" class="collapse" data-parent="#accordion_foros">
+                                    <div class="card-body">
+                                        <!-- Instancia de Calificación  -->
+                                        <div>
+                                            <p>Foro: ¿Por qué no puedo entrar a mi Facebook? <small>(NoobCode | 28/07/20
+                                                    23:09)</small></p>
+                                            <p>Respuesta: Porque de seguro te banearon NoobCode.
+                                                <small>(LuchoCode | 28/07/20
+                                                    23:11)</small></p>
+                                            </p>
+                                            <p>Calificación: <span class="fa fa-star star_checked"></span>
+                                                <span class="fa fa-star star_checked"></span>
+                                                <span class="fa fa-star star_checked"></span>
+                                                <span class="fa fa-star star_checked"></span>
+                                                <span class="fa fa-star"></span></p>
+                                            <p><small>28/07/20 23:13</small></p>
+                                            <div class="float-right align-self-sm-end btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-link">Editar</button>
+                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                            </div>
+                                            <br>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin de Instancia de Calificación  -->
+                                        <!-- Instancia de Calificación Vacía -->
+                                        <div class="vacio">
+                                            <br>
+                                            <p><i class="fas fa-ban icono_vacio"></i></p>
+                                            <h5>Aún no ha calificado ninguna respuesta de foro.</h5>
+                                            <hr>
+                                        </div>
+                                        <!-- Fin Instancia de Calificación Vacía -->
+                                        <button type="button" class="btn btn-link">Ver Más</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="jumbotron text-center head_foot">
+            <p>Aprendizaje Online para todo el Ecuador</p>
+            AprendEC 2020 <i class="far fa-copyright"></i>
+        </div>
+    </footer>
+</body>
+
+</html>
