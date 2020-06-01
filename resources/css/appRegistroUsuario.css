@@ -1,0 +1,27 @@
+.header{
+    font-size: 100px;
+}
+
+input[type="text"]{
+    width: 100%;
+    background-color: rgb(230, 230, 230);
+    border-radius: 5px;
+  }
+
+  .botonRedSocial{
+    border: 0;
+    background-color: transparent;
+    border: 2px solid black;  
+  }
+  
+  .botonRedSocial:hover{
+    border: 0;
+    background-color: #343A40;
+    color: white;
+  }
+
+  textarea{
+    width: 100%;
+  }
+  
+  
