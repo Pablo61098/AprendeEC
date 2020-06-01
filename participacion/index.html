@@ -105,7 +105,7 @@
                                             <p><small>09/05/20 20:30</small></p>
                                             <div class="float-right align-self-sm-end btn-group btn-group-sm">
                                                 <button type="button" class="btn btn-link">Editar</button>
-                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_eliminar_comentario_post">Eliminar</button>
                                             </div>
                                             <br>
                                             <hr>
@@ -144,7 +144,7 @@
                                             <p><small>09/05/20 20:35</small></p>
                                             <div class="float-right align-self-sm-end btn-group btn-group-sm">
                                                 <button type="button" class="btn btn-link">Editar</button>
-                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_eliminar_calificacion_post">Eliminar</button>
                                             </div>
                                             <br>
                                             <hr>
@@ -188,7 +188,7 @@
                                             <p><small>28/07/20 23:30</small></p>
                                             <div class="float-right align-self-sm-end btn-group btn-group-sm">
                                                 <button type="button" class="btn btn-link">Editar</button>
-                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_eliminar_comentario_foro">Eliminar</button>
                                             </div>
                                             <br>
                                             <hr>
@@ -223,7 +223,7 @@
                                             <p><small>28/07/20 23:48</small></p>
                                             <div class="float-right align-self-sm-end btn-group btn-group-sm">
                                                 <button type="button" class="btn btn-link">Editar</button>
-                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_eliminar_respuesta_foro">Eliminar</button>
                                             </div>
                                             <br>
                                             <hr>
@@ -266,7 +266,7 @@
                                             <p><small>28/07/20 23:13</small></p>
                                             <div class="float-right align-self-sm-end btn-group btn-group-sm">
                                                 <button type="button" class="btn btn-link">Editar</button>
-                                                <button type="button" class="btn btn-link">Eliminar</button>
+                                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_eliminar_calificacion_respuesta">Eliminar</button>
                                             </div>
                                             <br>
                                             <hr>
@@ -297,6 +297,106 @@
             AprendEC 2020 <i class="far fa-copyright"></i>
         </div>
     </footer>
+    <!-- Modal Eliminar Comentario Post -->
+    <div class="modal fade" id="modal_eliminar_comentario_post" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Comentario de Post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se procederá a eliminar el comentario del post indicado.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Eliminar Calificación Post -->
+    <div class="modal fade" id="modal_eliminar_calificacion_post" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Calificación de Post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se procederá a eliminar la calificación del post indicado.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Eliminar Comentario Foro -->
+    <div class="modal fade" id="modal_eliminar_comentario_foro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Comentario de Foro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se procederá a eliminar el comentario del foro indicado.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Eliminar Respuesta Foro -->
+    <div class="modal fade" id="modal_eliminar_respuesta_foro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Respuesta de Foro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se procederá a eliminar la respuesta del foro indicado.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Eliminar Calificación Respuesta -->
+    <div class="modal fade" id="modal_eliminar_calificacion_respuesta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Calificación de Respuesta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se procederá a eliminar la calificación de la respuesta indicada.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

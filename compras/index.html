@@ -107,7 +107,7 @@
                                     <p>Cantidad: <input type="number" min="1" value="1"></p>
                                 </div>
                                 <div class="col-lg-3 align-self-sm-end btn-group btn-group-sm">
-                                    <button type="button" class="btn btn-link">Quitar</button>
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_quitar_producto">Quitar</button>
                                     <hr>
                                 </div>
                             </div>
@@ -192,7 +192,7 @@
                             <!-- Instancia de Dirección 1 -->
                             <div class="row ml-2 mr-2">
                                 <div class="col-xl-1 align-self-sm-center">
-                                    <input type="checkbox" id="dir1" name="dir" value="dir1">
+                                    <input type="checkbox" id="dir1" name="dir" value="dir1" disabled>
                                 </div>
                                 <div class="col-xl-7">
                                     <h4>Lionel Andrés Messi Dután</h4>
@@ -202,7 +202,25 @@
                                 <div class="col-xl-3 align-self-sm-end btn-group btn-group-sm">
                                     <button type="button" class="btn btn-link" data-toggle="tooltip" title="Definir como Dirección de Envío">Activar</button>
                                     <button type="button" class="btn btn-link">Editar</button>
-                                    <button type="button" class="btn btn-link">Eliminar</button>
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_eliminar_direccion">Eliminar</button>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Fin Instancia de Dirección 1 -->
+                            <!-- Instancia de Dirección 1 -->
+                            <div class="row ml-2 mr-2">
+                                <div class="col-xl-1 align-self-sm-center">
+                                    <input type="checkbox" id="dir1" name="dir" value="dir1" checked disabled>
+                                </div>
+                                <div class="col-xl-7">
+                                    <h4>Lionel Andrés Messi Dután</h4>
+                                    <p>Calle del Chorro y Calle Vieja<br> Cuenca, Azuay 010105<br> Ecuador
+                                        <br> Cédula: ******3156<br> Teléfono: 0949394557</p>
+                                </div>
+                                <div class="col-xl-3 align-self-sm-end btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-link" data-toggle="tooltip" title="Definir como Dirección de Envío" disabled>Activar</button>
+                                    <button type="button" class="btn btn-link">Editar</button>
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_eliminar_direccion">Eliminar</button>
                                 </div>
                             </div>
                             <hr>
@@ -307,7 +325,7 @@
                             <!-- Instancia de Método de Pago 1 -->
                             <div class="row ml-2 mr-2">
                                 <div class="col-lg-1 align-self-sm-center">
-                                    <input type="checkbox" id="pag1" name="pag" value="pag1">
+                                    <input type="checkbox" id="pag1" name="pag" value="pag1" disabled>
                                 </div>
                                 <div class="col-lg-4 align-self-sm-center">
                                     <i class="fab fa-cc-visa pago"></i>
@@ -320,7 +338,28 @@
                                 </div>
                                 <div class="col-lg-3 align-self-sm-end btn-group btn-group-sm">
                                     <button type="button" class="btn btn-link" data-toggle="tooltip" title="Definir como Método de Pago Actual">Activar</button>
-                                    <button type="button" class="btn btn-link">Eliminar</button>
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_eliminar_pago">Eliminar</button>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- Fin Instancia de Método de Pago 1 -->
+                            <!-- Instancia de Método de Pago 1 -->
+                            <div class="row ml-2 mr-2">
+                                <div class="col-lg-1 align-self-sm-center">
+                                    <input type="checkbox" id="pag1" name="pag" value="pag1" disabled checked>
+                                </div>
+                                <div class="col-lg-4 align-self-sm-center">
+                                    <i class="fab fa-cc-visa pago"></i>
+                                    <hr class="hr_br">
+                                </div>
+                                <div class="col-lg-4">
+                                    <h4>Juan Herrera</h4>
+                                    <p><br>**********3456<br>09/22</p>
+                                    <p>Tipo: Crédito</p>
+                                </div>
+                                <div class="col-lg-3 align-self-sm-end btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-link" data-toggle="tooltip" title="Definir como Método de Pago Actual" disabled>Activar</button>
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal_eliminar_pago">Eliminar</button>
                                 </div>
                             </div>
                             <hr>
@@ -409,6 +448,66 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Quitar Producto -->
+    <div class="modal fade" id="modal_quitar_producto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Quitar Producto del Carrito</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se procederá a quitar el producto del carrito.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Eliminar Dirección -->
+    <div class="modal fade" id="modal_eliminar_direccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Dirección</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se procederá a eliminar la dirección indicada.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Eliminar Método de Pago -->
+    <div class="modal fade" id="modal_eliminar_pago" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Método de Pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se procederá a eliminar el método de pago indicado.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Aceptar</button>
                 </div>
             </div>
         </div>
