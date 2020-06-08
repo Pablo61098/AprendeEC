@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AprendeEC novedades</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- Cargo la barra de navegación -->
+<div class="container-expand">
+    <div id="barraNavegacion">
+    </div>
+</div>
+<div class="container-expand">
+    <div class="row">
+        <div class="col-sm-2">
+            <ul class="list-group">
+                <div class="list-group list-group-flush ">
+                    <a id="linkLastPost" href="#" class="list-group-item list-group-item-action">Últimos posts publicados</a>
+                    <a id="linkLastForos"  href="#" class="list-group-item list-group-item-action">Últimos foros publicados</a>
+                    <a id="linkDestacado"  href="#" class="list-group-item list-group-item-action">Lo más destacado</a>
+                </div>
+            </ul>
+            <div class="text-center mt-4">
+                <a href="#" class="btn btn-warning" role="button"> RANKING </a>
+            </div>
+        </div>
+        <div class="col-sm-10 text-center mt-4">
+            <p>
+                Aquí se debe cargar dinámicamente de acuerdo a lo señalado en las opciones de lado.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis porro cumque in inventore veniam sint
+                voluptates fugiat ratione quasi tempora atque iusto, voluptatem jdksahdkdhjahdkahda kjahdkajhd exercitationem eveniet cum perspiciatis
+                officia ducimus culpa.</p>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    $(function () {
+        $('#barraNavegacion').load('navbar.html');
+        $('#linkLastPost').click(function(){
+            $(this).attr('class','list-group-item list-group-item-action active');
+            $('#linkLastForos').attr('class','list-group-item list-group-item-action');
+            $('#linkDestacado').attr('class','list-group-item list-group-item-action');
+        });
+        $('#linkLastForos').click(function(){
+            $(this).attr('class','list-group-item list-group-item-action active');
+            $('#linkLastPost').attr('class','list-group-item list-group-item-action');
+            $('#linkDestacado').attr('class','list-group-item list-group-item-action');
+        });
+        $('#linkDestacado').click(function(){
+            $(this).attr('class','list-group-item list-group-item-action active');
+            $('#linkLastForos').attr('class','list-group-item list-group-item-action');
+            $('#linkLastPost').attr('class','list-group-item list-group-item-action');
+        });
+    });
+</script>
+</body>
+
+</html>

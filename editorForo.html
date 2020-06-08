@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="ckeditor/ckeditor.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <title>Foro Editor</title>
+
+</head>
+
+<body>
+
+    <!-- Cargo la barra de navegación-->
+    <div class="container-expand">
+        <div id="barraNavegacion">
+        </div>
+    </div>
+
+    <div class="container mt-4 text-center">
+        <i class="fas fa-question-circle fa-7x"></i>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mt-4 mb-4">
+                <h1>Pregunta algo</h1>
+                <p>Recuerda ser directo...</p>
+                <h5>Título</h5>
+                <div class="container-expand ">
+                    <input id="tituloForo" type="text" size="100" placeholder="Título que describa tu problema. Sé breve." >    
+                </div>
+                    
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <textarea id="editor1"></textarea>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-right mt-4">
+                <button id="btnGuardar" type="button" class="btn btn-outline-primary">Guardar</button>
+                <button id="btnSalir" type="button" class="btn btn-outline-primary">Salir</button>
+            </div> 
+        </div>
+    </div>
+
+    <!--Scripts para el control-->
+    <script type="text/javascript">
+        CKEDITOR.replace("editor1");
+        $(function () {
+            $('#barraNavegacion').load('navbar.html');
+            $('#btnGuardar').click(function(){
+                var contenido=CKEDITOR.instances.editor1.getData();
+                var centi=0;
+                if(tituloForo.value.length==0){
+                    centi=centi+1;
+                }
+                if(contenido.length==0){
+                    centi=centi+1;
+                }
+                
+                if(centi!=0){
+                    alert('Verifique que los campos no estén vacíos.');
+                }
+                else{
+                    alert('Se ha guardado los cambios');    
+                }
+                
+            });
+            $('#btnSalir').click(function(){
+                window.open('modPubForos.html','_self');
+            });
+
+        });
+        
+    </script>
+</body>
+
+</html>
