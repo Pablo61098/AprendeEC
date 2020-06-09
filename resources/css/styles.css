@@ -9,8 +9,15 @@
     font-weight: bold;
 }
 
+html,
+body {
+    height: 100%;
+}
+
 body {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
 .jumbotron {
@@ -63,3 +70,10 @@ body {
 }
 
 
+.content {
+    flex: 1 0 auto;
+}
+
+.footer {
+    flex-shrink: 0;
+}

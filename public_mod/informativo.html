@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="../resources/css/styles.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
-    
-    
+
+
 </head>
 
 <body>
-   
-<!-- Header -->
+
+    <!-- Header -->
     <header>
         <div class="jumbotron head_foot">
             <img src="../resources/images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
@@ -71,35 +71,34 @@
         </div>
     </nav>
 
-   
-<div class="container-expand">
-    <div class="row">
-        <div class="col-sm-2">
-            <ul class="list-group">
-                <div class="list-group list-group-flush ">
-                    <a id="linkLastPost" href="#" class="list-group-item list-group-item-action">Últimos posts publicados</a>
-                    <a id="linkLastForos"  href="#" class="list-group-item list-group-item-action">Últimos foros publicados</a>
-                    <a id="linkDestacado"  href="#" class="list-group-item list-group-item-action">Lo más destacado</a>
+
+    <div class="container-expand">
+        <div class="row">
+            <div class="col-sm-2">
+                <ul class="list-group">
+                    <div class="list-group list-group-flush ">
+                        <a id="linkLastPost" href="#" class="list-group-item list-group-item-action">Últimos posts publicados</a>
+                        <a id="linkLastForos" href="#" class="list-group-item list-group-item-action">Últimos foros publicados</a>
+                        <a id="linkDestacado" href="#" class="list-group-item list-group-item-action">Lo más destacado</a>
+                    </div>
+                </ul>
+                <div class="text-center mt-4">
+                    <a href="../ranking/rankingU.html" class="btn btn-warning" role="button"> RANKING </a>
                 </div>
-            </ul>
-            <div class="text-center mt-4">
-                <a href="../ranking/rankingU.html" class="btn btn-warning" role="button"> RANKING </a>
+            </div>
+            <div class="col-sm-10 text-center mt-4">
+                <p>
+                    Aquí se debe cargar dinámicamente de acuerdo a lo señalado en las opciones de lado. Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis porro cumque in inventore veniam sint voluptates fugiat ratione quasi tempora atque iusto, voluptatem jdksahdkdhjahdkahda
+                    kjahdkajhd exercitationem eveniet cum perspiciatis officia ducimus culpa.</p>
             </div>
         </div>
-        <div class="col-sm-10 text-center mt-4">
-            <p>
-                Aquí se debe cargar dinámicamente de acuerdo a lo señalado en las opciones de lado.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis porro cumque in inventore veniam sint
-                voluptates fugiat ratione quasi tempora atque iusto, voluptatem jdksahdkdhjahdkahda kjahdkajhd exercitationem eveniet cum perspiciatis
-                officia ducimus culpa.</p>
-        </div>
+
+
     </div>
 
 
-</div>
-
-
     <!-- Footer -->
+    <div class="content"></div>
     <footer>
         <div class="jumbotron text-center head_foot">
             <p>Aprendizaje Online para todo el Ecuador</p>
@@ -108,26 +107,26 @@
     </footer>
 
 
-<script>
-    $(function () {
-        // $('#barraNavegacion').load('navbar.html');
-        $('#linkLastPost').click(function(){
-            $(this).attr('class','list-group-item list-group-item-action active');
-            $('#linkLastForos').attr('class','list-group-item list-group-item-action');
-            $('#linkDestacado').attr('class','list-group-item list-group-item-action');
+    <script>
+        $(function() {
+            // $('#barraNavegacion').load('navbar.html');
+            $('#linkLastPost').click(function() {
+                $(this).attr('class', 'list-group-item list-group-item-action active');
+                $('#linkLastForos').attr('class', 'list-group-item list-group-item-action');
+                $('#linkDestacado').attr('class', 'list-group-item list-group-item-action');
+            });
+            $('#linkLastForos').click(function() {
+                $(this).attr('class', 'list-group-item list-group-item-action active');
+                $('#linkLastPost').attr('class', 'list-group-item list-group-item-action');
+                $('#linkDestacado').attr('class', 'list-group-item list-group-item-action');
+            });
+            $('#linkDestacado').click(function() {
+                $(this).attr('class', 'list-group-item list-group-item-action active');
+                $('#linkLastForos').attr('class', 'list-group-item list-group-item-action');
+                $('#linkLastPost').attr('class', 'list-group-item list-group-item-action');
+            });
         });
-        $('#linkLastForos').click(function(){
-            $(this).attr('class','list-group-item list-group-item-action active');
-            $('#linkLastPost').attr('class','list-group-item list-group-item-action');
-            $('#linkDestacado').attr('class','list-group-item list-group-item-action');
-        });
-        $('#linkDestacado').click(function(){
-            $(this).attr('class','list-group-item list-group-item-action active');
-            $('#linkLastForos').attr('class','list-group-item list-group-item-action');
-            $('#linkLastPost').attr('class','list-group-item list-group-item-action');
-        });
-    });
-</script>
+    </script>
 
 
 

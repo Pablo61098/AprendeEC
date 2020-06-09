@@ -83,7 +83,7 @@
                     <a href="../ranking/rankingU.html" class="btn btn-warning" role="button"> RANKING </a>
                 </div>
             </div>
-            <div class="col-sm-9 mt-4" >
+            <div class="col-sm-9 mt-4">
                 <div class="container-fluid">
                     <div class="btn-group d-flex" role="group">
                         <button id="btnCrear" type="button" class="btn btn-outline-primary">Crear</button>
@@ -109,16 +109,17 @@
                                 <strong>Tags:</strong> <em>#SistemasOperativos #SystemAdministration</em><br>
                             </p>
                         </div>
-                        <div class="container"> 
+                        <div class="container">
                             <hr>
-                        </div>               
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-        <!-- Footer -->
+    <!-- Footer -->
+    <div class="content"></div>
     <footer>
         <div class="jumbotron text-center head_foot">
             <p>Aprendizaje Online para todo el Ecuador</p>
@@ -126,72 +127,63 @@
         </div>
     </footer>
 
-    
+
     <script>
-        $(function () {
-            $('#btnCrear').click(function(){
-                window.open('editorForo.html','_self')
+        $(function() {
+            $('#btnCrear').click(function() {
+                window.open('editorForo.html', '_self')
             });
-            $('#btnPublicar').click(function(){
+            $('#btnPublicar').click(function() {
                 //Debajo debe ir el evento que se genera. En este caso la publicación del foro en el sitio
-                var revisarCheck=revisor1.checked;
+                var revisarCheck = revisor1.checked;
                 //Antes de revisar el ckecked, debe verificar si ese post ya ha sido publicado. Para eso 
                 //Necesitamos lectura de la base de datos
-                if(revisarCheck==true){;
+                if (revisarCheck == true) {;
                     //Aquí se debería verificar en la base de datos por motivos de seguridad
-                    if($('#estadoPost1').text()!='Publicado'){
-                        var respuesta=confirm('¿Está seguro de publicar el foro?',revisarCheck);
-                        if(respuesta==true){
-                            revisor1.checked=false;
+                    if ($('#estadoPost1').text() != 'Publicado') {
+                        var respuesta = confirm('¿Está seguro de publicar el foro?', revisarCheck);
+                        if (respuesta == true) {
+                            revisor1.checked = false;
                             $('#estadoPost1').text('Publicado');
                         }
-                    }else{
+                    } else {
                         alert('EL foro ya fue publicado');
                     }
-                    
-                }       
-                else{
+
+                } else {
                     alert('Debe estar marcado al menos un foro');
                 }
             });
-            
-            $('#btnEliminar').click(function(){
-                var revisarCheck=revisor1.checked;
-                if(revisarCheck==true){
-                    var respuesta=confirm('¿Esta seguro de eliminar el/los post/s?. Si acepta se eliminará permanentemente.');
-                    if(respuesta==true){
+
+            $('#btnEliminar').click(function() {
+                var revisarCheck = revisor1.checked;
+                if (revisarCheck == true) {
+                    var respuesta = confirm('¿Esta seguro de eliminar el/los post/s?. Si acepta se eliminará permanentemente.');
+                    if (respuesta == true) {
                         $('#showPost1').remove();
                     }
-                }else{
+                } else {
                     alert('Debe seleccionar al menos un foro');
                 }
-                
+
             });
 
-            $('#btnEditar').click(function(){
+            $('#btnEditar').click(function() {
                 //Aquí se debe obtener de la base de datos el foro publicado y mandarlo al editor de texto
             });
 
-            $('#btnVer').click(function(){
+            $('#btnVer').click(function() {
                 //Aquí se debe obtener de la base de datos lo que se debe mostrar y mandarlo al html vista para visualizarlo. 
-                var revisarCheck=revisor1.checked;
-                if(revisarCheck==true){
-                    window.open('viewForo.html','_blank');
-                }else{
+                var revisarCheck = revisor1.checked;
+                if (revisarCheck == true) {
+                    window.open('viewForo.html', '_blank');
+                } else {
                     alert('Debe seleccionar un foro.');
                 }
             });
 
         });
     </script>
-
-
-    <footer>
-        <div class="jumbotron text-center head_foot">
-            <p>Aprendizaje Online para todo el Ecuador</p>
-            AprendEC 2020 <i class="far fa-copyright"></i>
-        </div>
-    </footer>
 
 </body>
 

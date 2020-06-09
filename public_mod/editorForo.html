@@ -71,7 +71,7 @@
     <div class="container mt-4 text-center">
         <i class="fas fa-question-circle fa-7x"></i>
     </div>
-    
+
 
     <div class="container">
         <div class="row">
@@ -80,9 +80,9 @@
                 <p>Recuerda ser directo...</p>
                 <h5>Título</h5>
                 <div class="container-expand ">
-                    <input id="tituloForo" type="text" size="100" placeholder="Título que describa tu problema. Sé breve." >    
+                    <input id="tituloForo" type="text" size="100" placeholder="Título que describa tu problema. Sé breve.">
                 </div>
-                    
+
             </div>
         </div>
     </div>
@@ -95,11 +95,12 @@
             <div class="col-sm-12 text-right mt-4">
                 <button id="btnGuardar" type="button" class="btn btn-outline-primary">Guardar</button>
                 <button id="btnSalir" type="button" class="btn btn-outline-primary">Salir</button>
-            </div> 
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
+    <div class="content"></div>
     <footer>
         <div class="jumbotron text-center head_foot">
             <p>Aprendizaje Online para todo el Ecuador</p>
@@ -111,31 +112,29 @@
     <!--Scripts para el control-->
     <script type="text/javascript">
         CKEDITOR.replace("editor1");
-        $(function () {
-            $('#btnGuardar').click(function(){
-                var contenido=CKEDITOR.instances.editor1.getData();
-                var centi=0;
-                if(tituloForo.value.length==0){
-                    centi=centi+1;
+        $(function() {
+            $('#btnGuardar').click(function() {
+                var contenido = CKEDITOR.instances.editor1.getData();
+                var centi = 0;
+                if (tituloForo.value.length == 0) {
+                    centi = centi + 1;
                 }
-                if(contenido.length==0){
-                    centi=centi+1;
+                if (contenido.length == 0) {
+                    centi = centi + 1;
                 }
-                
-                if(centi!=0){
+
+                if (centi != 0) {
                     alert('Verifique que los campos no estén vacíos.');
+                } else {
+                    alert('Se ha guardado los cambios');
                 }
-                else{
-                    alert('Se ha guardado los cambios');    
-                }
-                
+
             });
-            $('#btnSalir').click(function(){
-                window.open('modPubForos.html','_self');
+            $('#btnSalir').click(function() {
+                window.open('modPubForos.html', '_self');
             });
 
         });
-        
     </script>
 </body>
 
