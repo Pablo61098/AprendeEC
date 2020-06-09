@@ -24,6 +24,50 @@
             <h1><b>@prendEC</b></h1>
         </div>
     </header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
+
+            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="colapsado">
+                <ul class="navbar-nav mx-xs-auto ml-md-3">
+                    <li class="nav-item">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
+                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
+                                    class="fas fa-search"></i></button>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
+                    <li class="nav-item  mx-auto">
+                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown mx-auto">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            <i class="far fa-user"></i>
+                            <span>Nombre de Usuario</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
+                            <a class="dropdown-item" href="../participacion/">Participación</a>
+                            <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
+                            <a class="dropdown-item" href="../compras/">Compras</a>
+                            <a class="dropdown-item" href="../tienda/">Tienda</a>
+                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
+                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
     <!-- Formulario de Direcciones -->
     <div class="container" id="formdir">
         <br><br>
@@ -94,11 +138,21 @@
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo.</div>
             </div>
-            <div class="form-group float-right">
+            <div class="form-group text-right">
                 <input type="submit" value="Aceptar" class="btn btn-primary">
+
             </div>
+
         </form>
     </div>
+                <!-- Footer -->
+    <footer>
+        <div class="jumbotron text-center head_foot">
+            <p>Aprendizaje Online para todo el Ecuador</p>
+            AprendEC 2020 <i class="far fa-copyright"></i>
+        </div>
+    </footer>
+
 </body>
 
 </html>

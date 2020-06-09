@@ -4,25 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="../resources/css/styles.css">
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resources/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <title>Posts</title>
 </head>
 
 <body>
-    <!-- Cargo la barra de navegación-->
-    <div class="container-expand">
-        <div id="barraNavegacion">
+    
+
+<!-- Header -->
+    <header>
+        <div class="jumbotron head_foot">
+            <img src="../resources/images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <h1><b>@prendEC</b></h1>
         </div>
-    </div>
+    </header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
+
+            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="colapsado">
+                <ul class="navbar-nav mx-xs-auto ml-md-3">
+                    <li class="nav-item">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
+                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
+                                    class="fas fa-search"></i></button>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
+                    <li class="nav-item  mx-auto">
+                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown mx-auto">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            <i class="far fa-user"></i>
+                            <span>Nombre de Usuario</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
+                            <a class="dropdown-item" href="../participacion/">Participación</a>
+                            <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
+                            <a class="dropdown-item" href="../compras/">Compras</a>
+                            <a class="dropdown-item" href="../tienda/">Tienda</a>
+                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
+                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
 
     <div class="container-expand">
         <div class="row">
@@ -53,8 +101,13 @@
     
     
     </div>
+
+    <div class="container mt-5">
+        
+    </div>
     
 
+        <!-- Footer -->
     <footer>
         <div class="jumbotron text-center head_foot">
             <p>Aprendizaje Online para todo el Ecuador</p>
@@ -62,9 +115,10 @@
         </div>
     </footer>
 
+
     <script>
         $(function () {
-            $('#barraNavegacion').load('navbar.html');
+            // $('#barraNavegacion').load('navbar.html');
             $('#btnCrear').click(function(){
                 window.open('editor.html','_self')
             });
