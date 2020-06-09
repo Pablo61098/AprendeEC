@@ -1,5 +1,5 @@
 .header{
-    font-size: 100px;
+    font-size: 80px;
 }
 
 input[type="text"]{
@@ -8,20 +8,33 @@ input[type="text"]{
     border-radius: 5px;
   }
 
-  .botonRedSocial{
-    border: 0;
-    background-color: transparent;
-    border: 2px solid black;  
-  }
-  
-  .botonRedSocial:hover{
-    border: 0;
-    background-color: #343A40;
-    color: white;
-  }
+.botonRedSocial{
+  border: 0;
+  background-color: transparent;
+  border: 2px solid black;  
+}
 
-  textarea{
-    width: 100%;
-  }
+.botonRedSocial:hover{
+  border: 0;
+  background-color: #343A40;
+  color: white;
+}
+
+textarea{
+  width: 100%;
+}
+
+.formBody {
+  /* background-color: rgba(255,255,255,0.6); */
+  border: 1px solid rgba(128,128,128,0.3);
+  background-color: transparent;
+  color: black;
+  transition: background-color 0.7s;
+}
+
+.formBody:hover {
+  border: 1px solid rgba(0,0,0,0.3);
+  transition: background-color 0.7s;
+}
   
   

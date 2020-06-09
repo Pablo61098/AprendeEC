@@ -9,7 +9,9 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
         <meta name="viewport" content="width=device-width, initial-scale-1">
         <link rel="stylesheet" href="../resources/css/appGestionProductos.css">
-    <link rel="stylesheet" href="../resources/css/styles.css">
+        <link rel="stylesheet" href="../resources/css/styles.css">
+
+        <script href=""></script>
 
     </head> 
     
@@ -68,17 +70,17 @@
 
         <div class="container-fluid">
             <div class="row mt-3 mt-sm-5">
-                <div class="col-12 col-sm-3 col-lg-2 text-left sideBar">
-                    <div class="row flex-row flex-sm-column justify-content-center align-items-end mt-5">
-                        <div class="col-6 col-sm-12 mb-s">
-                            <a href="gestionProductos.html" class="btn btn-outline-secondary btn-block botonSideBar activo">Productos</a>
+                <div class="col-12 col-sm-4 col-lg-4 text-left sideBar">
+                    <div class="row flex-row flex-sm-column justify-content-start align-items-start mt-5">
+                        <div class="col-6 col-sm-12">
+                            <a href="gestionProductos.html" class="btn btn-primary btn-block text-left">Productos</a>
                         </div>
                         <div class="col-6 col-sm-12">
-                            <a href="gestionVentas.html" class="btn btn-outline-secondary botonSideBar btn-block ">Pedidos Penidentes</a>
+                            <a href="gestionVentas.html" class="btn btn-primary btn-block text-left desactivo ">Pedidos Penidentes</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-9 col-lg-10 ">
+                <div class="col-12 col-sm-8 col-lg-8 ">
                     <div class="row flex-column principal-layout">
                         <div class="">
                             <h3 class="seccion">Productos Ofertados</h3>
@@ -124,10 +126,10 @@
                         <div class="">
                             <div class="row justify-content-end mt-2">
                                 <div class="mr-3">
-                                    <a href="" class="btn btn-secondary">assadaasdsasdasd</a>
+                                    <button href="" class="btn btn-secondary" id="btn-eliminar">Eliminar</button>
                                 </div>
                                 <div class="mr-3">
-                                    <a href="" class="btn btn-secondary">assadasdasd</a>
+                                    <button href="" class="btn btn-secondary" id="btn-editar">Editar</button>
                                 </div>
                             </div>
                         </div>
@@ -140,31 +142,32 @@
                                     <label for="">Título</label>
                                 </div>
                                 <div class="col-12">
-                                    <input type="text">
+                                    <input type="text" id="txt-titulo">
                                 </div>
                                 <div class="col-12">
                                     <label for="">Descripción</label>
                                 </div>
                                 <div class="col-12">
-                                    <input type="text">
+                                    <input type="text" id="txt-descripcion">
                                 </div>
                                 <div class="col-12">
                                     <label for="">Precio</label>
                                 </div>
                                 <div class="col-12">
-                                    <input type="text">
+                                    <input type="text" id="txt-precio">
                                 </div>
                                 <div class="col-12">
                                     <label for="">Stock</label>
                                 </div>
                                 <div class="col-12">
-                                    <input type="text">
+                                    <input type="text" id="txt-stock">
                                 </div>
                                 <div class="col-12">
                                     <label for="">Elegir Imagen</label>
                                 </div>
                                 <div class="col-12">
-                                    <a href="" class="btn btn-primary">Cargar</a>
+                                    <!-- <a href="" class="btn btn-primary">Cargar</a> -->
+                                    <input type="file">
                                 </div>
                                 <div class="col-12">
                                     <div class="row justify-content-end">
@@ -172,7 +175,7 @@
                                             <a href="" class="btn btn-secondary">Aceptar</a>
                                         </div>
                                         <div class="mr-3">
-                                            <a href="" class="btn btn-secondary">Borrar Campos</a>
+                                            <button class="btn btn-secondary" id="btn-borrar-campos">Borrar Campos</button>
                                         </div>
                                     </div>
                                 </div>
@@ -200,5 +203,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
     </body>
+
+    <script src="../resources/javascript/gestionProductos.js" ></script>
 
 </html>
