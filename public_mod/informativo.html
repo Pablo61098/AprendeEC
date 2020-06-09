@@ -5,17 +5,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AprendeEC novedades</title>
+
+    
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="../resources/css/styles.css">
+    
 </head>
 
 <body>
     <!-- Cargo la barra de navegación -->
-<div class="container-expand">
+<!-- <div class="container-expand">
     <div id="barraNavegacion">
+        
     </div>
-</div>
+</div> -->
+
+<header>
+    <div class="jumbotron head_foot">
+        <img src="../resources/images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+        <h1><b>@prendEC</b></h1>
+    </div>
+</header>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand mx-auto mr-md-3 " href="#">AprendEC</a>
+
+        <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="colapsado">
+            <ul class="navbar-nav mx-xs-auto ml-md-3">
+                <li class="nav-item">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
+                        <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
+                                class="fas fa-search"></i></button>
+                    </form>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
+                <li class="nav-item  mx-auto">
+                    <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                </li>
+                <!-- Dropdown -->
+                <li class="nav-item dropdown mx-auto">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        <i class="far fa-user"></i>
+                        <span>Nombre de Usuario</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
+                        <a class="dropdown-item" href="#">Campos</a>
+                        <a class="dropdown-item" href="../participacion/">Participación</a>
+                        <a class="dropdown-item" href="#">Cuenta</a>
+                        <a class="dropdown-item" href="../compras/">Compras</a>
+                        <a class="dropdown-item" href="../tienda/">Tienda</a>
+                        <a class="dropdown-item" href="#">Gestión de ventas</a>
+                        <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
 <div class="container-expand">
     <div class="row">
         <div class="col-sm-2">
@@ -27,7 +90,7 @@
                 </div>
             </ul>
             <div class="text-center mt-4">
-                <a href="#" class="btn btn-warning" role="button"> RANKING </a>
+                <a href="../ranking/rankingU.html" class="btn btn-warning" role="button"> RANKING </a>
             </div>
         </div>
         <div class="col-sm-10 text-center mt-4">
@@ -42,9 +105,18 @@
 
 </div>
 
+
+<footer>
+    <div class="jumbotron text-center head_foot">
+        <p>Aprendizaje Online para todo el Ecuador</p>
+        AprendEC 2020 <i class="far fa-copyright"></i>
+    </div>
+</footer>
+
+
 <script>
     $(function () {
-        $('#barraNavegacion').load('navbar.html');
+        // $('#barraNavegacion').load('navbar.html');
         $('#linkLastPost').click(function(){
             $(this).attr('class','list-group-item list-group-item-action active');
             $('#linkLastForos').attr('class','list-group-item list-group-item-action');
@@ -62,6 +134,10 @@
         });
     });
 </script>
+
+
+
+
 </body>
 
 </html>
