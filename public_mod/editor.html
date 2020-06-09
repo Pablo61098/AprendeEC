@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="ckeditor/ckeditor.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
     <link rel="stylesheet" href="../resources/css/styles.css">
     <title>Post Editor</title>
@@ -71,7 +71,7 @@
     <div class="container mt-4 text-center">
         <i class="fas fa-book-reader fa-7x"></i>
     </div>
-    
+
 
     <div class="container">
         <div class="row">
@@ -79,7 +79,7 @@
                 <h1>Postea algo..</h1>
                 <h5>Título del Post</h5>
                 <div class="container-expand ">
-                    <input id="tituloPost" type="text" size="100" placeholder="Título que describa tu Post. Sé preciso." >    
+                    <input id="tituloPost" type="text" size="100" placeholder="Título que describa tu Post. Sé preciso.">
                 </div>
             </div>
         </div>
@@ -94,11 +94,12 @@
             <div class="col-sm-12 text-right mt-4">
                 <button id="btnGuardar" type="button" class="btn btn-outline-primary">Guardar</button>
                 <button id="btnSalir" type="button" class="btn btn-outline-primary">Salir</button>
-            </div> 
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
+    <div class="content"></div>
     <footer>
         <div class="jumbotron text-center head_foot">
             <p>Aprendizaje Online para todo el Ecuador</p>
@@ -110,31 +111,29 @@
     <!--Scripts para el control-->
     <script type="text/javascript">
         CKEDITOR.replace("editor1");
-        $(function () {
+        $(function() {
             // $('#barraNavegacion').load('navbar.html');
-            $('#btnGuardar').click(function(){
-                var contenido=CKEDITOR.instances.editor1.getData();
-                var centi=0;
-                if(tituloPost.value.length==0){
-                    centi=centi+1;
+            $('#btnGuardar').click(function() {
+                var contenido = CKEDITOR.instances.editor1.getData();
+                var centi = 0;
+                if (tituloPost.value.length == 0) {
+                    centi = centi + 1;
                 }
-                if(contenido.length==0){
-                    centi=centi+1;
+                if (contenido.length == 0) {
+                    centi = centi + 1;
                 }
-                
-                if(centi!=0){
+
+                if (centi != 0) {
                     alert('Verifique que los campos no estén vacíos.');
-                }
-                else{
-                    alert('Se ha guardado los cambios');    
+                } else {
+                    alert('Se ha guardado los cambios');
                 }
             });
-            $('#btnSalir').click(function(){
-                window.open('modPublicaciones.html','_self');
+            $('#btnSalir').click(function() {
+                window.open('modPublicaciones.html', '_self');
             });
 
         });
-        
     </script>
 </body>
 
