@@ -22,26 +22,26 @@
             <h1><b>@prendEC</b></h1>
         </div>
     </header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
 
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark"> 
-        <div class="container"> 
-            <a class="navbar-brand mx-auto mr-md-3 " href="#">AprendEC</a>
-            
             <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-  
-            <div class="collapse navbar-collapse" 
-                 id="colapsado"> 
-                 <ul class="navbar-nav mx-xs-auto ml-md-3">
+
+            <div class="collapse navbar-collapse" id="colapsado">
+                <ul class="navbar-nav mx-xs-auto ml-md-3">
                     <li class="nav-item">
-                        <form >
+                        <form class="form-inline">
                             <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
-                            <!-- <button class=" btn btn-outline-success mx-auto my-2 my-sm-0"  type="submit"><i class="fas fa-search"></i></button> -->
+                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
+                                    class="fas fa-search"></i></button>
                         </form>
-                    </li>                    
+                    </li>
                 </ul>
-                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="userAndNotification">
+                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
                     <li class="nav-item  mx-auto">
                         <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
                     </li>
@@ -52,21 +52,20 @@
                             <span>Nombre de Usuario</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Publicaciones</a>
-                            <a class="dropdown-item" href="#">Campos</a>
-                            <a class="dropdown-item" href="#">Participacion</a>
-                            <a class="dropdown-item" href="#">Cuenta</a>
-                            <a class="dropdown-item" href="#">Tienda</a>
-                            <a class="dropdown-item" href="#">Gestión de ventas</a>
-                            <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                            <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
+                            <a class="dropdown-item" href="../participacion/">Participación</a>
+                            <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
+                            <a class="dropdown-item" href="../compras/">Compras</a>
+                            <a class="dropdown-item" href="../tienda/">Tienda</a>
+                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
+                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
                         </div>
                     </li>
                 </ul>
-                
-            </div> 
-        </div> 
-    </nav> 
 
+            </div>
+        </div>
+    </nav>
     <div class="container">
             <h1 class="text-left" id="pageName">Cuenta</h1>
             <div class="row border justify-content-around align-items-start informacionCuenta text-center p-5 ">
