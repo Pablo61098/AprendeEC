@@ -5,25 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../resources/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
     <title>Foro</title>
 </head>
 
 <body>
-    <!-- Cargo la barra de navegación-->
-    <!-- <div class="container-expand">
-        <div id="barraNavegacion">
-        </div>
-    </div> -->
-
+    <!-- Header -->
     <header>
         <div class="jumbotron head_foot">
             <img src="../resources/images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
@@ -33,12 +27,12 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand mx-auto mr-md-3 " href="#">AprendEC</a>
-    
+            <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
+
             <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-    
+
             <div class="collapse navbar-collapse" id="colapsado">
                 <ul class="navbar-nav mx-xs-auto ml-md-3">
                     <li class="nav-item">
@@ -61,20 +55,20 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
-                            <a class="dropdown-item" href="#">Campos</a>
                             <a class="dropdown-item" href="../participacion/">Participación</a>
-                            <a class="dropdown-item" href="#">Cuenta</a>
+                            <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
                             <a class="dropdown-item" href="../compras/">Compras</a>
                             <a class="dropdown-item" href="../tienda/">Tienda</a>
-                            <a class="dropdown-item" href="#">Gestión de ventas</a>
-                            <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
+                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
                         </div>
                     </li>
                 </ul>
-    
+
             </div>
         </div>
     </nav>
+
 
     <div class="container-expand">
         <div class="row">
@@ -123,10 +117,18 @@
             </div>
         </div>
     </div>
+
+        <!-- Footer -->
+    <footer>
+        <div class="jumbotron text-center head_foot">
+            <p>Aprendizaje Online para todo el Ecuador</p>
+            AprendEC 2020 <i class="far fa-copyright"></i>
+        </div>
+    </footer>
+
     
     <script>
         $(function () {
-            $('#barraNavegacion').load('navbar.html');
             $('#btnCrear').click(function(){
                 window.open('editorForo.html','_self')
             });
