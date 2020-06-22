@@ -198,7 +198,7 @@ function borrar(elemento) {
     request.send();
 }
 
-function put(nom,ced,dir1,dir2,canton,prov,codPost,telef){
+function post(nom,ced,dir1,dir2,canton,prov,codPost,telef){
 	var objeto= new Object();
 	objeto.responsable=nom;
 	objeto.cedula=ced;
@@ -213,7 +213,7 @@ function put(nom,ced,dir1,dir2,canton,prov,codPost,telef){
 	var request = new XMLHttpRequest();
     var link = 'http://localhost:8181/me/compras/direcciones/';
 	var mimeType = "text/plain";  
-	xmlHttp.open('PUT', link, true);  // true : asynchrone false: synchrone
-	xmlHttp.setRequestHeader('Content-Type', mimeType);  
-	xmlHttp.send(jsonPut); 
+	request.open('PUT', link, true);  // true : asynchrone false: synchrone
+	request.setRequestHeader('Content-Type', mimeType);  
+	request.send(jsonPut); 
 }
