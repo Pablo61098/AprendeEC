@@ -11,6 +11,9 @@ $(document).on("click", "#aceptar_eliminar_direccion", function() {
     if (!elemento) {
         alert("El elemento seleccionado ya no existe.");
     } else {
+        var id_element = elemento.getAttribute('id');
+        var len_id = id_element.length;
+        borrar(id_element.substring(9, len_id));
         padre = elemento.parentNode;
         padre.removeChild(elemento);
     }

@@ -2,9 +2,7 @@ package com.example.aprendeEC.Controlador;
 
 
 import com.example.aprendeEC.Modelo.Direccion;
-import com.example.aprendeEC.Modelo.Usuario;
 import com.example.aprendeEC.Repositorio.DireccionRepositorio;
-import com.example.aprendeEC.Repositorio.UsuarioRepositorio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
