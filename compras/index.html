@@ -16,7 +16,7 @@
     <script src="../resources/javascript/form_validation.js"></script>
     <script src="../resources/javascript/quitar_producto_carrito.js"></script>
     <script src="../resources/javascript/eliminar_direccion.js"></script>
-    
+    <script type="text/javascript" src="../resources/javascript/crud_rest_direcciones.js"></script>
     <script src="../resources/javascript/activar_pago.js"></script>
 </head>
 
@@ -337,7 +337,7 @@
                                 <div class="invalid-feedback">Por favor rellene el campo.</div>
                             </div>
                             <div class="form-group float-right">
-                                <input type="submit" value="Aceptar" class="btn btn-primary">
+                                <input type="submit" value="Aceptar" class="btn btn-primary" onclick="put(document.getElementById('nombres').value,document.getElementById('cedula').value,document.getElementById('linea1').value,document.getElementById('linea2').value,document.getElementById('canton').value,document.getElementById('provincia').value,document.getElementById('codigo').value,document.getElementById('telefono').value)">
                             </div>
                         </form>
                     </div>

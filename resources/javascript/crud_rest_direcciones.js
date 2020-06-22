@@ -197,3 +197,23 @@ function borrar(elemento) {
     }
     request.send();
 }
+
+function put(nom,ced,dir1,dir2,canton,prov,codPost,telef){
+	var objeto= new Object();
+	objeto.responsable=nom;
+	objeto.cedula=ced;
+	objeto.direccion=dir1;
+	objeto.direccionDos=dir2;
+	objeto.Ciudad=canton;
+	objeto.provincia=prov;
+	objeto.codigoPostal=codPost;
+	objeto.telefono=telef;
+	var jsonPut= JSON.stringify(objeto);
+	window.alert(jsonPut);
+	var request = new XMLHttpRequest();
+    var link = 'http://localhost:8181/me/compras/direcciones/';
+	var mimeType = "text/plain";  
+	xmlHttp.open('PUT', link, true);  // true : asynchrone false: synchrone
+	xmlHttp.setRequestHeader('Content-Type', mimeType);  
+	xmlHttp.send(jsonPut); 
+}
