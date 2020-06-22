@@ -9,8 +9,9 @@ public class Direccion {
 
 
     @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
     @Column (name="direccion_id")
-    private String id;
+    private int id;
     @Column (name="direccion_responsable")
     private String responsable;
     @Column (name="direccion_cedula")
@@ -23,7 +24,7 @@ public class Direccion {
     private String Ciudad;
     @Column (name="direccion_provincia")
     private String provincia;
-    @Column (name="direccion_Postal")
+    @Column (name="direccion_codigoPostal")
     private String codigoPostal;
     @Column (name="direccion_telefono")
     private String telefono;
@@ -90,5 +91,13 @@ public class Direccion {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

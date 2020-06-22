@@ -16,7 +16,7 @@
     <script src="../resources/javascript/form_validation.js"></script>
     <script src="../resources/javascript/quitar_producto_carrito.js"></script>
     <script src="../resources/javascript/eliminar_direccion.js"></script>
-    <script src="../resources/javascript/crud_rest_direcciones.js"></script>
+    
     <script src="../resources/javascript/activar_pago.js"></script>
 </head>
 
@@ -82,7 +82,7 @@
                                 class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Carrito</a></li>
                     <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#historial"><i
                                 class="far fa-file-alt"></i>&nbsp;&nbsp;Historial de Compras</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#direcciones"><i
+                    <li class="nav-item"><a id="btn-direcciones" class="nav-link" data-toggle="pill" href="#direcciones"><i
                                 class="fas fa-map-marked-alt"></i>&nbsp;&nbsp;Direcciones</a></li>
                     <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#pago"><i
                                 class="far fa-credit-card"></i>&nbsp;&nbsp;Método de Pago</a></li>
@@ -97,7 +97,7 @@
                         <h2>Carrito</h2>
                         <br>
                         <!-- Scroll de Carrito -->
-                        <div class="container border pre-scrollable pt-4 pb-4">
+                        <div class="container border pre-scrollable pt-4 pb-4" >
                             <!-- Instancia de Carrito 1 -->
                             <div id="producto1">
                                 <div class="row ml-2 mr-2">
@@ -211,9 +211,9 @@
                         <h2>Direcciones</h2>
                         <br>
                         <!-- Scroll de Direcciones -->
-                        <div class="container border pre-scrollable pt-4 pb-4">
+                        <div class="container border pre-scrollable pt-4 pb-4" id="contenedor-direcciones">
                             <!-- Instancia de Dirección 1 -->
-                            <div id="direccion1">
+                            <!-- <div id="direccion1">
                                 <div class="row ml-2 mr-2">
                                     <div class="col-xl-1 align-self-sm-center">
                                         <input type="checkbox" id="check_dir1" name="check_dir" value="check_dir1" disabled>
@@ -230,10 +230,10 @@
                                     </div>
                                 </div>
                                 <hr>
-                            </div>
+                            </div> -->
                             <!-- Fin Instancia de Dirección 1 -->
                             <!-- Instancia de Dirección 2 -->
-                            <div id="direccion2">
+                            <!-- <div id="direccion2">
                                 <div class="row ml-2 mr-2">
                                     <div class="col-xl-1 align-self-sm-center">
                                         <input type="checkbox" id="check_dir2" name="check_dir" value="check_dir2" checked disabled>
@@ -250,14 +250,14 @@
                                     </div>
                                 </div>
                                 <hr>
-                            </div>
+                            </div> -->
                             <!-- Fin Instancia de Dirección 2 -->
                             <!-- Instancia de Direcciones Vacía -->
-                            <div class="vacio">
+                            <!-- <div class="vacio">
                                 <p><i class="fas fa-ban icono_vacio"></i></p>
                                 <h5>No tiene direcciones de envío agregadas.</h5>
                                 <hr>
-                            </div>
+                            </div> -->
                             <!-- Fin Instancia de Direcciones Vacía -->
                         </div>
                         <br>
@@ -544,6 +544,8 @@
             </div>
         </div>
     </div>
+    <script src="../resources/javascript/crud_rest_direcciones.js"></script>
+
 </body>
 
 </html>

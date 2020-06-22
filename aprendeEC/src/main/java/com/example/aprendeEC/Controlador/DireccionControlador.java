@@ -34,8 +34,8 @@ public class DireccionControlador {
     }
 
     @GetMapping ("/{id}")
-    public Direccion getById(@PathVariable(value="id") String id){
-        return direccionRepo.findById(String.valueOf(id))
+    public Direccion getById(@PathVariable(value="id") Integer id){
+        return direccionRepo.findById(id)
                 .orElseGet(() -> {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Direccion no encontrada");
                 });
@@ -53,9 +53,9 @@ public class DireccionControlador {
 
 
     @DeleteMapping("/{id}")
-    public void borrar (@PathVariable(value="id") String id){
-        if(direccionRepo.findById(String.valueOf(id)).isPresent()){
-            direccionRepo.delete( direccionRepo.findById( String.valueOf(id)).get());
+    public void borrar (@PathVariable(value="id") int id){
+        if(direccionRepo.findById(id).isPresent()){
+            direccionRepo.delete( direccionRepo.findById(id).get());
         }else{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Persona no encontrada");
         }
