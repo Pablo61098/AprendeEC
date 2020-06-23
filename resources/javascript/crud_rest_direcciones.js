@@ -198,22 +198,27 @@ function borrar(elemento) {
     request.send();
 }
 
-function post(nom,ced,dir1,dir2,canton,prov,codPost,telef){
-	var objeto= new Object();
-	objeto.responsable=nom;
-	objeto.cedula=ced;
-	objeto.direccion=dir1;
-	objeto.direccionDos=dir2;
-	objeto.Ciudad=canton;
-	objeto.provincia=prov;
-	objeto.codigoPostal=codPost;
-	objeto.telefono=telef;
-	var jsonPut= JSON.stringify(objeto);
-	window.alert(jsonPut);
-	var request = new XMLHttpRequest();
-    var link = 'http://localhost:8181/me/compras/direcciones/';
-	var mimeType = "text/plain";  
-	request.open('PUT', link, true);  // true : asynchrone false: synchrone
-	request.setRequestHeader('Content-Type', mimeType);  
-	request.send(jsonPut); 
+function post(nom, ced, dir1, dir2, canton, prov, codPost, telef) {
+    let objeto = new Object();
+    objeto.responsable = nom;
+    objeto.cedula = ced;
+    objeto.direccion = dir1;
+    objeto.direccionDos = dir2;
+    objeto.ciudad = canton;
+    objeto.provincia = prov;
+    objeto.codigoPostal = codPost;
+    objeto.telefono = telef;
+    let jsonPut = JSON.stringify(objeto);
+    let request = new XMLHttpRequest();
+    let link = 'http://localhost:8181/me/compras/direcciones/';
+    request.open('POST', link, true); // true : asynchrone false: synchrone
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            alert("El elemento fue ingresado.");
+        } else {
+            alert("El elemento no fue ingresado.");
+        }
+    }
+    request.setRequestHeader("Content-type", "application/json");
+    request.send(jsonPut);
 }

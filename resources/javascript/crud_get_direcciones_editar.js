@@ -1,27 +1,29 @@
-function processUser()
-{
+var id_direcc = 0;
+
+function processUser() {
     let parameters = location.search.substring(1).split("&");
     id = parameters[0].split("=")[1];
+    id_direcc = id;
     console.log(id);
-    
+
     let nombres = document.getElementById("nombres");
     let cedula = document.getElementById("cedula");
     let linea1 = document.getElementById("linea1");
     let linea2 = document.getElementById("linea2");
-    let ciudad = document.getElementById("ciudad");
+    let ciudad = document.getElementById("canton");
     let provincia = document.getElementById("provincia");
     let telefono = document.getElementById("telefono");
     let codigo = document.getElementById("codigo");
 
 
     let request = new XMLHttpRequest();
-    request.open('GET', 'http://localhost:8181/me/compras/direcciones/'+id ,  true);
+    request.open('GET', 'http://localhost:8181/me/compras/direcciones/' + id, true);
 
-    request.onload = function(){
+    request.onload = function() {
         console.log("hola");
         let data = JSON.parse(this.response);
         console.log(data);
-        if(request.status >= 200 && request.status < 400){
+        if (request.status >= 200 && request.status < 400) {
             nombres.setAttribute("value", data.responsable);
             cedula.setAttribute("value", data.cedula);
             linea1.setAttribute("value", data.direccion);
@@ -31,21 +33,48 @@ function processUser()
             telefono.setAttribute("value", data.telefono);
             codigo.setAttribute("value", data.codigoPostal);
 
-        }else{
-            
+        } else {
+
         }
     }
 
     request.send();
-    
+
     // nombres.setAttribute();
 
-//   var temp = parameters[0].split("=");
-//   l = unescape(temp[1]);
-//   temp = parameters[1].split("=");
-//   p = unescape(temp[1]);
-//   document.getElementById("log").innerHTML = l;
-//   document.getElementById("pass").innerHTML = p;
+    //   var temp = parameters[0].split("=");
+    //   l = unescape(temp[1]);
+    //   temp = parameters[1].split("=");
+    //   p = unescape(temp[1]);
+    //   document.getElementById("log").innerHTML = l;
+    //   document.getElementById("pass").innerHTML = p;
+}
+
+function put(nom, ced, dir1, dir2, canton, prov, codPost, telef) {
+    let objeto = new Object();
+    objeto.id = id_direcc;
+    objeto.responsable = nom;
+    objeto.cedula = ced;
+    objeto.direccion = dir1;
+    objeto.direccionDos = dir2;
+    objeto.ciudad = canton;
+    objeto.provincia = prov;
+    objeto.codigoPostal = codPost;
+    objeto.telefono = telef;
+    let jsonPut = JSON.stringify(objeto);
+    let request = new XMLHttpRequest();
+    let link = 'http://localhost:8181/me/compras/direcciones/';
+    console.log("hola1");
+    request.open('PUT', link, true); // true : asynchrone false: synchrone
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            alert("El elemento fue editado.");
+        } else {
+            alert("El elemento no fue editado.");
+        }
+    }
+    request.setRequestHeader("Content-type", "application/json");
+    request.send(jsonPut);
 }
 
 processUser();

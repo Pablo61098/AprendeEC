@@ -14,7 +14,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="../resources/javascript/tooltip.js"></script>
     <script src="../resources/javascript/form_validation.js"></script>
-    <script src="../resources/javascript/crud_rest_direcciones.js"></script>
 </head>
 
 <body>
@@ -75,7 +74,7 @@
         <a href="../compras/"><button type="button" class="btn btn-link float-right">Volver</button></a>
         <h2>Editar Dirección</h2>
         <br>
-        <form class="needs-validation" novalidate>
+        <form action="../compras/" onsubmit="put(document.getElementById('nombres').value,document.getElementById('cedula').value,document.getElementById('linea1').value,document.getElementById('linea2').value,document.getElementById('canton').value,document.getElementById('provincia').value,document.getElementById('codigo').value,document.getElementById('telefono').value)">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-user-alt"></i></span>
@@ -111,7 +110,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-archway"></i></span>
                 </div>
-                <input type="text" id="ciudad" name="ciudad" class="form-control" required placeholder="Cantón" data-toggle="tooltip" title="Cantón" value="">
+                <input type="text" id="canton" name="ciudad" class="form-control" required placeholder="Cantón" data-toggle="tooltip" title="Cantón" value="">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo.</div>
             </div>
@@ -143,7 +142,6 @@
             <div class="form-group text-right">
                 <input type="submit" value="Aceptar" class="btn btn-primary">
             </div>
-
         </form>
     </div>
     <!-- Footer -->
@@ -154,7 +152,6 @@
             AprendEC 2020 <i class="far fa-copyright"></i>
         </div>
     </footer>
-
     <script src="../resources/javascript/crud_get_direcciones_editar.js"></script>
 </body>
 

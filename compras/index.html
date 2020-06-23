@@ -16,7 +16,6 @@
     <script src="../resources/javascript/form_validation.js"></script>
     <script src="../resources/javascript/quitar_producto_carrito.js"></script>
     <script src="../resources/javascript/eliminar_direccion.js"></script>
-    <script type="text/javascript" src="../resources/javascript/crud_rest_direcciones.js"></script>
     <script src="../resources/javascript/activar_pago.js"></script>
 </head>
 
@@ -97,7 +96,7 @@
                         <h2>Carrito</h2>
                         <br>
                         <!-- Scroll de Carrito -->
-                        <div class="container border pre-scrollable pt-4 pb-4" >
+                        <div class="container border pre-scrollable pt-4 pb-4">
                             <!-- Instancia de Carrito 1 -->
                             <div id="producto1">
                                 <div class="row ml-2 mr-2">
@@ -272,7 +271,7 @@
                         <br>
                         <h2>Dirección</h2>
                         <br>
-                        <form class="needs-validation" novalidate>
+                        <form onsubmit="post(document.getElementById('nombres').value,document.getElementById('cedula').value,document.getElementById('linea1').value,document.getElementById('linea2').value,document.getElementById('canton').value,document.getElementById('provincia').value,document.getElementById('codigo').value,document.getElementById('telefono').value)">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user-alt"></i></span>
@@ -337,7 +336,7 @@
                                 <div class="invalid-feedback">Por favor rellene el campo.</div>
                             </div>
                             <div class="form-group float-right">
-                                <input type="submit" value="Aceptar" class="btn btn-primary" onclick="post(document.getElementById('nombres').value,document.getElementById('cedula').value,document.getElementById('linea1').value,document.getElementById('linea2').value,document.getElementById('canton').value,document.getElementById('provincia').value,document.getElementById('codigo').value,document.getElementById('telefono').value)">
+                                <input type="submit" value="Aceptar" class="btn btn-primary">
                             </div>
                         </form>
                     </div>
