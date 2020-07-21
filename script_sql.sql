@@ -95,10 +95,10 @@ create table metodo_pago (
     id INT NOT NULL AUTO_INCREMENT,
     username_usuario VARCHAR(20),
     titular VARCHAR(255),
-    numero VARCHAR(255),
+    token VARCHAR(255),
+    cuatro_ultimos_digitos VARCHAR(4),
     anio_expiracion INT,
     mes_expiracion INT,
-    cvv INT,
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username) 
 );
@@ -115,6 +115,7 @@ create table producto (
     descripcion VARCHAR(255),
     precio DECIMAL(19,2),
     foto BLOB,
+    stock INT,
     PRIMARY KEY (id, username_inst, id_institucion),
     FOREIGN KEY (username_inst) REFERENCES usuario_admin_inst(username),
     FOREIGN KEY (id_institucion) REFERENCES institucion(id)
