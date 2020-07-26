@@ -16,7 +16,7 @@ CREATE TABLE telefono_usuario(
     username VARCHAR(20), 
     telefono VARCHAR(15), 
     PRIMARY KEY (username, telefono), 
-    FOREIGN KEY (username) REFERENCES usuario(username) 
+    FOREIGN KEY (username) REFERENCES usuario(username)
 );
 
 create table institucion (
@@ -99,13 +99,11 @@ create table metodo_pago (
     cuatro_ultimos_digitos VARCHAR(4),
     anio_expiracion INT,
     mes_expiracion INT,
+    compania VARCHAR(255),
+    tipo VARCHAR(255),
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username) 
 );
-
-ALTER TABLE usuario 
-    ADD FOREIGN KEY (id_direccion_activa) REFERENCES direccion(id), 
-    ADD FOREIGN KEY (id_pago_activo) REFERENCES metodo_pago(id);
 
 create table producto (
     id INT NOT NULL AUTO_INCREMENT,
@@ -116,6 +114,7 @@ create table producto (
     precio DECIMAL(19,2),
     foto BLOB,
     stock INT,
+    eliminado BOOLEAN,
     PRIMARY KEY (id, username_inst, id_institucion),
     FOREIGN KEY (username_inst) REFERENCES usuario_admin_inst(username),
     FOREIGN KEY (id_institucion) REFERENCES institucion(id)
@@ -127,6 +126,7 @@ create table carrito (
     costo DECIMAL(19,2),
     fecha_hora_creacion VARCHAR(25),
     fecha_hora_pago VARCHAR(25),
+    pendiente BOOLEAN,
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
 );
@@ -137,7 +137,7 @@ create table carrito_producto (
     cantidad INT,
     PRIMARY KEY (id_carrito, id_producto),
     FOREIGN KEY (id_carrito) REFERENCES carrito(id),
-    FOREIGN KEY (id_producto) REFERENCES producto(id)
+    FOREIGN KEY (id_producto) REFERENCES producto(id) 
 );
 
 create table categoria (
@@ -172,7 +172,7 @@ create table categoria_post (
     id_post INT,
     PRIMARY KEY (id_categoria, id_post),
     FOREIGN KEY (id_categoria) REFERENCES categoria(id),
-    FOREIGN KEY (id_post) REFERENCES post(id)
+    FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE
 );
 
 create table categoria_foro (
@@ -180,7 +180,7 @@ create table categoria_foro (
     id_foro INT,
     PRIMARY KEY (id_categoria, id_foro),
     FOREIGN KEY (id_categoria) REFERENCES categoria(id),
-    FOREIGN KEY (id_foro) REFERENCES foro(id)
+    FOREIGN KEY (id_foro) REFERENCES foro(id) ON DELETE CASCADE
 );
 
 create table usuario_post_comentario (
@@ -190,7 +190,7 @@ create table usuario_post_comentario (
     texto TEXT,
     fecha_hora VARCHAR(25),
     PRIMARY KEY (id, id_post, username_usuario),
-    FOREIGN KEY (id_post) REFERENCES post(id),
+    FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE,
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
 );
 
@@ -201,7 +201,7 @@ create table usuario_foro_comentario (
     texto TEXT,
     fecha_hora VARCHAR(25),
     PRIMARY KEY (id, id_foro, username_usuario),
-    FOREIGN KEY (id_foro) REFERENCES foro(id),
+    FOREIGN KEY (id_foro) REFERENCES foro(id) ON DELETE CASCADE,
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
 );
 
@@ -210,7 +210,7 @@ create table usuario_post_calificacion (
     id_post INT,
     calificacion INT,
     PRIMARY KEY (id_post, username_usuario),
-    FOREIGN KEY (id_post) REFERENCES post(id),
+    FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE,
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
 );
 
@@ -221,7 +221,7 @@ create table usuario_foro_respuesta (
     respuesta BLOB,
     fecha_hora VARCHAR(25),
     PRIMARY KEY (id, id_foro, username_usuario),
-    FOREIGN KEY (id_foro) REFERENCES foro(id),
+    FOREIGN KEY (id_foro) REFERENCES foro(id) ON DELETE CASCADE,
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
 );
 
@@ -230,7 +230,7 @@ create table usuario_respuesta_calificacion (
     id_respuesta INT,
     calificacion INT,
     PRIMARY KEY (id_respuesta, username_usuario),
-    FOREIGN KEY (id_respuesta) REFERENCES usuario_foro_respuesta(id),
+    FOREIGN KEY (id_respuesta) REFERENCES usuario_foro_respuesta(id) ON DELETE CASCADE,
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
 );
 
