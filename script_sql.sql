@@ -62,7 +62,7 @@ create table solicitud (
     direccion VARCHAR(255),
     pagina_web VARCHAR(255),
     numero_cuenta_bancaria VARCHAR(255),
-    certificado_caces BLOB,
+    certificado_caces VARCHAR(255),
     nombres_administrador VARCHAR(255),
     apellidos_administrador VARCHAR(255),
     cedula_administrador VARCHAR(10),

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">    
+        
+        <meta name="viewport" content="width=device-width, initial-scale-1">
+        
+        <link rel="stylesheet" href="../../css/styles.css">
+        <link rel="stylesheet" href="../../css/stylesAdminSolicitudes.css">
+
+    </head>
+    <body>   
+        
+        <% for(let i=0; i<results.length; i++){ %>
+
+            <div class="row justify-content-center text-center solicitud">
+                <div class="row col-8 solicitud">
+                    <div class=" row col-12 idSolicitud">
+                        <div class="col-12 col-md-4">
+                            Solicitud: 
+                        </div>
+                        <div class="col-12 col-md-8" >
+                            <span class="id"><%= results[i].id %></span>
+                        </div>
+                        <div class="col-12">
+                            Pendiente
+                        </div>
+                    </div>
+                    <div class=" row col-12 title">
+                        <div class="col-12 ">
+                            Info Instiucion
+                        </div>
+                    </div>
+                    <div class="row col-12 infoInstitucion align-items-center">
+                        <div class="col-12 col-md-4">
+                            Nombre Institucion: 
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].nombre_institucion %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Ciudad:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].ciudad %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Direccion:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].nombre_institucion %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Pagina Web:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].pagina_web %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Numero Cuenta Bancaria:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].numero_cuenta_bancaria %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Dominio Correo Institucion:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].dominio_correo_institucion %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Certidicado CACES:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].certificado_caces %>
+                        </div>
+                    </div>
+    
+                    <div class=" row col-12">
+                        <div class="col-12 title">
+                            Info Admiinistrador
+                        </div>
+                    </div>
+    
+                    <div class="row col-12 infoAdministrador align-items-center">
+                        <div class="col-12 col-md-4">
+                            Nombres Administrador:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].nombres_administrador %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Apellidos Administrador:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].apellidos_administrador %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Cedula Administrador:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].cedula_administrador %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Cargo Administrador:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].cargo_administrador %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Correo Administrador:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].correo_administrador %>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            Dominio de correo institucional:
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <%= results[i].dominio_correo_institucion %>
+                        </div>
+                    </div>
+                    <div class="row col-12 justify-content-center">
+                        <div class="col-3">
+                            <button class="btnAceptar">Aceptar</button>
+                        </div>
+                        <div class="col-3">
+                            <button class="btnRechazar">Rechazar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+        
+        <script src="../../javascript/adminSolicitudes.js"></script>
+    </body>
+
+</html>
+
+
