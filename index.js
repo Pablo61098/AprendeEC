@@ -1,11 +1,11 @@
-require('dotenv').config();
-
 const express = require("express"),
       app = express(),
       bodyParser = require("body-parser"),
-      fileUpload = require('express-fileupload')
+      fileUpload = require('express-fileupload'),
+      sessions = require("client-sessions")
     //   flash = require("connect-flash")
       ;
+
 
 const sesionRoutes = require("./routes/sesion");
 const adminRoutes = require("./routes/admin");
@@ -15,6 +15,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(fileUpload());
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(sessions({
+    cookieName: "session",
+    secret: process.env.SESSION_SECRET,
+    duration: 0.5 * 60 * 1000,
+}));
+
 // app.use(flash());
 
 // app.use(function(req, res, next){
