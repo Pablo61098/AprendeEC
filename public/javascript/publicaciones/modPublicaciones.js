@@ -18,7 +18,10 @@ $(function() {
         accion=1;
     });
     $('#btnVer').click(function() {
-        window.open('/viewPost', '_blanck');
+        let username='luchoCode';
+        let id = checked;
+        //window.open('/viewPost/'+id+'/'+username, '_blanck');
+        verPost(id,username);
     });
     $('#btnEliminar').click(function(){
         $('#exampleModalLabel').text('Eliminar Post');
@@ -38,6 +41,18 @@ $(function() {
     });
 
 });
+
+//Llamada a la vista del post
+function verPost(id,username){
+    let httpReq = new XMLHttpRequest();
+    httpReq.open('GET','/viewPost/'+id+'/'+username,true);
+    httpReq.onreadystatechange = function(){
+        if(httpReq.readyState == 4 && httpReq.status==200){
+            console.log(httpReq.responseText);
+        }
+    }
+    httpReq.send(null);
+}
 
 //Funcion para eliminar un post
 function eliminarPost(){
@@ -94,7 +109,7 @@ function enabledButtons(){
 //Obtenemos los posts del usuario
 function getPosts(){
     let ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.open("GET", "/getPost", true);
+    ajaxRequest.open("GET", "/getPost/luchoCode", true);
     ajaxRequest.onreadystatechange = function(){
         if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
             listaPost=categorias=JSON.parse(ajaxRequest.responseText);

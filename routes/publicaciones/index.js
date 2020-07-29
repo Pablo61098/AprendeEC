@@ -30,6 +30,8 @@ var router = express.Router();
 // .catch((e) => console.log(e))
 // .finally(() => console.log(""))
 
+
+
 var mysql = require('mysql')
 const conn = mysql.createConnection({
 	host: 'localhost',
@@ -122,8 +124,8 @@ router.get('/categorias',function(req,res){
 
 
 //Funcion para obtener los posts
-router.get('/getPost',function(req,res){
-	let query = 'Select * from post';
+router.get('/getPost/:username',function(req,res){
+	let query = "Select * from post where username_usuario='"+req.params.username+"'";
 	conn.query(query,(err,respuesta)=>{
 		if(err){
 			console.error(err);
@@ -134,7 +136,7 @@ router.get('/getPost',function(req,res){
 	});
 });
 
-//Servicio para cambiar la alterar la publicacion o foro
+//Servicio para alterar la publicacion o foro
 router.put('/publicarPub/:username/:id/:tabla',function(req,res){
 	let query = 'UPDATE ' +req.params.tabla + ' set publicado=true'+' WHERE id='+req.params.id+" AND username_usuario='"+req.params.username+"'";
 	console.log(query);
@@ -148,7 +150,7 @@ router.put('/publicarPub/:username/:id/:tabla',function(req,res){
 	});
 });
 
-//Servicio para eliminar un post o fore 
+//Servicio para eliminar un post o foro
 router.delete('/deletePub/:username/:id/:tabla',function(req,res){
 	let query = 'DELETE from '+req.params.tabla + ' WHERE id='+req.params.id+" AND username_usuario='"+req.params.username+"'";
 	conn.query(query,(err,respuesta)=>{
@@ -194,8 +196,32 @@ router.get('/editor',function(req,res){
 	res.render('./publicaciones_views/editor')
 });
 
-router.get('/viewPost/:id_post',function(req,res){
-	res.render('./publicaciones_views/viewPost')
+router.get('/viewPost/:id_post/:username',function(req,res){
+	let where = "";
+	console.log(req.params.username);
+	//Verifico que el usuario sea diferente de -1, si lo es, quiere decir que es una petición desde la página informativa
+	if(req.params.username != '-1'){
+		where = "AND username_usuario='"+req.params.username+"'";
+	}else{
+		where = "AND publicado=true";
+	}
+	//Obtengo el post que necesito para mostrar en la vista
+	let query = 'Select post.id, post.username_usuario, post.valoracion, post.titulo, post.fecha_hora, '+
+	'categoria.nombre, post.contenido, post.publicado from post INNER JOIN categoria_post '+
+	'INNER JOIN categoria ON post.id = '+req.params.id_post+' AND categoria_post.id_categoria = categoria.id '+
+	' '+where;  
+	console.log(query);
+	conn.query(query, (err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		let respuesta_view = JSON.stringify(respuesta);
+		console.log(respuesta_view);
+		res.render('./publicaciones_views/viewPost',{respuesta_view: respuesta_view});
+	});
+	
 });
 
 router.get('/informativo',function(req,res){
