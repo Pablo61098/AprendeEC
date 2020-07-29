@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <link rel="stylesheet" href="../resources/css/styles.css">
+    <link rel="stylesheet" href="../../.././css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -18,7 +18,7 @@
     <!-- Header -->
     <header>
         <div class="jumbotron head_foot">
-            <img src="../resources/images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <img src="../../.././images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
             <h1><b>@prendEC</b></h1>
         </div>
     </header>
@@ -71,12 +71,12 @@
         <br><br>
         <h2>Editar Dirección</h2>
         <br>
-        <form class="needs-validation" novalidate>
+        <form class="needs-validation" novalidate action="/compras/direcciones/<%= results[0].id %>" method="POST">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-user-alt"></i></span>
                 </div>
-                <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres Completos" data-toggle="tooltip" title="Nombres Completos" required value="Lionel Andrés Messi Dután">
+                <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres Completos" data-toggle="tooltip" title="Nombres Completos" required value="<%= results[0].nombre_encargado %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo.</div>
             </div>
@@ -84,7 +84,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                 </div>
-                <input type="number" id="cedula" name="cedula" class="form-control" required placeholder="Cédula" pattern="[0-9]{10}" data-toggle="tooltip" title="Cédula" value="7788993156">
+                <input type="number" id="cedula" name="cedula" class="form-control" required placeholder="Cédula" pattern="[0-9]{10}" data-toggle="tooltip" title="Cédula" value="<%= results[0].cedula_encargado %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo. Formato: Cédula Ecuatoriana de 10 Dígitos.
                 </div>
@@ -93,7 +93,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-map"></i></span>
                 </div>
-                <input type="text" id="linea1" name="linea1" class="form-control" required placeholder="Línea de Dirección 1" data-toggle="tooltip" title="Línea de Dirección 1" value="Calle del Chorro y Calle Vieja">
+                <input type="text" id="linea1" name="linea1" class="form-control" required placeholder="Línea de Dirección 1" data-toggle="tooltip" title="Línea de Dirección 1" value="<%= results[0].linea_direccion_1 %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo.</div>
             </div>
@@ -101,13 +101,13 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-map-marked"></i></span>
                 </div>
-                <input type="text" id="linea2" name="linea2" class="form-control" placeholder="Línea de Dirección 2 (Opcional)" data-toggle="tooltip" title="Línea de Dirección 2" value="">
+                <input type="text" id="linea2" name="linea2" class="form-control" placeholder="Línea de Dirección 2 (Opcional)" data-toggle="tooltip" title="Línea de Dirección 2" value="<%= results[0].linea_direccion_2 %>">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-archway"></i></span>
                 </div>
-                <input type="text" id="canton" name="canton" class="form-control" required placeholder="Cantón" data-toggle="tooltip" title="Cantón" value="Cuenca">
+                <input type="text" id="canton" name="canton" class="form-control" required placeholder="Cantón" data-toggle="tooltip" title="Cantón" value="<%= results[0].ciudad %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo.</div>
             </div>
@@ -115,7 +115,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
                 </div>
-                <input type="text" id="provincia" name="provincia" class="form-control" required placeholder="Provincia" data-toggle="tooltip" title="Provincia" value="Azuay">
+                <input type="text" id="provincia" name="provincia" class="form-control" required placeholder="Provincia" data-toggle="tooltip" title="Provincia" value="<%= results[0].provincia %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo.</div>
             </div>
@@ -123,7 +123,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-atlas"></i></span>
                 </div>
-                <input type="number" id="codigo" name="codigo" class="form-control" required pattern="[0-9]{6}" placeholder="Código Postal" data-toggle="tooltip" title="Código Postal" value="010105">
+                <input type="number" id="codigo" name="codigo" class="form-control" required pattern="[0-9]{6}" placeholder="Código Postal" data-toggle="tooltip" title="Código Postal" value="<%= results[0].codigo_postal %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo. Formato: Código Postal Ecuatoriano de 6 Dígitos.
                 </div>
@@ -132,7 +132,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                 </div>
-                <input type="tel" id="telefono" name="telefono" class="form-control" class="form-control" required placeholder="Teléfono" data-toggle="tooltip" title="Teléfono" value="0949394557">
+                <input type="tel" id="telefono" name="telefono" class="form-control" class="form-control" required placeholder="Teléfono" data-toggle="tooltip" title="Teléfono" value="<%= results[0].telefono %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo.</div>
             </div>
@@ -151,8 +151,8 @@
             AprendEC 2020 <i class="far fa-copyright"></i>
         </div>
     </footer>
-    <script src="../resources/javascript/tooltip.js"></script>
-    <script src="../resources/javascript/form_validation.js"></script>
+    <script src="../../.././javascript/tooltip.js"></script>
+    <script src="../../.././javascript/form_validation.js"></script>
 </body>
 
 </html>
