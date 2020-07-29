@@ -1,0 +1,86 @@
+    <%- include('hnf/header.ejs') %> 
+    <%- include('hnf/navbar.ejs') %>
+
+    <div class="container-expand">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="container">
+                    <p>Aqui se va a encontrar el post con un formato determinado</p>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p><strong>Tags:</strong> #tagsHere</p>
+                        </div>
+                        <div class="col-sm-6" >
+                            <button id="btnStar1" class="btn"><i class="fas fa-star "></i></button>
+                            <button id="btnStar2" class="btn"><i class="fas fa-star "></i></button>
+                            <button id="btnStar3" class="btn"><i class="fas fa-star "></i></button>
+                            <button id="btnStar4" class="btn"><i class="fas fa-star "></i></button>
+                            <button id="btnStar5" class="btn"><i class="fas fa-star "></i></button>
+                        </div>
+                    </div>
+                    <hr>
+                    <!--Aquí va la parte en donde el usuario puede comentar-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <img src="images/default-user.jpeg" width="60px" height="60px">
+                            </div>
+                            <div class="col-sm-11">
+                                <div class="container">
+                                    <form style="display: flex; margin-right: 20px;margin-left: 20px">
+                                        <input type="text" style="flex: 1" placeholder="Añade un comentario">
+                                        <button id="btnEnviar" type="button" class="btn ml-3 btn-outline-primary">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--***************************************************-->
+                    <hr>
+                    <h3>Comentarios</h3>
+                    <!--Contenedor dinámico-->
+                    <div class="container mt-4">
+                        <div class="row">
+                            <div class="col-sm-1 text-right">
+                                <img src="images/default-user.jpeg" width="60px" height="60px">
+                            </div>
+                            <div class="col-sm-11 ">
+                                <h6><strong>Crack666</strong></h6>
+                                <p>Esto debe ser dinámico. Uno por cada comentario se debe crear en el html.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <!--FIn de contenedor dinámico-->
+                    <div class="container mt-4">
+                        <div class="row">
+                            <div class="col-sm-1 text-right">
+                                <img src="images/default-user.jpeg" width="60px" height="60px">
+                            </div>
+                            <div class="col-sm-11 ">
+                                <h6><strong>Crack999</strong></h6>
+                                <p>Esto debe ser dinámico. Uno por cada comentario se debe crear en el html.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('hnf/footer.ejs') %>
+
+    <!--Espacio para los scripts-->
+    <script type="text/javascript" src="./javascript/publicaciones/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="./javascript/publicaciones/viewPost.js">
+        
+    </script>
+</body>
+
+</html>

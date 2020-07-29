@@ -1,0 +1,68 @@
+
+    <%- include('hnf/header.ejs') %> 
+    <%- include('hnf/navbar.ejs') %> 
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id=contenidoModel>
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" id=btnYesPublicar>Guardar cambios</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-expand">
+        <div class="row">
+            <div class="col-sm-3">
+                <ul class="list-group">
+                    <div class="list-group list-group-flush ">
+                        <a href="#" class="list-group-item list-group-item-action active">Posts</a>
+                        <a href="/modPubForos" class="list-group-item list-group-item-action">Foros</a>
+                    </div>
+                </ul>
+                <div class="text-center mt-4">
+                    <a href="../ranking/rankingU.html" class="btn btn-warning" role="button"> RANKING </a>
+                </div>
+            </div>
+            <div class="col-sm-9 mt-4">
+                <div class="container-fluid">
+                    <div class="btn-group d-flex" role="group">
+                        <button id="btnCrear" type="button" class="btn btn-outline-primary">Crear</button>
+                        <button id="btnEditar" type="button" class="btn btn-outline-primary">Editar</button>
+                        <button id="btnEliminar" type="button" class="btn btn-outline-primary">Eliminar</button>
+                        <button id="btnVer" type="button" class="btn btn-outline-primary">Ver</button>
+                        <button id="btnPublicar" type="button" class="btn btn-outline-primary">Publicar</button>
+                    </div>
+                </div>
+                <div class="container-expand ml-4 mt-4 mr-4" id="verPosts">
+                      
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container mt-5">
+    </div>
+
+
+    <!-- Footer -->
+    <%- include('hnf/footer.ejs') %> 
+    <script type="text/javascript" src="./javascript/publicaciones/modPublicaciones.js"></script>
+</body>
+
+</html>

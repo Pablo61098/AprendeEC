@@ -8,7 +8,7 @@ CREATE TABLE usuario (
     id_direccion_activa INT,
     id_pago_activo INT,
     foto BLOB,
-    valoracion INT,
+    valoracion FLOAT,
     PRIMARY KEY (username)
 );
 
@@ -27,7 +27,7 @@ create table institucion (
     numero_cuenta_bancaria VARCHAR(255),
     dominio_correo VARCHAR(255),
     pagina_web VARCHAR(255),
-    valoracion INT,
+    valoracion FLOAT,
     PRIMARY KEY (id)
 );
 
@@ -124,8 +124,8 @@ create table carrito (
     id INT NOT NULL AUTO_INCREMENT,
     username_usuario VARCHAR(20),
     costo DECIMAL(19,2),
-    fecha_hora_creacion VARCHAR(25),
-    fecha_hora_pago VARCHAR(25),
+    fecha_hora_creacion VARCHAR(255),
+    fecha_hora_pago VARCHAR(255),
     pendiente BOOLEAN,
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
@@ -149,9 +149,10 @@ create table categoria (
 create table post (
     id INT NOT NULL AUTO_INCREMENT,
     username_usuario VARCHAR(20),
-    valoracion INT,
+    valoracion FLOAT,
     titulo VARCHAR(255),
-    fecha_hora VARCHAR(25),
+    fecha_hora VARCHAR(255),
+    publicado BOOLEAN,
     contenido BLOB,
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
@@ -161,8 +162,9 @@ create table foro (
     id INT NOT NULL AUTO_INCREMENT,
     username_usuario VARCHAR(20),
     titulo VARCHAR(255),
-    fecha_hora VARCHAR(25),
+    fecha_hora VARCHAR(255),
     contenido BLOB,
+    publicado BOOLEAN,
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
 );
@@ -188,7 +190,7 @@ create table usuario_post_comentario (
     username_usuario VARCHAR(20),
     id_post INT,
     texto TEXT,
-    fecha_hora VARCHAR(25),
+    fecha_hora VARCHAR(250),
     PRIMARY KEY (id, id_post, username_usuario),
     FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE,
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
@@ -199,7 +201,7 @@ create table usuario_foro_comentario (
     username_usuario VARCHAR(20),
     id_foro INT,
     texto TEXT,
-    fecha_hora VARCHAR(25),
+    fecha_hora VARCHAR(250),
     PRIMARY KEY (id, id_foro, username_usuario),
     FOREIGN KEY (id_foro) REFERENCES foro(id) ON DELETE CASCADE,
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
@@ -219,7 +221,7 @@ create table usuario_foro_respuesta (
     username_usuario VARCHAR(20),
     id_foro INT,
     respuesta BLOB,
-    fecha_hora VARCHAR(25),
+    fecha_hora VARCHAR(250),
     PRIMARY KEY (id, id_foro, username_usuario),
     FOREIGN KEY (id_foro) REFERENCES foro(id) ON DELETE CASCADE,
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
@@ -247,3 +249,4 @@ create table ciudad (
     PRIMARY KEY (id, id_provincia),
     FOREIGN KEY (id_provincia) REFERENCES provincia(id)
 );
+

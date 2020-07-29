@@ -18,6 +18,8 @@ app.use(express.static(__dirname + "/public"));
 
 
 app.use(sesionRoutes);
+app.use(require('./routes/publicaciones'));
+
 
 
 app.listen(process.env.PORT || 3000, process.env.IP ,function(){
