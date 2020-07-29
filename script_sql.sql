@@ -7,8 +7,9 @@ CREATE TABLE usuario (
     apellido VARCHAR(50),
     id_direccion_activa INT,
     id_pago_activo INT,
-    foto BLOB,
+    foto varchar(255),
     valoracion FLOAT,
+    confirmado boolean,
     PRIMARY KEY (username)
 );
 
