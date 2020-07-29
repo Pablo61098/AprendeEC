@@ -1,0 +1,120 @@
+    <%- include('hnf/header.ejs') %> 
+    <%- include('hnf/navbar.ejs') %>
+
+
+    <div class="container-expand">
+        <div class="row">
+            <div class="col-sm-12 mt-4">
+                <div class="container">
+                    <p>Aqui se va a encontrar el foro con un formato determinado</p>
+                </div>
+                <div class="container">
+                    <!--Aquí se tendrá que cargar los comentarios. Esto se tendra que ir creando dinámicamente-->
+                    <hr>
+                    <div class="row">
+                        <div id="username" class="col-sm-2 text-center">
+                            <p><strong>LuchoCode</strong></p>
+                        </div>
+                        <div id="comentario" class="col-sm-10">
+                            <p>Aquí irá un comentario</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div id="username" class="col-sm-2 text-center">
+                            <p><strong>CañaMan999</strong></p>
+                        </div>
+                        <div id="comentario" class="col-sm-10">
+                            <p>Aquí irá un comentario</p>
+                        </div>
+                    </div>
+                    <!--HASTA AQUÍ-->
+                </div>
+                <!--Aqui se tendrá el text area para que el usuario, en caso de estar registrado, pueda comentar.-->
+                <hr>
+                <div class="container">
+                    <form style="display: flex; margin-right: 20px;margin-left: 20px">
+                        <input type="text" style="flex: 1" placeholder="Añade un comentario">
+                        <button id="btnEnviar" type="button" class="btn ml-3 btn-outline-primary">Enviar</button>
+                    </form>
+
+                </div>
+                <!--En esta parte va las respuestas por parte de los usuario-->
+                <hr style="height:2px;border-width:0;color:gray;background-color:black">
+                <h3>Respuestas</h3>
+                <div class="container">
+
+                    <!--Esta parte también se debería crear dinámicamente con las respuestas de los usuarios-->
+                    <p>La respuesta por parte del usuario irá en esta sección. Loremjfjsdhfjsfks jhfshfjhfdsjk fds fjhfks fsh fjkds fdkj fdsjhfjdskfjkd fsd hds dhsadhas dhuashdad iua dsa su suai du dasiuhd asu dsadhai hdsa</p>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <button class="btn btn-outline-primary"><i class="fas fa-arrow-circle-up"></i></button>
+                            <button class="btn btn-outline-primary"><i class="fas fa-arrow-circle-down"></i></button>
+                        </div>
+                        <div class="col-sm-2">
+                            <p><strong>Calificación:</strong> 10 pts</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p><strong>Respondido: </strong><em id="respFecha1"></em></p>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <img src="images/default-user.jpeg" style="width: 60px; height: 60px">
+                            <p><strong>AliciaBerg</strong><br>
+                                <strong>Puntos: </strong>10
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="height:2px;border-width:0;color:gray;background-color:black">
+                <div class="container">
+
+                    <!--Esta parte también se debería crear dinámicamente con las respuestas de los usuarios-->
+                    <p>La respuesta por parte del usuario irá en esta sección. Loremjfjsdhfjsfks jhfshfjhfdsjk fds fjhfks fsh fjkds fdkj fdsjhfjdskfjkd fsd hds dhsadhas dhuashdad iua dsa su suai du dasiuhd asu dsadhai hdsa</p>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <button class="btn btn-outline-primary"><i class="fas fa-arrow-circle-up"></i></button>
+                            <button class="btn btn-outline-primary"><i class="fas fa-arrow-circle-down"></i></button>
+                        </div>
+                        <div class="col-sm-2">
+                            <p><strong>Calificación:</strong> 10 pts</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p><strong>Respondido: </strong><em id="respFecha2"></em></p>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <img src="images/default-user.jpeg" style="width: 60px; height: 60px">
+                            <p><strong>AliciaBerg</strong><br>
+                                <strong>Puntos: </strong>10
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr style="height:2px;border-width:0;color:gray;background-color:black">
+                <!--Sección para las respuestas-->
+                <h4>Responder</h4>
+                <div class="container mt-4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <textarea id="editor1"></textarea>
+                        </div>
+                        <div class="col-sm-12 text-right mt-4">
+                            <!--Aquí se debería verificar que el usuario sea uno registrado para enviar la respuesta-->
+                            <button id="btnEnviarResp" class="btn btn-outline-primary">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <%- include('hnf/footer.ejs') %> 
+
+    <!--Espacio para los scripts-->
+    <script type="text/javascript" src="./javascript/publicaciones/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="./javascript/publicaciones/viewForo.js"></script>
+</body>
+
+</html>

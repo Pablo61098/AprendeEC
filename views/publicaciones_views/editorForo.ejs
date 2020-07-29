@@ -1,0 +1,45 @@
+    <%- include('hnf/header.ejs') %> 
+    <%- include('hnf/navbar.ejs') %>
+
+    <div class="container mt-4 text-center">
+        <i class="fas fa-question-circle fa-7x"></i>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mt-4 mb-4">
+                <h1>Pregunta algo</h1>
+                <p>Recuerda ser directo...</p>
+                <h5>Título</h5>
+                <div class="container-expand ">
+                    <input id="tituloForo" type="text" size="100" placeholder="Título que describa tu problema. Sé breve.">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <textarea id="editor1"></textarea>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-right mt-4">
+                <button id="btnGuardar" type="button" class="btn btn-outline-primary">Guardar</button>
+                <button id="btnSalir" type="button" class="btn btn-outline-primary">Salir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('hnf/footer.ejs') %> 
+
+
+    <!--Scripts para el control-->
+    <script type="text/javascript" src="./javascript/publicaciones/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="./javascript/publicaciones/editorForo.js"></script>
+
+</body>
+
+</html>

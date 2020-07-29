@@ -1,0 +1,4 @@
+Insert into usuario values('luchoCode', 'Cuenca', '1234', 'luis.sotamba@ucuenca.edu.ec', 'Luis Miguel', 'Sotamba', -1, -1, null, 0) 
+Insert into categoria values (null,'Matemática'); 
+Insert into categoria values (null,'Programación');
+ 

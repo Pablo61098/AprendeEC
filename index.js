@@ -29,7 +29,9 @@ app.use(sessions({
 // });
 
 app.use(sesionRoutes);
+app.use(require('./routes/publicaciones'));
 app.use("/admin",adminRoutes);
+
 
 
 
