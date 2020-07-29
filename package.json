@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.4",
     "flash": "^1.1.0",
+    "js-big-decimal": "^1.2.3",
     "mysql": "^2.18.1"
   }
 }
