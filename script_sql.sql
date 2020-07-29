@@ -9,6 +9,7 @@ CREATE TABLE usuario (
     id_pago_activo INT,
     foto varchar(255),
     valoracion INT,
+    confirmado boolean,
     PRIMARY KEY (username)
 );
 

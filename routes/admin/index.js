@@ -14,9 +14,6 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-
-
-
 router.get("/adminSolicitudes", (req, res) => {
 
     console.log("heyyyy");

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Confirmation Information</title>
+
+    </head>
+    <body>
+        <div>
+            <label>CONFIRMATION INFORMATION</label>
+        </div>
+        <div>
+            <% if(confirmado == 1){ %>
+                <label>El usuario ha sido confirmado</label>
+            <% }else if(confirmado == -1){ %>
+                <label>El usuario ha sido rechazado</label>
+            <% }else if(confirmado == 2){ %>
+                <label>El usuario ya se habia CONFIRMADO, ninguna accion es necesaria</label>
+            <% } else if(confirmado == -2){ %>
+                <label>El usuario ya se habia RECHAZADO, ninguna accion es necesaria</label>
+            <% } %>
+        </div>
+    </body>
+</html>

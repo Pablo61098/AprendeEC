@@ -3,13 +3,13 @@
   
     <head> 
         <meta charset="UTF-8">
-        <title>Align nav bar item into center</title> 
+        <title>Register</title> 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
         <meta name="viewport" content="width=device-width, initial-scale-1">
-        <link rel="stylesheet" href="../resources/css/appRegistroUsuario.css">
+        <link rel="stylesheet" href="./css/appRegistroUsuario.css">
         
-        <link rel="stylesheet" href="../resources/css/styles.css">
+        <link rel="stylesheet" href="./css/styles.css">
 
     </head> 
     
@@ -63,21 +63,21 @@
             <h1 class="text-center header mb-5 mt-5">AprendeEC</h1>
 
             <div class="row flex-column justify-content-around formBody p-5 my-5">
-                <form action="login.html" id="formaRegistro">
+                <form action="/register" id="formaRegistro" method="POST">
                     <div class="row col-12">
                         <div class="col-12 col-sm-6">
-                            <label for="">Nombre de usuario</label>
+                            <label  for="">Nombre de usuario</label>
                         </div>
                         <div class="col-12 col-sm-6 text-center">
-                            <input type="text" required id="nombreUsuario">
+                            <input name="userName" type="text" required id="nombreUsuario">
                         </div>
                     </div>
                     <div class="row col-12">
                         <div class="col-12 col-sm-6">
-                            <label for="">Contraseña</label>
+                            <label  for="">Contraseña</label>
                         </div>
                         <div class="col-12 col-sm-6 text-center">
-                            <input type="text" required id="contrasena">
+                            <input name="contrasena" type="text" required id="contrasena">
                         </div>
                     </div>
                     <div class="row col-12">
@@ -85,26 +85,32 @@
                             <label for="">Confirmar contraseña</label>
                         </div>
                         <div class="col-12 col-sm-6 text-center">
-                            <input type="text" required id="confirmacionContrasena">
+                            <input name="contrasenaConfirm" type="text" required id="confirmacionContrasena">
                         </div>
                     </div>
                     <div class="row col-12">
                         <div class="col-12 col-sm-6">
                             <label for="">Correo Institucional</label>
                         </div>
-                        <div class="col-12 col-sm-6 text-center">
-                            <input type="text" required id="correo">
+                        <div class="row col-12 col-sm-6 text-center" id = "correoInput">
+                            <input name="correo" class= "col-sm-8 col-12"  type="text" required id="correo">
+                            <select name="correoDominio" id="opcionesDominio" class="browser-default custom-select col-sm-4 col-12">
+                                <% for(let i=0; i<instituciones.length; i++){ %>
+                                    <option><%= instituciones[i].dominio_correo %></option>
+                                <% } %>
+                            </select>
                         </div>
                     </div>
                     <div class="row col-12">
                         <div class="col-12 col-sm-6">
                             <label for="">Universidad/Instituto</label>
                         </div>
-                        <div class="col-12 col-sm-6 text-center">
-                            <select name="" id="acerca" class="browser-default custom-select">
-                                <option value="">Universidad de Cuenca</option>
-                                <option value="">Universidad del Azuay</option>
-                                <option value="">Universidad de las Americas</option>
+                        <div class="col-12 col-sm-6 text-center" >
+                            <select name="universityId" class="browser-default custom-select" id="universityNames">
+                                <option value="-1">Ninguno</option>
+                                <% for(let i=0; i<instituciones.length; i++){ %>
+                                    <option value="<%= instituciones[i].id %>"><%= instituciones[i].nombre %></option>
+                                <% } %>
                             </select>
                         </div>
                     </div>
@@ -155,11 +161,17 @@
                 </form>
             </div>
         </div>
+
+
+        
     
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
+        <script src="../../javascript/registroUsuario.js"></script>
     </body>
 
+
+
 </html>
+
