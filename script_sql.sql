@@ -5,8 +5,6 @@ CREATE TABLE usuario (
     correo VARCHAR(75),
     nombre VARCHAR(50),
     apellido VARCHAR(50),
-    id_direccion_activa INT,
-    id_pago_activo INT,
     foto varchar(255),
     valoracion FLOAT,
     confirmado boolean,
@@ -88,6 +86,7 @@ create table direccion (
     telefono VARCHAR(15), 
     linea_direccion_1 VARCHAR(255),
     linea_direccion_2 VARCHAR(255),
+    activa BOOLEAN,
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username) 
 );
@@ -102,6 +101,7 @@ create table metodo_pago (
     mes_expiracion INT,
     compania VARCHAR(255),
     tipo VARCHAR(255),
+    activo BOOLEAN,
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username) 
 );
@@ -113,7 +113,7 @@ create table producto (
     nombre VARCHAR(255),
     descripcion VARCHAR(255),
     precio DECIMAL(19,2),
-    foto BLOB,
+    foto VARCHAR(255),
     stock INT,
     eliminado BOOLEAN,
     PRIMARY KEY (id, username_inst, id_institucion),
@@ -136,6 +136,9 @@ create table carrito_producto (
     id_carrito INT,
     id_producto INT,
     cantidad INT,
+    costo_unitario DECIMAL(19,2),
+    nombre_producto VARCHAR(255),
+    nombre_institucion VARCHAR(255),
     PRIMARY KEY (id_carrito, id_producto),
     FOREIGN KEY (id_carrito) REFERENCES carrito(id),
     FOREIGN KEY (id_producto) REFERENCES producto(id) 
@@ -222,6 +225,7 @@ create table usuario_foro_respuesta (
     username_usuario VARCHAR(20),
     id_foro INT,
     respuesta BLOB,
+    valoracion INT,
     fecha_hora VARCHAR(250),
     PRIMARY KEY (id, id_foro, username_usuario),
     FOREIGN KEY (id_foro) REFERENCES foro(id) ON DELETE CASCADE,

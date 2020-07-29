@@ -1,11 +1,11 @@
 @font-face {
     font-family: headerfont;
-    src: url(../../resources/fonts/sansation_light.woff);
+    src: url(../fonts/sansation_light.woff);
 }
 
 @font-face {
     font-family: headerfont;
-    src: url(../../resources/fonts/sansation_bold.woff);
+    src: url(../fonts/sansation_bold.woff);
     font-weight: bold;
 }
 

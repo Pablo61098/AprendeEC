@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <title>Métodos de Pago</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href=".././css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="jumbotron head_foot">
+            <img src=".././images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <h1><b>@prendEC</b></h1>
+        </div>
+    </header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
+
+            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="colapsado">
+                <ul class="navbar-nav mx-xs-auto ml-md-3">
+                    <li class="nav-item">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar"
+                                name="busqueda">
+                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
+                                    class="fas fa-search"></i></button>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
+                    <li class="nav-item  mx-auto">
+                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown mx-auto">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            <i class="far fa-user"></i>
+                            <span>Nombre de Usuario</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
+                            <a class="dropdown-item" href="../participacion/">Participación</a>
+                            <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
+                            <a class="dropdown-item" href="../compras/">Compras</a>
+                            <a class="dropdown-item" href="../tienda/">Tienda</a>
+                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
+                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <!-- Cuerpo -->
+    <div class="container-fluid pt-4 pb-4">
+        <div class="row">
+            <!-- Barra Lateral -->
+            <aside class="col-sm-4 pt-4 pb-4 bg-light navbar-light rounded">
+                <ul class="nav nav-pills flex-column" role="tablist">
+                    <li class="nav-item"><a class="nav-link" href="/compras"><i
+                                class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Carrito</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/compras/historial"><i
+                                class="far fa-file-alt"></i>&nbsp;&nbsp;Historial de Compras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/compras/direcciones"><i
+                                class="fas fa-map-marked-alt"></i>&nbsp;&nbsp;Direcciones</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/compras/metodos_pago"><i
+                                class="far fa-credit-card"></i>&nbsp;&nbsp;Métodos de Pago</a></li>
+                </ul>
+            </aside>
+            <!-- Secciones de Pestañas -->
+            <div class="col-sm-8 pt-4 pb-4">
+                <section section class="container" id="pago">
+                    <!-- Gestión de Métodos de Pago Registrados -->
+                    <div class="ml-4">
+                        <h2>Métodos de Pago</h2>
+                        <br>
+                        <!-- Scroll de Métodos de Pago -->
+                        <div class="container border pre-scrollable pt-4 pb-4">
+                            <% if (results.length === 0) { %>
+                            <!-- Instancia de Método de Pago -->
+                            <!-- Instancia de Métodos de Pago Vacía -->
+                            <div class="vacio">
+                                <p><i class="fas fa-ban icono_vacio"></i></p>
+                                <h5>No tiene métodos de pago agregados.</h5>
+                                <hr>
+                            </div>
+                            <!-- Fin Instancia de Métodos de Pago Vacía -->
+                            <% } else { %>
+                            <% for (let i=0; i < results.length; i++) { %>
+                            <div id="<%= results[i].id %>">
+                                <div class="row ml-2 mr-2">
+                                    <div class="col-lg-1 align-self-sm-center">
+                                        <input type="checkbox" id="pag<%= results[i].id %>" name="pag"
+                                            id="pag<%= results[i].id %>" disabled class="estado_pago"
+                                            <%= results[i].activo ? "checked" : "" %> />
+                                    </div>
+                                    <div class="col-lg-4 align-self-sm-center">
+                                        <i class="fab fa-cc-<%= results[i].compania %> pago"></i>
+                                        <hr class="hr_br">
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <h4><%= results[i].titular %></h4>
+                                        <p><br>**********<%= results[i].cuatro_ultimos_digitos %>
+                                            <br><%= results[i].mes_expiracion %>/<%= results[i].anio_expiracion %></p>
+                                        <p>Tipo: <%= results[i].tipo %></p>
+                                    </div>
+                                    <div class="col-lg-3 align-self-sm-end btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-link boton_activar_pago"
+                                            data-id="pag<%= results[i].id %>" data-info="<%= results[i].id %>"
+                                            <%= results[i].activo ? "disabled" : "" %> />Activar</button>
+                                        <button type="button" class="btn btn-link eliminar_pago" data-toggle="modal"
+                                            data-id="<%= results[i].id %>"
+                                            data-info="<%= results[i].titular %> (**********<%= results[i].cuatro_ultimos_digitos %>)"
+                                            data-toggle="modal"
+                                            data-target="#modal_eliminar_pago">Eliminar</button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                            <!-- Fin Instancia de Método de Pago -->
+                            <% } %>
+                            <% } %>
+                        </div>
+                        <br>
+                        <div class="form-group float-right">
+                            <button type="button" class="btn btn-primary" data-toggle="collapse"
+                                data-target="#formpag"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <!-- Formulario de Métodos de Pago -->
+                    <div class="ml-4 collapse" id="formpag">
+                        <br><br>
+                        <hr>
+                        <br>
+                        <h2>Método de Pago</h2>
+                        <br>
+                        <form class="needs-validation" novalidate action="/compras/metodos_pago" method="POST">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user-alt"></i></span>
+                                </div>
+                                <input type="text" id="titular" name="titular" class="form-control"
+                                    placeholder="Titular" required>
+                                <div class="valid-feedback">Correcto.</div>
+                                <div class="invalid-feedback">Por favor rellene el campo.</div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                </div>
+                                <input type="number" id="tarjeta" name="tarjeta" class="form-control" required
+                                    placeholder="Número de Tarjeta">
+                                <div class="valid-feedback">Correcto.</div>
+                                <div class="invalid-feedback">Por favor rellene el campo.
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="month" id="mes" name="mes" class="form-control" required
+                                    data-toggle="tooltip" title="Fecha de Expiración">
+                                <div class="valid-feedback">Correcto.</div>
+                                <div class="invalid-feedback">Por favor rellene el campo.</div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-credit-card"></i></span>
+                                </div>
+                                <input type="number" id="cvv" name="cvv" class="form-control"
+                                    placeholder="Código de Seguridad (CVV)" required>
+                                <div class="valid-feedback">Correcto.</div>
+                                <div class="invalid-feedback">Por favor rellene el campo.</div>
+                            </div>
+                            <div class="form-group float-right">
+                                <input type="submit" value="Aceptar" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="content"></div>
+    <footer>
+        <div class="jumbotron text-center head_foot">
+            <p>Aprendizaje Online para todo el Ecuador</p>
+            AprendEC 2020 <i class="far fa-copyright"></i>
+        </div>
+    </footer>
+    <!-- Modal Eliminar Método de Pago -->
+    <div class="modal fade" id="modal_eliminar_pago" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Método de Pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="body_modal_eliminar_pago"> 
+                    Se procederá a eliminar el método de pago:
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="aceptar_eliminar_pago">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src=".././javascript/tooltip.js"></script>
+    <script src=".././javascript/form_validation.js"></script>
+    <script src=".././javascript/activar_pago.js"></script>
+    <script src=".././javascript/eliminar_pago.js"></script>
+</body>
+
+</html>

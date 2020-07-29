@@ -19,6 +19,7 @@ connection.connect();
 
 
 const sesionRoutes = require("./routes/sesion");
+const comprasRoutes = require("./routes/compras");
 const adminRoutes = require("./routes/admin");
 
 
@@ -82,6 +83,7 @@ app.use((req, res, next) => {
 // });
 
 app.use(sesionRoutes);
+app.use("/compras", comprasRoutes);
 app.use(require('./routes/publicaciones'));
 app.use("/admin",adminRoutes);
 
