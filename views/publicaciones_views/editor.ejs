@@ -1,0 +1,71 @@
+    <%- include('hnf/header.ejs') %> 
+    <%- include('hnf/navbar.ejs') %> 
+    <div class="container mt-4 text-center">
+        <i class="fas fa-book-reader fa-7x"></i>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 mt-4 mb-4">
+                <h1>Postea algo..</h1>
+                <h5>Título del Post</h5>
+                <div class="container-expand ">
+                    <input id="tituloPost" type="text" size="100" placeholder="Título que describa tu Post. Sé preciso.">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 mt-1 mb-4">
+                <h5>Categoría</h5>     
+                <div class="col-sm" id="categoria">
+                        <select class="selectpicker" >
+                          <!-- <option>Mustard</option>
+                          <option>Ketchup</option>
+                          <option>Relish</option> -->
+                        </select>
+                </div>
+                <div class="container mt-2">
+                    <button type="button" class="btn btn-success" id="btnSeleccionar">Seleccionar</button>
+                    <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
+                </div>
+                <!-- <div class="row">
+                    <h5>Hola</h5>
+                </div> -->
+                
+            </div>
+            <div class="col-sm-8 mt-1 mb-4">
+                <h5>Categorías seleccionadas</h5>
+                <div id="catSel" class="container">
+                   <!--  <button type="button" class="btn btn-secondary">Secondary</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <textarea id="editor1"></textarea>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-right mt-4">
+                <button id="btnGuardar" type="button" class="btn btn-outline-primary">Guardar</button>
+                <button id="btnSalir" type="button" class="btn btn-outline-primary">Salir</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <%- include('hnf/footer.ejs') %> 
+    <!--Scripts para el control-->
+    <script type="text/javascript" src="./javascript/publicaciones/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="./javascript/publicaciones/editor.js"></script>
+
+</body>
+
+</html>

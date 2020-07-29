@@ -1,0 +1,4 @@
+1. Agregar un campo mas a los post: publicado boolean;
+2. En la tabla post se debe aumentar el numero de caracteres para la fecha
+3. En la tabla post se debe cambiar el tipo de dato en valoracion
+4. Agregar un campo de publicado a foro

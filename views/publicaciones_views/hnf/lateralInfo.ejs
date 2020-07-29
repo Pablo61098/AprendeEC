@@ -1,0 +1,26 @@
+<div class="list-group list-group-flush ">
+    <a href="#"class="list-group-item list-group-item-action" id=linkLastPost >Últimos posts publicados</a>
+    <a href="/getLastForos" class="list-group-item list-group-item-action" id=linkLastForos >Últimos foros publicados</a>
+    <a href="/getMostOutstanding" class="list-group-item list-group-item-action" id=linkDestacado>Lo más destacado</a>
+</div>
+<script>
+    $(function() {
+        // $('#barraNavegacion').load('navbar.html');
+        $('#linkLastPost').click(function() {
+        console.log('Hla');
+            $(this).attr('class', 'list-group-item list-group-item-action active');
+            $('#linkLastForos').attr('class', 'list-group-item list-group-item-action');
+            $('#linkDestacado').attr('class', 'list-group-item list-group-item-action');
+        });
+        $('#linkLastForos').click(function() {
+            $(this).attr('class', 'list-group-item list-group-item-action active');
+            $('#linkLastPost').attr('class', 'list-group-item list-group-item-action');
+            $('#linkDestacado').attr('class', 'list-group-item list-group-item-action');
+        });
+        $('#linkDestacado').click(function() {
+            $(this).attr('class', 'list-group-item list-group-item-action active');
+            $('#linkLastForos').attr('class', 'list-group-item list-group-item-action');
+            $('#linkLastPost').attr('class', 'list-group-item list-group-item-action');
+        });
+    });
+</script>

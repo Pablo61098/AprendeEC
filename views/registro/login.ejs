@@ -20,18 +20,21 @@
                 </div>
 
                 <div class="col-md-9 col-lg-7 col-xl-6 iniciarSesion">
-                    <form  action="" class="row flex-column p-4" id="formaIniciarSesion">
+                    <form  action="/login" class="row flex-column p-4" id="formaIniciarSesion" method="POST">
                         <div id="camposIniciarSesion" class="col-sm-12 mb-3 align-self-around">
                             <p>Nombre de usuario</p>
                             <input type="text" class="form-control"  name="username" aria-describedby="usernameHelp">
                             <small id="usernameHelp" class="form-text text-muted">Ingrese el nombre de usaurio con el cual esta registrado.</small>
                             <p>Contraseña</p>
                             <input type="password" class="form-control" name="password" required>
+                            <% if(typeof wrongCredentials != 'undefined'){ %>
+                                <small id="loginInformation" class="text-danger"><%= wrongCredentials %></small>
+                            <% } %>
                         </div>
                         <div class="row align-items-end col-sm-12 justify-content-start">
                             <a href="#" class="ml-3">Olvide mi contraseña</a>
                             <!-- <a href="iniciarSesionPrimeraVez.html" class="mr-3 ml-auto btn btn-success" id="btnIniciarSesion" form="formaIniciarSesion">Iniciar Sesión</a>     -->
-                            <a href="../public_mod/informativo.html" class="mr-3 ml-auto btn btn-success" id="btnIniciarSesion" form="formaIniciarSesion">Iniciar Sesión</a>    
+                            <button type="submit"  class="mr-3 ml-auto btn btn-success" id="btnIniciarSesion" form="formaIniciarSesion">Iniciar Sesión</button>    
                         </div>
                     </form>                        
                 </div>

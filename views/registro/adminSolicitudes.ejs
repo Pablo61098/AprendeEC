@@ -15,6 +15,16 @@
     </head>
     <body>   
         
+        <% if((tipo=="rechazado") && (institucion && institucion.length > 0)){ %>
+            <div class="alert alert-danger text-center">
+                <%= `Se ha RECHAZADO a la institucion: ${institucion}` %>
+            </div>
+        <% }else if((tipo=="aceptado") && (institucion && institucion.length > 0)){ %>
+            <div class="alert alert-success text-center">
+                <%= `Se ha ACEPTADO a la institucion: ${institucion}` %>
+            </div>
+        <% } %>
+
         <% for(let i=0; i<results.length; i++){ %>
 
             <div class="row justify-content-center text-center solicitud">
@@ -75,8 +85,9 @@
                         <div class="col-12 col-md-4">
                             Certidicado CACES:
                         </div>
-                        <div class="col-12 col-md-8">
-                            <%= results[i].certificado_caces %>
+                        <div class="row col-12 col-md-8">
+                            <div class="col-10 fileName"><%= results[i].certificado_caces %></div>
+                            <div class="col-2 btnDescargar"><button>Descargar</button></div>
                         </div>
                     </div>
     
@@ -140,5 +151,6 @@
     </body>
 
 </html>
+
 
 
