@@ -1,6 +1,7 @@
 var express = require('express');
 
 var router = express.Router();
+var middleware = require("../../middleware");
 // var app  = express();
 // var bodyParser = require('body-parser');
 // app.use(bodyParser.urlencoded({extended: true}));
@@ -35,9 +36,9 @@ var router = express.Router();
 var mysql = require('mysql')
 const conn = mysql.createConnection({
 	host: 'localhost',
-	user: 'luis',
+	user: 'root',
 	database : 'aprendecdb',
-	password: '1234'
+	password: process.env.LOCAL_MYSQL_PASSWORD
 });
 
 conn.connect(function(err) {
@@ -60,6 +61,7 @@ router.post('/savePost',function(req,res){
 			console.error(err);
             res.status(404).send('Not found');
 		}
+		// comsole.log(req.locals.userName);
 		console.log('Insertado exitosamente');
 		recuperarIdMaxAndSaveCategorias('luchoCode','id','post','username_usuario',req.body.id_categoria,'id_categoria','id_post','categoria_post');
 
@@ -184,7 +186,7 @@ router.get('/getLastPost',function(req,res){
 
 
 
-router.get('/modPublicaciones', function (req, res) {
+router.get('/modPublicaciones', middleware.isLoggedIn ,function (req, res) {
 	res.render('./publicaciones_views/modPublicaciones');
 });
 

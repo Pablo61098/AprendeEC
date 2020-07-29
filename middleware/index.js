@@ -13,17 +13,13 @@ connection.connect();
 let middlewareObj = {}
 
 middlewareObj.isLoggedIn = function(req, res, next){
-    // console.log("0");
-    console.log(req.session);
-    console.log(req.session.userName);
-    if(!!(req.session && req.session.userName)){
-        // console.log("0.5");
-        res.locals.userName = req.session.userName;
-        return next();
+    console.log("\nhey 1");
+    if(!req.user){
+        console.log("hey 2");
+        return res.redirect("/login");
     }
-    // console.log("1");
-    res.redirect('/login');
-    
+    console.log("hey 3");
+    next();
 }
 
 module.exports = middlewareObj;

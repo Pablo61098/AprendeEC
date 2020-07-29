@@ -1,5 +1,3 @@
-
-
 const express = require("express");
 const router = express.Router();
 const mysql = require("mysql");
@@ -21,6 +19,7 @@ connection.connect();
 
 router.get("/hola", middleware.isLoggedIn ,function(req, res){
     console.log("YOU ARE LOGGED IN");
+    res.send("hola");
 });
 
 
@@ -56,6 +55,7 @@ router.post("/login", function(req, res){
             if(bcrypt.compareSync(contrasena, results[0].contrasena)){
                 //Aqui se debe llamar al dashboard de la aplicacion
                 req.session.userName = results[0].username;
+                // res.locals.userName = req.session.userName;
                 return res.render("./registro/login", {wrongCredentials: "Correcto"});
             }else{
                 return res.render("./registro/login", {wrongCredentials: "Nombre de usuario o contraseña incorrecta"});

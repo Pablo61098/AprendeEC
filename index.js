@@ -2,24 +2,77 @@ const express = require("express"),
       app = express(),
       bodyParser = require("body-parser"),
       fileUpload = require('express-fileupload'),
-      sessions = require("client-sessions")
+      session = require("express-session"),
+      mysql = require("mysql")
     //   flash = require("connect-flash")
       ;
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: process.env.LOCAL_MYSQL_PASSWORD,
+    database: 'aprendecdb'
+});
+
+connection.connect();
+
 
 
 const sesionRoutes = require("./routes/sesion");
 const adminRoutes = require("./routes/admin");
 
 
+
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(fileUpload());
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
-app.use(sessions({
-    cookieName: "session",
+
+app.use(session({
+    name: 'authentication',
     secret: process.env.SESSION_SECRET,
-    duration: 0.5 * 60 * 1000,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge:  1000 * 60  * 10
+    }
 }));
+
+app.use((req, res, next) => {
+    
+    console.log('\n0');
+    console.log(req.session);
+    console.log(res.locals);
+    if(!(req.session && req.session.userName)){
+        return next();
+    }
+
+    connection.query(`select * from usuario where(username = '${req.session.userName}')`, function(err, results, fields){
+        console.log('1');
+        if(err){
+            console.log('2');
+            return next(err);
+        }
+        if(results.length == 0){
+            console.log('3');
+            return next();
+        }
+
+        console.log('4');
+        user = results[0];
+        user.contrasena = undefined;
+
+        req.user = user;
+        res.locals.userName = user.username;
+        console.log(res.locals);
+        console.log('5');
+
+        next();
+    });
+
+});
+
 
 // app.use(flash());
 
@@ -31,6 +84,7 @@ app.use(sessions({
 app.use(sesionRoutes);
 app.use(require('./routes/publicaciones'));
 app.use("/admin",adminRoutes);
+
 
 
 
