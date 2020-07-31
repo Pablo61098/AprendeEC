@@ -19,17 +19,14 @@ function postPublicados(){
             postVisibles=JSON.parse(ajaxRequest.responseText);
             console.log(postVisibles);
             //Mandamos a imprimir eso en la pantalla de informativo 
-            let mapaCategorias = getCategoriasMapa(postVisibles);
+			let mapaCategorias = getCategoriasMapa(postVisibles);
+			limpiar();
             printPost(postVisibles,mapaCategorias);       
         }
     }
     ajaxRequest.send(null);
 }
 
-//Limpiar los post que ya están en pantalla
-function limpiarPosts(){
-	
-}
 
 //Funcion para obtener las categorias de los post
 function getCategoriasMapa(lista){
@@ -67,6 +64,12 @@ function getCategoriasMapa(lista){
 	return mapa;
 }
 
+function limpiar(){
+    $('#contenido > div').each(function(){
+        $(this).remove();
+    })
+}
+
 //Funcion para poner en pantalla los últimos post publicados
 function printPost(lista,mapa){
 	let id=-1;
@@ -87,7 +90,7 @@ function printPost(lista,mapa){
                     '<div class="col-sm-1 mt-5">'+
                     '</div>'+
                     '<div class="col-sm-11">'+
-                    '<h3><a href="/viewPost/'+lista[i].id+'" style="color:black">'+lista[i].titulo+'</a></h3>' +
+                    '<h3><a href="/viewPost/'+lista[i].id+"/"+lista[i].username_usuario+'/1'+'" style="color:black">'+lista[i].titulo+'</a></h3>' +
                     '<strong>Calificación: </strong>'+lista[i].valoracion+'<br>'+
                     '<strong>Categorias: </strong>'+categorias+'<br>'+
                     '<strong>Publicado por: </strong>'+lista[i].username_usuario+'<br>'+

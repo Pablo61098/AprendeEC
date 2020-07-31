@@ -169,7 +169,7 @@ router.post('/savePost',function(req,res){
 		}
 		// comsole.log(req.locals.userName);
 		console.log('Insertado exitosamente');
-		recuperarIdMaxAndSaveCategorias('luchoCode','id','post','username_usuario',req.body.id_categoria,'id_categoria','id_post','categoria_post');
+		recuperarIdMaxAndSaveCategorias(req.body.username_usuario,'id','post','username_usuario',req.body.id_categoria,'id_categoria','id_post','categoria_post');
 
 		res.send('Agregado exitosamente');
 	});	
@@ -288,9 +288,62 @@ router.get('/getLastPost',function(req,res){
 	});
 });
 
-//---------- PARA VIEW POST----------------
+//Servicio para añadir un comentario a un post o foro
+router.post('/putComentario',function(req,res){
+	//obtenemos el nombre de los campos y los valores, así como también las tablas
+	console.log(req.body);
+	let id = req.body.id;
+	let username_usuario=req.body.username_usuario;
+	let id_post_foro=req.body.id_post_foro;
+	let texto = req.body.texto;
+	let fecha_hora = req.body.fecha_hora;
+	let tabla = req.body.tabla;
+	let id_c=req.body.campos[0];
+	let username_usuario_c=req.body.campos[1];
+	let id_post_foro_c=req.body.campos[2];
+	let texto_c=req.body.campos[3];
+	let fecha_hora_c=req.body.campos[4];
+	//Armamos la consulta
+	let query = 'Insert into '+ tabla + '('+id_c+", "+username_usuario_c+","+id_post_foro_c+", "+texto_c+","+fecha_hora_c+")"+
+	" values"+ '('+id+",'"+username_usuario+"',"+id_post_foro+", '"+texto+"','"+fecha_hora+"')";
+	console.log(query);
+	conn.query(query,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		res.send('Ok');
+	});
+})
 
-
+//Servicio para obtener los comentarios de un post o foro
+router.get('/getComentarios/:id_p_f/:tabla/:campo_p_f',function(req,res){
+	console.log(req.params);
+	const tabla = req.params.tabla;
+	const id_p_f= req.params.id_p_f;
+	const campo_p_f = req.params.campo_p_f;
+	//Armo la consulta
+	const query = "SELECT "+tabla+".id, "+tabla+".username_usuario, "+
+	tabla+"."+campo_p_f+", "+tabla+".texto, "+tabla+".fecha_hora, "+
+	"usuario.foto FROM "+tabla+" INNER JOIN usuario ON "+
+	tabla+".username_usuario=usuario.username AND "+tabla+"."+campo_p_f+"="+id_p_f+" ORDER BY "+tabla+".fecha_hora DESC ";
+	conn.query(query,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		//Mando la respuesta en json
+		console.log(respuesta);
+		let respuesta_view = JSON.parse(JSON.stringify(respuesta));
+		console.log(respuesta_view);
+		//COnvertimos los bytes
+		//let convertido = new Buffer(respuesta_view[0].contenido.data).toString('ascii');
+		//console.log(convertido);
+		//respuesta_view[0].contenido = convertido;
+		res.send(respuesta_view);
+	});
+})
 
 
 router.get('/modPublicaciones', middleware.isLoggedIn ,function (req, res) {
@@ -305,7 +358,8 @@ router.get('/editor',function(req,res){
 	res.render('./publicaciones_views/editor')
 });
 
-router.get('/viewPost/:id_post/:username',function(req,res){
+//Servicio para ver el post 
+router.get('/viewPost/:id_post/:username/:action',function(req,res){
 	let where = "";
 	console.log(req.params.username);
 	//Verifico que el usuario sea diferente de -1, si lo es, quiere decir que es una petición desde la página informativa
@@ -327,7 +381,10 @@ router.get('/viewPost/:id_post/:username',function(req,res){
 		let respuesta_view = JSON.parse(JSON.stringify(respuesta));
 		publicacion=respuesta_view[0];
 		console.log(publicacion);
-		res.send('Encontrado');
+		if(req.params.action=='0')
+			res.send('Encontrado');
+		if(req.params.action=='1')
+			res.redirect('/verPost');
 	});
 	
 });
@@ -370,7 +427,42 @@ router.get('/categoriaPost/:post_id',function(req,res){
 	});
 });
 
-//-----------------------------------------
+//Servicio para verificar si ya se califico a un post o a una respusta de un foro
+router.get('/verificar_calificacion/:id_/:username/:tabla/:campo_p_f', function(req,res){
+	let id_p_f = req.params.id_;
+	let username = req.params.username;
+	let  tabla = req.params.tabla;
+	let name_campo_f_p = req.params.campo_p_f;
+
+	let consulta = 'SELECT calificacion FROM '+tabla + " WHERE username_usuario='"+username+"' AND "+name_campo_f_p+"="+id_p_f;
+	conn.query(consulta, (err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta)
+		res.send(respuesta)
+	})
+})
+
+//Servicio para calificar un post o foro
+router.post('/calificar/',function(req,res){
+	let tabla = req.body.tabla;
+	let id_=req.body.id_;
+	let campo_p_f = req.body.nameCampo;
+	let calificacion = req.body.calificacion;
+	let username_usuario=req.body.username_usuario;
+	let consulta = 'INSERT INTO '+tabla + "(username_usuario,"+campo_p_f+",calificacion)"+
+	" VALUES('"+username_usuario+"',"+id_+","+calificacion+")";
+	conn.query(consulta, (err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		res.send(calificacion);
+	});
+})
 
 
 router.get('/modPublicaciones', function (req, res) {

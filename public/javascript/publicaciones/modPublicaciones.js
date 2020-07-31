@@ -6,7 +6,8 @@ let accion=0;
 $(function() {
     // $('#barraNavegacion').load('navbar.html');
     disabledButtons();
-    getPosts();
+    console.log($('#usuarioActivo').text());
+    getPosts($('#usuarioActivo').text());
     $('#btnCrear').click(function() {
         window.open('/editor', '_self')
     });
@@ -18,7 +19,8 @@ $(function() {
         accion=1;
     });
     $('#btnVer').click(function() {
-        let username='luchoCode';
+        let username = $('#usuarioActivo').text();
+        // let username='luchoCode';
         let id = checked;
         //window.open('/viewPost/'+id+'/'+username, '_blanck');
         verPost(id,username);
@@ -35,9 +37,9 @@ $(function() {
         console.log('Publicar');     
         $('#modalMessage').modal('toggle');  
         if(accion==1)
-            publicarPost();
+            publicarPost($('#usuarioActivo').text());
         if(accion==2)
-            eliminarPost();
+            eliminarPost($('#usuarioActivo').text());
     });
 
 });
@@ -47,7 +49,7 @@ function verPost(id,username){
     let httpReq = new XMLHttpRequest();
     //Verifico si el post corresponde al usuario quien quiere verlo
     //El usuario puede ver post publicados y sin publicar, un usuario no registrado solo puede ver post publicados
-    httpReq.open('GET','/verificarPost/'+id+'/'+username,true);
+    httpReq.open('GET','/viewPost/'+id+'/'+username+'/0',true);
     httpReq.onreadystatechange = function(){
         if(httpReq.readyState == 4 && httpReq.status==200){
             console.log(httpReq.responseText);
@@ -58,9 +60,9 @@ function verPost(id,username){
 }
 
 //Funcion para eliminar un post
-function eliminarPost(){
+function eliminarPost(userActivo){
     let id_post = checked;
-    let username = 'luchoCode';
+    let username = userActivo;
     let ajaxRequest = new XMLHttpRequest();
     ajaxRequest.open("DELETE", "/deletePub/"+username+'/'+id_post+'/post', true);
     ajaxRequest.onreadystatechange = function(){
@@ -75,9 +77,9 @@ function eliminarPost(){
 
 
 //Funcion para cabiar el estado de la publicación
-function publicarPost(){
+function publicarPost(userActivo){
     let id_post = checked;
-    let username = 'luchoCode';
+    let username = userActivo;
     let ajaxRequest = new XMLHttpRequest();
     ajaxRequest.open("PUT", "/publicarPub/"+username+'/'+id_post+'/post', true);
     ajaxRequest.onreadystatechange = function(){
@@ -110,14 +112,15 @@ function enabledButtons(){
 
 
 //Obtenemos los posts del usuario
-function getPosts(){
+function getPosts(user){
     let ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.open("GET", "/getPost/luchoCode", true);
+    ajaxRequest.open("GET", "/getPost/"+user, true);
     ajaxRequest.onreadystatechange = function(){
         if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
             listaPost=categorias=JSON.parse(ajaxRequest.responseText);
-            console.log(listaPost);   
-            printPosts(listaPost);     
+            console.log(listaPost);  
+            if(listaPost.length>0) 
+                printPosts(listaPost);     
         }
     }
     ajaxRequest.send(null);

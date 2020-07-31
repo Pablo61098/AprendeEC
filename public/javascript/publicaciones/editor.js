@@ -109,8 +109,9 @@ function llenarCombo(listaObjetos){
 function savePost(contenido, titulo){
     let fecha = new Date();
     let cat = getCategorias(mapaCategorias);
+    let user= $('#usuarioActivo').text();
     let post = 'id=null'+
-    '&username_usuario=luchoCode'+
+    '&username_usuario='+user+
     '&valoracion=0.0'+
     '&publicado=false'+
     '&titulo='+titulo+

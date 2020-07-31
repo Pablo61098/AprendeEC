@@ -9,8 +9,8 @@ const express = require("express"),
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: process.env.LOCAL_MYSQL_PASSWORD,
+    user: 'luis',
+    password: '1234',
     database: 'aprendecdb'
 });
 
@@ -32,7 +32,7 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(session({
     name: 'authentication',
-    secret: process.env.SESSION_SECRET,
+    secret: 'hola',
     resave: false,
     saveUninitialized: false,
     cookie: {
