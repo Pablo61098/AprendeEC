@@ -45,10 +45,13 @@ $(function() {
 //Llamada a la vista del post
 function verPost(id,username){
     let httpReq = new XMLHttpRequest();
-    httpReq.open('GET','/viewPost/'+id+'/'+username,true);
+    //Verifico si el post corresponde al usuario quien quiere verlo
+    //El usuario puede ver post publicados y sin publicar, un usuario no registrado solo puede ver post publicados
+    httpReq.open('GET','/verificarPost/'+id+'/'+username,true);
     httpReq.onreadystatechange = function(){
         if(httpReq.readyState == 4 && httpReq.status==200){
             console.log(httpReq.responseText);
+            window.open('/verPost','_self');
         }
     }
     httpReq.send(null);

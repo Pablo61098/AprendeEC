@@ -5,7 +5,7 @@ var username = "WhiteWolf";
 
 var conn = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
+    user: 'luis',
     password: '1234',
     database: 'aprendecdb'
 });

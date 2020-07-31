@@ -2,7 +2,13 @@
 var mapaCategorias=new Map();
 var tam=0;
 $(function() {
-    CKEDITOR.replace("editor1");
+    CKEDITOR.replace("editor1",{
+        extraPlugins: 'imagebrowser',
+        removePlugins: 'easyimage',
+        //filebrowserBrowseUrl: '/files',
+        imageBrowser_listUrl: '/files',
+        // filebrowserUploadUrl: '/upload'
+    });
     cargarCategorias();
     // $('#barraNavegacion').load('navbar.html');
     $('#btnGuardar').click(function() {
@@ -49,6 +55,9 @@ $(function() {
         cargarSeleccion(mapaCategorias);
     });
 
+    $('#btnEnviar').click(function(event){
+        console.log($('#myFile').val());
+    });
 });
 
 //Funcion para cargar las categorias seleccionadas

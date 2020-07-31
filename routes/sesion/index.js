@@ -9,7 +9,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
+    user: 'luis',
     password: '1234',
     database: 'aprendecdb'
 });
@@ -50,7 +50,7 @@ router.post("/login", function(req, res){
             }
             if(results[0].contrasena == contrasena){
                 //Aqui se debe llamar al dashboard de la aplicacion
-                return res.render("./registro/login", {wrongCredentials: "Correcto"});
+                return res.render('./registro/login',{wrongCredentials: "Correcto"});
             }
         }
     });    

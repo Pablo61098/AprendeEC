@@ -4,8 +4,14 @@
     <div class="container-expand">
         <div class="row">
             <div class="col-sm-12">
-                <div class="container">
-                    <p>Aqui se va a encontrar el post con un formato determinado</p>
+                <div class="container mt-4 mb-4" id="contenidoPost">
+                    <% if(typeof publicacion != 'undefined'){ %>
+                        <p hidden id="pub" class="text-danger"><%= publicacion.titulo %></p>
+                        <p hidden id="publicado" class="text-danger"><%= publicacion.publicado %></p>
+                        <p hidden id="id_post" class="text-danger"><%= publicacion.id %></p>
+                        <p hidden id="username_post" class="text-danger"><%= publicacion.username_usuario %></p>
+                    <% } %>
+                    
                 </div>
                 <div class="container">
                     <div class="row">
