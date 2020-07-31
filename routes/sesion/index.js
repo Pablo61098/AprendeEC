@@ -1,9 +1,10 @@
-
-
 const express = require("express");
 const router = express.Router();
 const mysql = require("mysql");
 const sgMail = require('@sendgrid/mail');
+const bcrypt = require('bcryptjs');
+const middleware = require("../../middleware");
+
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -16,6 +17,12 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
+router.get("/hola", middleware.isLoggedIn ,function(req, res){
+    console.log("YOU ARE LOGGED IN");
+    res.send("hola");
+});
+
+
 router.get("/login", function(req, res){
     console.log("Peticion a Login");
     // console.log(process.env.PWD);
@@ -27,9 +34,6 @@ router.get("/login", function(req, res){
     //         console.log(fields);
     //     }
     // });
-
-
-
     res.render("./registro/login");
 });
 
@@ -48,9 +52,17 @@ router.post("/login", function(req, res){
             if(results.length == 0){
                 return res.render("./registro/login", {wrongCredentials: "Nombre de usuario o contraseña incorrecta"});
             }
-            if(results[0].contrasena == contrasena){
+            if(bcrypt.compareSync(contrasena, results[0].contrasena)){
                 //Aqui se debe llamar al dashboard de la aplicacion
+<<<<<<< HEAD
                 return res.render('./registro/login',{wrongCredentials: "Correcto"});
+=======
+                req.session.userName = results[0].username;
+                // res.locals.userName = req.session.userName;
+                return res.render("./registro/login", {wrongCredentials: "Correcto"});
+            }else{
+                return res.render("./registro/login", {wrongCredentials: "Nombre de usuario o contraseña incorrecta"});
+>>>>>>> 656602a37c08b6d00296f102938c2b60f7b58d47
             }
         }
     });    
@@ -125,7 +137,7 @@ router.post("/register", function(req, res){
 
     if(req.body.contrasena == req.body.contrasenaConfirm){
         let userName = req.body.userName;
-        let contrasena = req.body.contrasena;
+        let contrasena = bcrypt.hashSync(req.body.contrasena, 14);
 
         if(req.body.universityName == '-1'){
             console.log(`${req.body.correo}`);
