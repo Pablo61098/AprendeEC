@@ -290,9 +290,6 @@ router.get('/getLastPost',function(req,res){
 
 //---------- PARA VIEW POST----------------
 
-<<<<<<< HEAD
-router.get('/verificarPost/:id_post/:username',function(req,res){
-=======
 
 
 
@@ -309,7 +306,6 @@ router.get('/editor',function(req,res){
 });
 
 router.get('/viewPost/:id_post/:username',function(req,res){
->>>>>>> 656602a37c08b6d00296f102938c2b60f7b58d47
 	let where = "";
 	console.log(req.params.username);
 	//Verifico que el usuario sea diferente de -1, si lo es, quiere decir que es una petición desde la página informativa
