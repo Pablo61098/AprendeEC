@@ -8,7 +8,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '1234',
+    password: process.env.LOCAL_MYSQL_PASSWORD,
     database: 'aprendecdb'
 });
 
