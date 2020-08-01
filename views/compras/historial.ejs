@@ -106,7 +106,9 @@
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
-                                    <th>Total</th>
+                                    <th>Dirección</th>
+                                    <th>Pago</th>
+                                    <th>Total (IVA)</th>
                                     <th>Artículos</th>
                                 </tr>
                             </thead>
@@ -119,11 +121,13 @@
                                 <% } %>
                                 <tr>
                                     <td><%= results[i].fecha_hora_pago %></td>
+                                    <td><%= results[i].direccion_envio %></td>
+                                    <td><%= results[i].metodo_pago %></td>
                                     <td>$<%= results[i].costo %> USD</td>
-                                    <td><%= results[i].nombre %> (<%= results[i].institucion %>) [<%= results[i].cantidad %>] x $<%= results[i].precio %> USD = $<%= results[i].precio * results[i].cantidad %> USD
+                                    <td><%= results[i].nombre %> (<%= results[i].institucion %>)<br>[<%= results[i].cantidad %>] x $<%= results[i].precio %> USD = $<%= bigDecimal.multiply(results[i].precio, results[i].cantidad) %> USD
                                     <% ultimo_id = results[i].id %>
                                 <% } else { %>
-                                    <br><%= results[i].nombre %> (<%= results[i].institucion %>) [<%= results[i].cantidad %>] x $<%= results[i].precio %> USD = $<%= results[i].precio * results[i].cantidad %> USD
+                                    <br><%= results[i].nombre %> (<%= results[i].institucion %>)<br>[<%= results[i].cantidad %>] x $<%= results[i].precio %> USD = $<%= bigDecimal.multiply(results[i].precio, results[i].cantidad) %> USD
                                 <% } %>
                                 <% if (i === results.length - 1) { %>
                                     </td>

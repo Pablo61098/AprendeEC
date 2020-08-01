@@ -165,10 +165,10 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                 </div>
-                                <input type="number" id="tarjeta" name="tarjeta" class="form-control" required
-                                    placeholder="Número de Tarjeta">
+                                <input type="text" id="tarjeta" name="tarjeta" class="form-control" required
+                                    placeholder="Número de Tarjeta" pattern="[0-9]{13,19}">
                                 <div class="valid-feedback">Correcto.</div>
-                                <div class="invalid-feedback">Por favor rellene el campo.
+                                <div class="invalid-feedback">Por favor rellene el campo. (Entre 13 y 19 dígitos)
                                 </div>
                             </div>
                             <div class="input-group mb-3">
@@ -184,10 +184,10 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-credit-card"></i></span>
                                 </div>
-                                <input type="number" id="cvv" name="cvv" class="form-control"
-                                    placeholder="Código de Seguridad (CVV)" required>
+                                <input type="text" id="cvv" name="cvv" class="form-control"
+                                    placeholder="Código de Seguridad (CVT)" required pattern="[0-9]{3,4}">
                                 <div class="valid-feedback">Correcto.</div>
-                                <div class="invalid-feedback">Por favor rellene el campo.</div>
+                                <div class="invalid-feedback">Por favor rellene el campo. (3 o 4 dígitos)</div>
                             </div>
                             <div class="form-group float-right">
                                 <input type="submit" value="Aceptar" class="btn btn-primary">

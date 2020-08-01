@@ -10,6 +10,7 @@ const express = require("express"),
 const sesionRoutes = require("./routes/sesion");
 const comprasRoutes = require("./routes/compras");
 const adminRoutes = require("./routes/admin");
+const tiendaRoutes = require("./routes/tienda");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -27,7 +28,7 @@ app.use(sesionRoutes);
 app.use("/compras", comprasRoutes);
 app.use(require('./routes/publicaciones'));
 app.use("/admin",adminRoutes);
-
+app.use("/tienda", tiendaRoutes);
 
 
 

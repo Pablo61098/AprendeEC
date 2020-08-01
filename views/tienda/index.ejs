@@ -8,7 +8,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <link rel="stylesheet" href="../resources/css/styles.css">
+    <link rel="stylesheet" href=".././css/styles.css">
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -18,7 +67,7 @@
     <!-- Header -->
     <header>
         <div class="jumbotron head_foot">
-            <img src="../resources/images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <img src=".././images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
             <h1><b>@prendEC</b></h1>
         </div>
     </header>
@@ -27,7 +76,8 @@
         <div class="container">
             <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
 
-            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
+            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -35,7 +85,8 @@
                 <ul class="navbar-nav mx-xs-auto ml-md-3">
                     <li class="nav-item">
                         <form class="form-inline">
-                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
+                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar"
+                                name="busqueda">
                             <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
                                     class="fas fa-search"></i></button>
                         </form>
@@ -68,71 +119,137 @@
     </nav>
     <!-- Cuerpo -->
     <div class="container-fluid pt-4 pb-4">
+        <!-- Busqueda -->
+        <form action="/tienda/buscar" method="GET">
+            <div class="form-group input-group">
+                <% if (busqueda) {%>
+                <input type="text" class="form-control" placeholder="Busque por producto, institución o descripción..."
+                    id="busqueda" name="busqueda" required value="<%= busqueda %>">
+                <% } else { %>
+                <input type="text" class="form-control" placeholder="Busque por producto, institución o descripción..."
+                    id="busqueda" name="busqueda" required>
+                <% } %>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <br>
         <!-- Productos -->
-        <div class="card-columns">
-            <div class="card bg-light">
-                <div class="card-body text-center">
-                    <!-- Usar sólo imágenes de 1024 x 1024 -->
-                    <img class="card-img-top  imagen_tienda" src="../resources/images/producto.jpg" alt="Producto">
-                    <p class="card-text"><b>Agenda Universitaria 2020</b><br>Institución: Universidad de Cuenca
-                        <br>Precio: $25.00 USD</p>
-                    <button class="btn btn-primary boton_carrito_agregar"><i class="fas fa-cart-plus"></i></button>
+        <div id="contenedor_productos">
+            <% if (results.length === 0) {%>
+            <div id="mensaje" class="h-100 text-center">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <img src=".././images/fail.png" alt="fail">
+                        <h3 class="card-text">No hay más productos disponibles.</h3><br>
+                        <a href="/tienda"><button class="btn btn-primary">Volver a
+                                Tienda</button></a>
+                    </div>
                 </div>
             </div>
-            <div class="card bg-light">
-                <div class="card-body text-center">
-                    <img class="card-img-top  imagen_tienda" src="../resources/images/producto.jpg" alt="Producto">
-                    <p class="card-text"><b>Agenda Universitaria 2020</b><br>Institución: Universidad de Cuenca
-                        <br>Precio: $25.00 USD</p>
-                    <button class="btn btn-primary"><i class="fas fa-cart-plus"></i></button>
+            <% } else { %>
+            <div class="card-group">
+                <% for (let i = 0; i < results.length; i++) {%>
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <img class="card-img-top  imagen_tienda" src=".././images/productos/<%= results[i].foto %>"
+                            alt="<%= results[i].foto %>"><br><br>
+                        <p class="card-text"><b><%= results[i].articulo %></b><br>Institución:
+                            <%= results[i].institucion %>
+                            <br><%= results[i].descripcion %><br>Precio: $<%= results[i].precio %> USD</p>
+                        <% if (results[i].stock > 0) {%>
+                        <button class="btn btn-primary boton_carrito_agregar" id="<%= results[i].id %>"><i
+                                class="fas fa-cart-plus"></i></button>
+                        <% } else { %>
+                        <button class="btn btn-danger" disabled>SIN STOCK</button>
+                        <% } %>
+                    </div>
                 </div>
+                <% } %>
+                <% for (let i = 3 - results.length; i > 0; i--) {%>
+                <div class="card bg-light"></div>
+                <% } %>
             </div>
-            <div class="card bg-light">
-                <div class="card-body text-center">
-                    <img class="card-img-top  imagen_tienda" src="../resources/images/producto.jpg" alt="Producto">
-                    <p class="card-text"><b>Agenda Universitaria 2020</b><br>Institución: Universidad de Cuenca
-                        <br>Precio: $25.00 USD</p>
-                    <button class="btn btn-danger boton_carrito_quitar"><i class="fas fa-cart-arrow-down"></i></button>
-                </div>
-            </div>
-            <div class="card bg-light">
-                <div class="card-body text-center">
-                    <img class="card-img-top  imagen_tienda" src="../resources/images/producto.jpg" alt="Producto">
-                    <p class="card-text"><b>Agenda Universitaria 2020</b><br>Institución: Universidad de Cuenca
-                        <br>Precio: $25.00 USD</p>
-                    <button class="btn btn-primary"><i class="fas fa-cart-plus"></i></button>
-                </div>
-            </div>
-            <div class="card bg-light">
-                <div class="card-body text-center">
-                    <img class="card-img-top  imagen_tienda" src="../resources/images/producto.jpg" alt="Producto">
-                    <p class="card-text"><b>Agenda Universitaria 2020</b><br>Institución: Universidad de Cuenca
-                        <br>Precio: $25.00 USD</p>
-                    <button class="btn btn-primary"><i class="fas fa-cart-plus"></i></button>
-                </div>
-            </div>
-            <div class="card bg-light">
-                <div class="card-body text-center">
-                    <img class="card-img-top  imagen_tienda" src="../resources/images/producto.jpg" alt="Producto">
-                    <p class="card-text"><b>Agenda Universitaria 2020</b><br>Institución: Universidad de Cuenca
-                        <br>Precio: $25.00 USD</p>
-                    <button class="btn btn-primary"><i class="fas fa-cart-plus"></i></button>
-                </div>
-            </div>
+            <% } %>
         </div>
         <br>
         <!-- Páginas -->
         <div class="row  justify-content-center">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <% if (busqueda) {%>
+                <% if (pagina > 1) {%>
+                <li class="page-item"><button class="page-link"><a
+                            href="/tienda/buscar?busqueda=<%= busqueda %>&pagina=<%= parseInt(pagina, 10) - 1 %>">Anterior</a></button>
+                </li>
+                <% } %>
+                <% if (results.length >= 3) {%>
+                <li class="page-item"><button class="page-link"><a
+                            href="/tienda/buscar?busqueda=<%= busqueda %>&pagina=<%= parseInt(pagina, 10) + 1 %>">Siguiente</a></button>
+                </li>
+                <% } %>
+                <% } else { %>
+                <% if (pagina > 1) {%>
+                <li class="page-item"><button class="page-link"><a
+                            href="/tienda?pagina=<%= parseInt(pagina, 10) - 1 %>">Anterior</a></button></li>
+                <% } %>
+                <% if (results.length >= 3) {%>
+                <li class="page-item"><button class="page-link"><a
+                            href="/tienda?pagina=<%= parseInt(pagina, 10) + 1 %>">Siguiente</a></button></li>
+                <% } %>
+                <% } %>
             </ul>
         </div>
+        <br>
+        <!-- Catalogo -->
+        <form action="/tienda/catalogo" method="POST">
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-at"></i></span>
+                </div>
+                <input type="email" class="form-control" placeholder="Enviar catálogo por correo a..." id="correo"
+                    name="correo" required>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-envelope"></i></button>
+            </div>
+        </form>
     </div>
-
+    <br>
+    <!-- Modal Agregar -->
+    <div class="modal" id="modal_agregar">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Producto Agregado</h5>
+                    <button id="cerrar_modal_agregar" type="button" class="close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Producto agregado al carrito.
+                </div>
+                <div class="modal-footer">
+                    <button id="aceptar_modal_agregar" type="button" class="btn btn-primary">Aceptar</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Ya Agregado -->
+    <div class="modal" id="modal_ya_agregado">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Producto Ya en Carrito</h5>
+                    <button id="cerrar_modal_ya_agregado" type="button" class="close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    El producto ya está en su carrito.
+                </div>
+                <div class="modal-footer">
+                    <button id="aceptar_modal_ya_agregado" type="button" class="btn btn-danger">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Footer -->
     <div class="content"></div>
     <footer>
@@ -141,7 +258,7 @@
             AprendEC 2020 <i class="far fa-copyright"></i>
         </div>
     </footer>
-    <script src="../resources/javascript/boton_carrito.js"></script>
+    <script src=".././javascript/boton_carrito.js"></script>
 </body>
 
 </html>

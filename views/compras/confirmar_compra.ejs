@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <title>Confirmar Compra</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href=".././css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="jumbotron head_foot">
+            <img src=".././images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <h1><b>@prendEC</b></h1>
+        </div>
+    </header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
+
+            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="colapsado">
+                <ul class="navbar-nav mx-xs-auto ml-md-3">
+                    <li class="nav-item">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar"
+                                name="busqueda">
+                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
+                                    class="fas fa-search"></i></button>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
+                    <li class="nav-item  mx-auto">
+                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown mx-auto">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            <i class="far fa-user"></i>
+                            <span>Nombre de Usuario</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
+                            <a class="dropdown-item" href="../participacion/">Participación</a>
+                            <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
+                            <a class="dropdown-item" href="../compras/">Compras</a>
+                            <a class="dropdown-item" href="../tienda/">Tienda</a>
+                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
+                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <!-- Cuerpo -->
+    <section class="container pb-4 pt-4">
+        <div id="informe">
+            <h2>AprendEC - Informe de Compra</h2>
+            <br>
+            <h6><b>Nombre: </b><%= buyerData[0].nombre %> <%= buyerData[0].apellido %></h6>
+            <h6><b>CI: </b><%= buyerData[0].cedula %></h6>
+            <h6><b>Fecha: </b><%= ( new Date() ).toLocaleDateString() %></h6>
+            <h6><b>Dirección de Envío: </b><%= buyerData[0].direccion %> | <%= buyerData[0].ciudad %>, <%= buyerData[0].provincia %></h6>
+            <h6><b>Forma de Pago: </b><%= buyerData[0].compania.toUpperCase() %> (**********<%= buyerData[0].digitos %>)</h6>
+            <br>
+            <table class="table table-striped table-responsive-xl tabla">
+                <thead>
+                    <tr>
+                        <th>Institución</th>
+                        <th>Artículo</th>
+                        <th>Costo Unitario ($ USD)</th>
+                        <th>Cantidad</th>
+                        <th>Costo ($ USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% let subtotal = "0.00" %>
+                    <% for (let i=0; i < results.length; i++) { %>
+                    <tr>
+                        <td><%= results[i].institucion %></td>
+                        <td><%= results[i].nombre %></td>
+                        <td><%= results[i].precio %></td>
+                        <td><%= results[i].cantidad %></td>
+                        <% let costo = bigDecimal.multiply(results[i].precio, results[i].cantidad) %>
+                        <td><%= costo %></td>
+                        <% subtotal = bigDecimal.add(subtotal, costo) %>
+                    </tr>
+                    <% } %>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th>Subtotal:</th>
+                        <td><%= subtotal %></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <% let porcentaje_iva = iva[0].valor %>
+                        <th>IVA (<%= porcentaje_iva %>%):</th>
+                        <% porcentaje_iva = "0." + porcentaje_iva %>
+                        <% let valor_iva = bigDecimal.round(bigDecimal.multiply(subtotal, porcentaje_iva), 2, bigDecimal.RoundingModes.HALF_DOWN) %>
+                        <td><%= valor_iva %></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th>Total a Pagar:</th>
+                        <td><%= bigDecimal.add(subtotal, valor_iva) %></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div class="form-group text-right">
+            <a href="/compras"><button value="Cancelar" class="btn btn-danger">Cancelar</button></a>
+            <a href="/compras/confirmar"><button value="Confirmar" class="btn btn-primary">Confirmar</button></a>
+        </div>
+    </section>
+    <!-- Footer -->
+    <div class="content"></div>
+    <footer>
+        <div class="jumbotron text-center head_foot">
+            <p>Aprendizaje Online para todo el Ecuador</p>
+            AprendEC 2020 <i class="far fa-copyright"></i>
+        </div>
+    </footer>
+</body>
+
+</html>

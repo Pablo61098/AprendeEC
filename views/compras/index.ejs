@@ -103,7 +103,7 @@
                             </div>
                             <!-- Fin Instancia de Carrito Vacío -->
                             <% } else { %>
-                            <% let costo = 0 %>
+                            <% let costo = "0.00" %>
                             <% for (let i=0; i < results.length; i++) { %>
                             <div id="<%= results[i].id %>">
                                 <div class="row ml-2 mr-2">
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="col-lg-5">
                                         <h4><%= results[i].nombre %></h4>
-                                        <% costo += results[i].precio * results[i].cantidad %>
+                                        <% costo = bigDecimal.add(costo, bigDecimal.multiply(results[i].precio, results[i].cantidad)) %>
                                         <p>Precio: $<span id="prod<%= results[i].id %>"><%= results[i].precio %></span>
                                             USD<br> Institución:
                                             <%= results[i].institucion %><br></p>
@@ -178,7 +178,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Aceptar</button>
+                    <a href="/compras/informe"><button type="button" class="btn btn-primary">Aceptar</button></a>
                 </div>
             </div>
         </div>
@@ -205,6 +205,7 @@
             </div>
         </div>
     </div>
+    <script src="./javascript/js-big-decimal.min.js"></script>
     <script src="./javascript/quitar_producto_carrito.js"></script>
     <script src="./javascript/control_carrito.js"></script>
 </body>

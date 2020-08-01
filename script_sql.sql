@@ -5,6 +5,7 @@ CREATE TABLE usuario (
     correo VARCHAR(75),
     nombre VARCHAR(50),
     apellido VARCHAR(50),
+    cedula VARCHAR(10),
     foto varchar(255),
     valoracion FLOAT,
     confirmado boolean,
@@ -41,7 +42,6 @@ create table usuario_academico(
 create table usuario_admin_inst(
     username VARCHAR(20),
     id_institucion INT,
-    cedula VARCHAR(10),
     cargo VARCHAR(255),
     PRIMARY KEY (id_institucion, username),
     FOREIGN KEY (username) REFERENCES usuario(username),
@@ -127,6 +127,8 @@ create table carrito (
     costo DECIMAL(19,2),
     fecha_hora_creacion VARCHAR(255),
     fecha_hora_pago VARCHAR(255),
+    direccion_envio VARCHAR(255),
+    metodo_pago VARCHAR(255),
     pendiente BOOLEAN,
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
@@ -253,5 +255,12 @@ create table ciudad (
     nombre VARCHAR(255),
     PRIMARY KEY (id, id_provincia),
     FOREIGN KEY (id_provincia) REFERENCES provincia(id)
+);
+
+create table datos_programa (
+    id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(255),
+    valor VARCHAR(255),
+    PRIMARY KEY (id)
 );
 

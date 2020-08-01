@@ -35,7 +35,7 @@ var router = express.Router();
 var mysql = require('mysql')
 const conn = mysql.createConnection({
 	host: 'localhost',
-	user: 'luis',
+	user: 'root',
 	database : 'aprendecdb',
 	password: '1234'
 });
