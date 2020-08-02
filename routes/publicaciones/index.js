@@ -636,6 +636,7 @@ router.post('/calificar/',function(req,res){
 			console.error(err);
 			res.status(404).send('Not found');
 		}
+		console.log('Clificacion post o foro')
 		console.log(respuesta);
 		res.send(calificacion);
 	});
@@ -665,6 +666,35 @@ router.get('/getCalificacionRespuesta/:id_',function(req,res){
 		}
 		console.log(respuesta);
 		res.send(respuesta);
+	})
+})
+
+
+//Servicio para obtener los comentarios de un post.
+router.get('/getNumeroComentarios/:id',function(req,res){
+	let consulta = 'SELECT COUNT(usuario_post_comentario.id_post) as total FROM `usuario_post_comentario` WHERE usuario_post_comentario.id_post='+req.params.id;
+	conn.query(consulta,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log('Obteniendo respuesta de getRespuestas..');
+		console.log(respuesta);
+		res.send(respuesta)
+	})
+})
+
+//Servicio para obtener las respuestas de un foro.
+router.get('/getRespuestas/:id',function(req,res){
+	let consulta = 'SELECT COUNT(usuario_foro_respuesta.id_foro) as total FROM `usuario_foro_respuesta` WHERE usuario_foro_respuesta.id_foro='+req.params.id;
+	conn.query(consulta,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log('Obteniendo respuesta de getRespuestas..');
+		console.log(respuesta);
+		res.send(respuesta)
 	})
 })
 

@@ -70,6 +70,8 @@ function eliminarPost(userActivo){
             console.log('Eliminado exitosamente');
             //window.open('/modPublicaciones')
             $('#'+id_post).remove();
+            checked=-1;
+            disabledButtons();
         }
     }
     ajaxRequest.send(null);
@@ -182,8 +184,8 @@ function printPosts(lista){
                     '</div>'+
                     '<div class="col-sm-11">'+
                     '<h3>'+lista[i].titulo+'</h3>' +
-                    '<p><strong>Comentarios: </strong>0<br>'+
-                    '<strong>Calificación: </strong>'+lista[i].valoracion+'<br>'+
+                    '<p id=comLabel'+lista[i].id+'><strong>Comentarios: </strong>...<br>'+
+                    '<strong>Calificación: </strong>'+lista[i].valoracion+' ptos.<br>'+
                     '<strong>Estado: </strong> <em id="estadoPost'+lista[i].id+'">'+publicado+'</em><br>'+
                     '</p>'+
                     '</div>'+
@@ -193,7 +195,25 @@ function printPosts(lista){
                     '</div>';
         console.log(registros);
         $('#verPosts').append(registros);
+        getNumerosComentarios(lista[i].id,lista[i].valoracion,lista[i].id,publicado)
      }
      //Coloco los event listener en los checkboxes
      listenToCheckBox();
+}
+
+function getNumerosComentarios(id_post,calificacion,id_estado,publicado){
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("GET", "/getNumeroComentarios/"+id_post, true);
+    ajaxRequest.onreadystatechange = function(){
+        if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
+            let comentarios=JSON.parse(ajaxRequest.responseText);
+            console.log(comentarios[0].total);  
+            $('#comLabel'+id_post).text('');
+            let putLabel = '<strong>Comentarios: </strong>'+comentarios[0].total+'<br>'+
+            '<strong>Calificación: </strong>'+calificacion+' ptos.<br>'+
+            '<strong>Estado: </strong> <em id="estadoPost'+id_estado+'">'+publicado+'</em><br>';
+            $('#comLabel'+id_post).append(putLabel);    
+        }
+    }
+    ajaxRequest.send(null);
 }

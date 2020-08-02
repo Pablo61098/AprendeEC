@@ -92,6 +92,8 @@ function eliminarPost(userActivo){
             console.log('Eliminado exitosamente');
             //window.open('/modPublicaciones')
             $('#'+id_foro).remove();
+            checked=-1;
+            disabledButtons();
         }
     }
     ajaxRequest.send(null);
@@ -185,7 +187,7 @@ function printForos(lista){
                    '</div>'+
                    '<div class="col-sm-11">'+
                    '<h3>'+lista[i].titulo+'</h3>' +
-                   '<p><strong>Comentarios: </strong>0<br>'+
+                   '<p id=respForo'+lista[i].id+'><strong>Respuestas: </strong>...<br>'+
                    '<strong>Estado: </strong> <em id="estadoForo'+lista[i].id+'">'+publicado+'</em><br>'+
                    '</p>'+
                    '</div>'+
@@ -195,7 +197,25 @@ function printForos(lista){
                    '</div>';
        console.log(registros);
        $('#verForos').append(registros);
+       getRespuestas(lista[i].id,lista[i].id,publicado);
     }
     //Coloco los event listener en los checkboxes
     listenToCheckBox();
+}
+
+function getRespuestas(id,id_estado,publicado){
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("GET", "/getRespuestas/"+id, true);
+    ajaxRequest.onreadystatechange = function(){
+        if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
+            let respuestas = JSON.parse(ajaxRequest.responseText);
+            console.log('Obtenido las respuestas del foro');
+            console.log(respuestas[0].total);
+            $('#respForo'+id).text('');
+            let putLabel = '<strong>Respuestas: </strong>'+respuestas[0].total + '<br>'+
+            '<strong>Estado: </strong> <em id="estadoForo'+id_estado+'">'+publicado+'</em><br>'
+            $('#respForo'+id).append(putLabel);
+        }
+    }
+    ajaxRequest.send(null);
 }

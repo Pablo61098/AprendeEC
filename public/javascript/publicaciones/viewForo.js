@@ -266,6 +266,9 @@ function printRespuestas(lista){
         $('#seccionRespuestas').append('<div><strong>No existe respuestas en esta publicación.</strong></div>');
     }else{
         for(var i = 0 ; i < lista.length; i++){
+            let fin = "<hr>";
+            if(i>=lista.length-1)
+                fin="";
             let registro = 
             '<div class="row" id="res'+lista[i].id+'">'+
                 '<div class="container">'+
@@ -288,7 +291,8 @@ function printRespuestas(lista){
                     '</p>'+
                 '</div>'+
             '</div>'+
-            ' <hr style="height:2px;border-width:0;color:gray;background-color:black">';
+            //' <hr style="height:2px;border-width:0;color:gray;background-color:black">';
+            fin;
             $('#seccionRespuestas').append(registro);
             //Obtengo las calificaciones de cada respuesta
             obtenerCalificacion(lista[i].id);

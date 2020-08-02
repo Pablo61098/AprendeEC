@@ -1,21 +1,23 @@
 let postVisibles=[];
 let foroVisibles=[];
+let mapaCategoriasPost;
+let mapaCategoriasForo;
 $(function(){
 	$('#linkLastPost').click(function(){
 		//Llamamos a la funcion que nos devolverá los ultimos posts
 		document.title='Últimos posts';
-		postPublicados();
+		postPublicados(1);
 	});
 	$('#linkLastForos').click(function(){
 		//Llamamos a la funcion que nos devolverá los ultimos posts
 		document.title='Últimos foros';
-		forosPublicados();
+		forosPublicados(1);
 	});
 
 });
 
 //funcion para obtener los ultimo post publicados
-function postPublicados(){
+function postPublicados(codigo){
     let ajaxRequest = new XMLHttpRequest();
     ajaxRequest.open("GET", "/getLastPost", true);
     ajaxRequest.onreadystatechange = function(){
@@ -26,16 +28,20 @@ function postPublicados(){
             postVisibles=JSON.parse(ajaxRequest.responseText);
             console.log(postVisibles);
             //Mandamos a imprimir eso en la pantalla de informativo 
-			let mapaCategorias = getCategoriasMapa(postVisibles);
-			limpiar();
-            printPost(postVisibles,mapaCategorias,'viewPost',1);       
+			mapaCategoriasPost = getCategoriasMapa(postVisibles);
+			//Si el codigo es 1, obtengo los ultimos post publicados, sino solo obtengo pero mando a los mas destacados
+			if(codigo ==1){
+				limpiar();
+            	printPost(postVisibles,mapaCategoriasPost,'viewPost',1);
+			}
+			       
         }
     }
     ajaxRequest.send(null);
 }
 
 //funcion para obtener los ultimo post publicados
-function forosPublicados(){
+function forosPublicados(codigo){
     let ajaxRequest = new XMLHttpRequest();
     ajaxRequest.open("GET", "/getLastForo", true);
     ajaxRequest.onreadystatechange = function(){
@@ -46,9 +52,12 @@ function forosPublicados(){
             foroVisibles=JSON.parse(ajaxRequest.responseText);
             console.log(foroVisibles);
             //Mandamos a imprimir eso en la pantalla de informativo 
-			let mapaCategorias = getCategoriasMapa(foroVisibles);
-			limpiar();
-            printPost(foroVisibles,mapaCategorias,'viewForo',0);       
+			mapaCategoriasForo = getCategoriasMapa(foroVisibles);
+			if(codigo==1){
+				limpiar();
+            	printPost(foroVisibles,mapaCategoriasForo,'viewForo',0);
+			}
+			       
         }
     }
     ajaxRequest.send(null);
