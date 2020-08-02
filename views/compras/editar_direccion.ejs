@@ -18,54 +18,13 @@
     <!-- Header -->
     <header>
         <div class="jumbotron head_foot">
-            <img src="../../.././images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <img src="../../.././images/ecuador.png" class="float-right imagen_header"
+                alt="Escudo de Armas del Ecuador">
             <h1><b>@prendEC</b></h1>
         </div>
     </header>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
-
-            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="colapsado">
-                <ul class="navbar-nav mx-xs-auto ml-md-3">
-                    <li class="nav-item">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
-                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
-                                    class="fas fa-search"></i></button>
-                        </form>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
-                    <li class="nav-item  mx-auto">
-                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
-                    </li>
-                    <!-- Dropdown -->
-                    <li class="nav-item dropdown mx-auto">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            <i class="far fa-user"></i>
-                            <span>Nombre de Usuario</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
-                            <a class="dropdown-item" href="../participacion/">Participación</a>
-                            <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
-                            <a class="dropdown-item" href="../compras/">Compras</a>
-                            <a class="dropdown-item" href="../tienda/">Tienda</a>
-                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
-                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
-                        </div>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </nav>
+    <%- include('../publicaciones_views/hnf/navbar.ejs') %>
     <!-- Formulario de Direcciones -->
     <div class="container" id="formdir">
         <br><br>
@@ -76,7 +35,8 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-user-alt"></i></span>
                 </div>
-                <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres Completos" data-toggle="tooltip" title="Nombres Completos" required value="<%= results[0].nombre_encargado %>">
+                <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres Completos"
+                    data-toggle="tooltip" title="Nombres Completos" required value="<%= results[0].nombre_encargado %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo.</div>
             </div>
@@ -84,7 +44,8 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                 </div>
-                <input type="text" id="cedula" name="cedula" class="form-control" required placeholder="Cédula" pattern="[0-9]{10}" data-toggle="tooltip" title="Cédula" value="<%= results[0].cedula_encargado %>">
+                <input type="text" id="cedula" name="cedula" class="form-control" required placeholder="Cédula"
+                    pattern="[0-9]{10}" data-toggle="tooltip" title="Cédula" value="<%= results[0].cedula_encargado %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo. Formato: Cédula Ecuatoriana de 10 Dígitos.
                 </div>
@@ -93,7 +54,9 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-map"></i></span>
                 </div>
-                <input type="text" id="linea1" name="linea1" class="form-control" required placeholder="Línea de Dirección 1" data-toggle="tooltip" title="Línea de Dirección 1" value="<%= results[0].linea_direccion_1 %>">
+                <input type="text" id="linea1" name="linea1" class="form-control" required
+                    placeholder="Línea de Dirección 1" data-toggle="tooltip" title="Línea de Dirección 1"
+                    value="<%= results[0].linea_direccion_1 %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo.</div>
             </div>
@@ -101,7 +64,9 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-map-marked"></i></span>
                 </div>
-                <input type="text" id="linea2" name="linea2" class="form-control" placeholder="Línea de Dirección 2 (Opcional)" data-toggle="tooltip" title="Línea de Dirección 2" value="<%= results[0].linea_direccion_2 %>">
+                <input type="text" id="linea2" name="linea2" class="form-control"
+                    placeholder="Línea de Dirección 2 (Opcional)" data-toggle="tooltip" title="Línea de Dirección 2"
+                    value="<%= results[0].linea_direccion_2 %>">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -121,17 +86,20 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-atlas"></i></span>
                 </div>
-                <input type="text" id="codigo" name="codigo" class="form-control" required pattern="[0-9]{6}" placeholder="Código Postal" data-toggle="tooltip" title="Código Postal" value="<%= results[0].codigo_postal %>">
+                <input type="text" id="codigo" name="codigo" class="form-control" required pattern="[0-9]{6}"
+                    placeholder="Código Postal" data-toggle="tooltip" title="Código Postal"
+                    value="<%= results[0].codigo_postal %>">
                 <div class="valid-feedback">Correcto.</div>
-                <div class="invalid-feedback">Por favor rellene el campo. Formato: Código Postal Ecuatoriano de 6 Dígitos.
+                <div class="invalid-feedback">Por favor rellene el campo. Formato: Código Postal Ecuatoriano de 6
+                    Dígitos.
                 </div>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                 </div>
-                <input type="text" id="telefono" name="telefono" class="form-control"
-                    class="form-control" required placeholder="Teléfono" pattern="[0-9]{9,10}" value="<%= results[0].telefono %>">
+                <input type="text" id="telefono" name="telefono" class="form-control" class="form-control" required
+                    placeholder="Teléfono" pattern="[0-9]{9,10}" value="<%= results[0].telefono %>">
                 <div class="valid-feedback">Correcto.</div>
                 <div class="invalid-feedback">Por favor rellene el campo. Formato: Teléfono
                     Ecuatoriano de 9 (Convencional) o 10 Dígitos (Celular).</div>

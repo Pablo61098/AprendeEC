@@ -5,7 +5,7 @@ var Prince = require("prince")
 var util = require("util")
 var fs = require('fs');
 var nodemailer = require('nodemailer');
-var username = "WhiteWolf";
+var middleware = require("../../middleware");
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -18,7 +18,7 @@ var transporter = nodemailer.createTransport({
 var conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '1234',
+    password: process.env.LOCAL_MYSQL_PASSWORD,
     database: 'aprendecdb',
     multipleStatements: true
 });
@@ -143,9 +143,9 @@ router.post("/catalogo", function (req, res) {
     });
 });
 
-router.put("/agregar/:id_producto", function (req, res) { 
+router.put("/agregar/:id_producto", middleware.isLoggedIn, function (req, res) { 
     let sql = `insert into carrito_producto (id_carrito, id_producto, cantidad) values ((select id from carrito where pendiente = true
-    and username_usuario =  ${mysql.escape(username)}), ${req.params.id_producto}, 1)`;
+    and username_usuario =  ${mysql.escape(res.locals.userName)}), ${req.params.id_producto}, 1)`;
     conn.query(sql, function (error, results) {
         if (error) {
             console.log(error);
