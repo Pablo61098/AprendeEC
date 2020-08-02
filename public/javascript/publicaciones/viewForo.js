@@ -276,7 +276,7 @@ function printRespuestas(lista){
                     '<button class="btn btn-outline-primary" id=btnDown'+lista[i].id+'><i class="fas fa-arrow-circle-down"></i></button>'+
                 '</div>'+
                 '<div class="col-sm-2">'+
-                    '<p><strong>Calificación:</strong> 0 pts</p>'+
+                    '<p id=cali'+lista[i].id+'><strong>Calificación:</strong>...</p>'+
                 '</div>'+
                 '<div class="col-sm-4">'+
                     '<p><strong>Respondido: </strong><em id="respFecha'+lista[i].id+'">'+lista[i].fecha_hora+'</em></p>'+
@@ -284,18 +284,44 @@ function printRespuestas(lista){
                 '<div class="col-sm-4 text-center">'+
                     '<img src="images/user_default.png" style="width: 60px; height: 60px">'+
                     '<p><strong>'+lista[i].username_usuario+'</strong><br>'+
-                        '<strong>Puntos: </strong>0'+
+                        // '<strong>Puntos: </strong>0'+
                     '</p>'+
                 '</div>'+
             '</div>'+
             ' <hr style="height:2px;border-width:0;color:gray;background-color:black">';
             $('#seccionRespuestas').append(registro);
-
+            //Obtengo las calificaciones de cada respuesta
+            obtenerCalificacion(lista[i].id);
         }
         listenToButtons('seccionRespuestas');
+        
     }
 }
 
+//Funcion para obtener la calificación de la respuesta
+function obtenerCalificacion(id_respuesta){
+    let http = new XMLHttpRequest();
+    http.open('GET','/getCalificacionRespuesta/'+id_respuesta, true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.onreadystatechange=function(){
+        if(http.readyState== 4 && http.status==200){
+            let respuesta=JSON.parse(http.responseText);
+            console.log('respuesta')
+            console.log(respuesta[0].total); 
+            printCalificacion(respuesta[0].total,id_respuesta);              
+        }
+    }
+    http.send(null);
+}
+
+//Funcion para modificar las calificaciones de las respuestas
+function printCalificacion(cali,id_tag){
+    $('#cali'+id_tag).text('');
+    if(cali ==null){
+        cali=0;
+    }
+    $('#cali'+id_tag).append('<strong>Calificación: </strong>'+cali+' pts');
+}
 
 //Funcion para mandar la valoración a la base de datos. Solo se va a poder valorar una vez.
 function calificar(puntaje, id_, username,tabla,campoBuscar){
@@ -312,6 +338,8 @@ function calificar(puntaje, id_, username,tabla,campoBuscar){
             //quitarEstrellasYPonerCalificacion(calificacion,1);
             accion=-1;
             mensaje('Calificado','Respuesta calificada','OK');
+            //Actualizo el puntaje de la calificacion
+            obtenerCalificacion(id_);
         }
     }
     let objeto = "username_usuario="+username+

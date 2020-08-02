@@ -501,7 +501,7 @@ router.get('/viewPost/:id_post/:username/:action',function(req,res){
 	}
 	//Obtengo el post que necesito para mostrar en la vista
 	let query = 'Select post.id, post.username_usuario, post.titulo,'+
-	'post.publicado from post WHERE post.id = '+req.params.id_post+' '+where;  
+	'post.publicado, post.valoracion from post WHERE post.id = '+req.params.id_post+' '+where;  
 	console.log(query);
 	conn.query(query, (err,respuesta)=>{
 		if(err){
@@ -577,6 +577,7 @@ router.get('/getPostView/:id/:username',function(req,res){
 		}
 		console.log(respuesta);
 		let respuesta_view = JSON.parse(JSON.stringify(respuesta));
+		publicacion=respuesta_view[0];
 		console.log(respuesta_view[0]);
 		console.log(respuesta_view[0].contenido.data);
 		//COnvertimos los bytes
@@ -639,6 +640,34 @@ router.post('/calificar/',function(req,res){
 		res.send(calificacion);
 	});
 })
+
+//Obtener las calificaiones de un post
+router.get('/getCalificacionPost/:id_',function(req,res){
+	let consulta = 'SELECT valoracion from post WHERE id='+ req.params.id_;
+	conn.query(consulta, (err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log('AYYYYYYYYYYYYYY');
+		console.log(respuesta);
+		res.send(respuesta);
+	}); 
+})
+
+//getCalificacionRespuesta
+router.get('/getCalificacionRespuesta/:id_',function(req,res){
+	let consulta = 'SELECT SUM(calificacion) as total from usuario_respuesta_calificacion WHERE id_respuesta='+req.params.id_;
+	conn.query(consulta,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		res.send(respuesta);
+	})
+})
+
 
 
 router.get('/modPublicaciones', function (req, res) {

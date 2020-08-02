@@ -11,7 +11,7 @@ $(function(){
 		document.title='Últimos foros';
 		forosPublicados();
 	});
-	
+
 });
 
 //funcion para obtener los ultimo post publicados
@@ -28,7 +28,7 @@ function postPublicados(){
             //Mandamos a imprimir eso en la pantalla de informativo 
 			let mapaCategorias = getCategoriasMapa(postVisibles);
 			limpiar();
-            printPost(postVisibles,mapaCategorias,'viewPost');       
+            printPost(postVisibles,mapaCategorias,'viewPost',1);       
         }
     }
     ajaxRequest.send(null);
@@ -48,7 +48,7 @@ function forosPublicados(){
             //Mandamos a imprimir eso en la pantalla de informativo 
 			let mapaCategorias = getCategoriasMapa(foroVisibles);
 			limpiar();
-            printPost(foroVisibles,mapaCategorias,'viewForo');       
+            printPost(foroVisibles,mapaCategorias,'viewForo',0);       
         }
     }
     ajaxRequest.send(null);
@@ -98,7 +98,7 @@ function limpiar(){
 }
 
 //Funcion para poner en pantalla los últimos post publicados
-function printPost(lista,mapa,link){
+function printPost(lista,mapa,link,p_o_f){
 	let id=-1;
 	let mapaAuxiliar=new Map();
 	for(var i=0 ;i<lista.length; i++){
@@ -112,6 +112,11 @@ function printPost(lista,mapa,link){
 		for (var j = 0 ; j<listaCate.length; j++){
 			categorias=categorias +"<em>"+ listaCate[j] + "</em>, ";
 		}
+		let agregado = " ";
+		//SI es 1 entonces es post y se debe agregar la calificación, sino es un foro
+		if(p_o_f==1){
+			agregado = "<strong>Calificación: "+lista[i].valoracion + " puntos</strong>";
+		}
 		categorias=categorias.substring(0,categorias.length-2)+".";
         let registros = '<div class="row" id="'+lista[i].id+'">'+
                     '<div class="col-sm-1 mt-5">'+
@@ -120,7 +125,8 @@ function printPost(lista,mapa,link){
                     '<h3><a href="/'+link+'/'+lista[i].id+"/"+lista[i].username_usuario+'/1'+'" style="color:black">'+lista[i].titulo+'</a></h3>' +
                     '<strong>Categorias: </strong>'+categorias+'<br>'+
                     '<strong>Publicado por: </strong>'+lista[i].username_usuario+'<br>'+
-                    '<strong>Fecha de publicación: </strong>'+lista[i].fecha_hora+'<br>'+
+					'<strong>Fecha de publicación: </strong>'+lista[i].fecha_hora+'<br>'+
+					agregado+
                     '</p>'+
                     '</div>'+
                     '<div class="container">'+

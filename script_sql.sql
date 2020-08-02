@@ -255,3 +255,21 @@ create table ciudad (
     FOREIGN KEY (id_provincia) REFERENCES provincia(id)
 );
 
+DELIMITER //
+CREATE TRIGGER update_post_valoraciones 
+BEFORE INSERT ON usuario_post_calificacion 
+FOR EACH ROW 
+BEGIN 
+#Obtengo la valoración actual del post que se está calificando
+DECLARE valoracion_actual FLOAT; 
+DECLARE contar INT;
+SET valoracion_actual = (SELECT post.valoracion FROM post WHERE post.id=NEW.id_post); 
+#Obtengo el numero de veces que se ha calificado el post
+SET contar = (SELECT COUNT(id_post) FROM usuario_post_calificacion where usuario_post_calificacion.id_post=NEW.id_post);
+#Incremento la valoración dada la calificación 
+SET valoracion_actual = valoracion_actual + NEW.calificacion; 
+#Ingreso el nuevo valor de la valoracion en la tabla POST 
+UPDATE post SET post.valoracion=valoracion_actual WHERE post.id = NEW.id_post; 
+END;
+
+SELECT COUNT(id_post) FROM usuario_post_calificacion where usuario_post_calificacion.id_post=21 

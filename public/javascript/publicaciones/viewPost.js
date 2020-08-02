@@ -129,13 +129,33 @@ function quitarEstrellasYPonerCalificacion(puntaje,accion){
     });
     let frase='';
     if(accion==1){
-        frase = '<p><strong>Calificación otorgada: </strong>'+puntaje+' ptos</p>';
+        printAndGetCalificacion(puntaje);
     }else if (accion==0){
         //El post aun no está publicado, entonces no debo mostrar la calificación
         frase = '<p><strong>Aún no está publicado el post para calificarlo</strong></p>';
 
     }
     $('#contenedorEstrellas').append(frase);
+}
+
+//Funcion para obtener calificaion del post
+function printAndGetCalificacion(puntaje){
+    let http = new XMLHttpRequest();
+    let id_ = $('#id_post').text();
+    http.open('GET','/getCalificacionPost/'+id_, true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.onreadystatechange=function(){
+        if(http.readyState== 4 && http.status==200){
+            let respuesta=JSON.parse(http.responseText);
+            console.log('respuesta')
+            console.log(respuesta[0].valoracion);
+            //Si ya esta calificado solo quito las estrellas
+            frase = '<p><strong>Calificación otorgada: </strong>'+puntaje+' ptos <br> <strong>Calificación total: </strong>'+
+            respuesta[0].valoracion+' puntos</p>';
+            $('#contenedorEstrellas').append(frase);  
+        }
+    }
+    http.send(null);
 }
 
 //Funcion para mandar la valoración a la base de datos. Solo se va a poder valorar una vez.
