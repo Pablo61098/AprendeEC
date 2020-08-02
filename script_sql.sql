@@ -264,3 +264,17 @@ create table datos_programa (
     PRIMARY KEY (id)
 );
 
+insert into datos_programa(nombre, valor) values ('iva', '12');
+insert into provincia(nombre) values ('Azuay');
+insert into provincia(nombre) values ('Pichincha');
+insert into provincia(nombre) values ('Guayas');
+insert into provincia(nombre) values ('Manabí');
+insert into ciudad(id_provincia, nombre) values (1, 'Cuenca');
+insert into ciudad(id_provincia, nombre) values (1, 'Paute');
+insert into ciudad(id_provincia, nombre) values (1, 'Gualaceo');
+insert into ciudad(id_provincia, nombre) values (2, 'Quito');
+insert into ciudad(id_provincia, nombre) values (3, 'Guayaquil');
+insert into ciudad(id_provincia, nombre) values (4, 'Portoviejo');
+insert into ciudad(id_provincia, nombre) values (4, 'Manta');
+commit;
+

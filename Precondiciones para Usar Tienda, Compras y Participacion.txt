@@ -1,0 +1,30 @@
+Precondiciones para Usar Tienda (/tienda), Compras (/compras) y Participacion
+
+1. Ser un usuario de la plataforma registrado de cualquier tipo: Invitado, Academico o Institucional
+
+La Tienda puede hacerse para ver los prodctos y enviar un catalogo por correo sin ser un usuario registrado.
+Pero para agregar productos al carrito se debe ser un usuario registrado e iniciar sesion. 
+
+2. Usuario Debe Tener:
+-Nombre
+-Apellido
+-Cedula
+-Foto (nombre del archivo en la carpeta /public/images/usuarios)
+
+3. Ademas se debe haber hecho el Insert del primer carrito del usuario, al momento de crear el usuario (transaccion de creacion de usuario):
+
+let date = new Date();
+let sql = `insert into carrito(username_usuario, fecha_hora_creacion, pendiente) values(${mysql.escape(res.locals.userName)}, '${date.toLocaleDateString()} ${date.toLocaleTimeString()}', true)`
+
+4. Iniciar la variable de ambiente: export TIENDA_MAIL_PASSWD=yaestoycansado
+
+5. Correr la ultima version de script_sql.sql, contiene inserciones del IVA y de algunas ciudades y provincias
+
+6. Insertar Productos en la tabla productos que contengan:
+-Id_Institucion
+-Nombre
+-Descripcion
+-Precio 
+-Stock
+-Eliminado (booleano en falso)
+-Foto (nombre del archivo en la carpeta /public/images/productos)

@@ -11,7 +11,7 @@ var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'aprendec.tienda@gmail.com',
-        pass: 'yaestoycansado'
+        pass: process.env.TIENDA_MAIL_PASSWD
     }
 });
 
