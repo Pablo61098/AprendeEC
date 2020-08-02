@@ -6,7 +6,7 @@ $(function() {
         extraPlugins: 'imagebrowser',
         removePlugins: 'easyimage',
         //filebrowserBrowseUrl: '/files',
-        imageBrowser_listUrl: '/files',
+        imageBrowser_listUrl: '/files'
         // filebrowserUploadUrl: '/upload'
     });
     cargarCategorias();

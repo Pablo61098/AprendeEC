@@ -133,9 +133,11 @@ var middleware = require("../../middleware");
 // .finally(() => console.log(""))
 
 var publicacion={};
+var publicacionForo={};
 
 router.use(function(req,res,next){
 	res.locals.publicacion = publicacion;
+	res.locals.publicacionForo = publicacionForo;
 	next();
 });
 
@@ -154,6 +156,29 @@ conn.connect(function(err) {
   }
   console.log("Conectado a la base de datos!");
 });
+
+
+
+//Funcion para guardar el foro
+router.post('/saveForo',function(req,res){
+	console.log(req.body);
+	let query= 'Insert into foro values('+req.body.id+','+"'"+req.body.username_usuario+"'"+",'"+req.body.titulo+"'"+','+"'"+req.body.fecha_hora+"'"+','+"'"+req.body.contenido+"',"+""+req.body.publicado+")";
+	console.log(query);
+	conn.query(query,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+            res.status(404).send('Not found');
+		}
+		// comsole.log(req.locals.userName);
+		console.log('Insertado exitosamente');
+		recuperarIdMaxAndSaveCategorias(req.body.username_usuario,'id','foro','username_usuario',req.body.id_categoria,'id_categoria','id_foro','categoria_foro');
+		res.send('Agregado exitosamente');
+	});	
+});
+
+
+
+
 
 
 
@@ -230,6 +255,18 @@ router.get('/categorias',function(req,res){
 	});
 });
 
+//Funcion para obtener los posts
+router.get('/getForo/:username',function(req,res){
+	let query = "Select * from foro where username_usuario='"+req.params.username+"'";
+	conn.query(query,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		res.send(respuesta);		
+	});
+});
 
 //Funcion para obtener los posts
 router.get('/getPost/:username',function(req,res){
@@ -278,6 +315,23 @@ router.get('/getLastPost',function(req,res){
 	'categoria.nombre from post INNER JOIN categoria_post '+
 	'INNER JOIN categoria ON post.id = categoria_post.id_post AND categoria_post.id_categoria = categoria.id '+
 	'AND post.publicado=true ORDER BY `post`.`id` DESC ';
+	conn.query(query,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		res.send(respuesta);
+	});
+});
+
+//--------- PARA INFORMATIVO ---------------
+router.get('/getLastForo',function(req,res){
+	//Obtenemos los últimos posts de todos los usuarios para mostrar en informativo
+	let query = 'Select foro.id, foro.username_usuario, foro.titulo, foro.fecha_hora, '+
+	'categoria.nombre from foro INNER JOIN categoria_foro '+
+	'INNER JOIN categoria ON foro.id = categoria_foro.id_foro AND categoria_foro.id_categoria = categoria.id '+
+	'AND foro.publicado=true ORDER BY `foro`.`id` DESC ';
 	conn.query(query,(err,respuesta)=>{
 		if(err){
 			console.error(err);
@@ -346,6 +400,48 @@ router.get('/getComentarios/:id_p_f/:tabla/:campo_p_f',function(req,res){
 })
 
 
+//Servicio para poner una respuesta en la base de datos
+router.post('/putRespuesta',function(req,res){
+	let insertar= "INSERT INTO usuario_foro_respuesta(id,username_usuario,id_foro,respuesta,fecha_hora) VALUES("+
+	"null,'"+req.body.username_usuario+"',"+req.body.id_foro+", '"+req.body.respuesta+"', '"+req.body.fecha_hora+"')";
+	conn.query(insertar,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		res.send('Respuesta insertada.');
+	})
+})
+
+//Funcion para obtener las respuestas
+function filtrar(lista){
+	for(var i=0; i<lista.length; i++){
+		let convertido= new Buffer(lista[i].respuesta.data).toString('ascii');
+		console.log(convertido);
+		lista[i].respuesta=convertido;
+	}
+	return lista;
+}
+
+//Servicio para obtener respuestas
+router.get('/respuestas/:id_foro/',function(req,res){
+	let consulta= "SELECT * FROM usuario_foro_respuesta WHERE id_foro="+req.params.id_foro;
+	conn.query(consulta, (err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		let respuesta_view = JSON.parse(JSON.stringify(respuesta));
+		//Convertimos los bytes
+		respuesta_view=filtrar(respuesta_view);
+		console.log(respuesta_view);
+		console.log('Respondiendo....')
+		res.send(respuesta_view);
+	});
+});
+
 router.get('/modPublicaciones', middleware.isLoggedIn ,function (req, res) {
 	res.render('./publicaciones_views/modPublicaciones');
 });
@@ -357,6 +453,41 @@ router.get('/modPubForos',function(req,res){
 router.get('/editor',function(req,res){
 	res.render('./publicaciones_views/editor')
 });
+
+
+//Servicio para ver el foro 
+router.get('/viewForo/:id_foro/:username/:action',function(req,res){
+	let where = "";
+	console.log(req.params.username);
+	//Siempre va a ser diferente de -1. 
+	if(req.params.username != '-1'){
+		where = "AND username_usuario='"+req.params.username+"'";
+	}else{
+		where = "AND publicado=true";
+	}
+	//Obtengo el post que necesito para mostrar en la vista
+	let query = 'Select foro.id, foro.username_usuario, foro.titulo,'+
+	'foro.publicado from foro WHERE foro.id = '+req.params.id_foro+' '+where;  
+	console.log(query);
+	conn.query(query, (err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		let respuesta_view = JSON.parse(JSON.stringify(respuesta));
+		publicacionForo=respuesta_view[0];
+		console.log(publicacionForo);
+		if(req.params.action=='0')
+			res.send('Encontrado');
+		if(req.params.action=='1')
+			res.redirect('/viewForo');
+	});
+	
+});
+
+
+
 
 //Servicio para ver el post 
 router.get('/viewPost/:id_post/:username/:action',function(req,res){
@@ -389,6 +520,51 @@ router.get('/viewPost/:id_post/:username/:action',function(req,res){
 	
 });
 
+//Servicio para obtener todo lo necesario para ver el foro
+router.get('/getForoView/:id/:username',function(req,res){
+	let id_foro = req.params.id;
+	let username_foro = req.params.username;
+
+	let query = 'Select * from foro where id = '+id_foro + " AND username_usuario='"+ username_foro + "'";
+	conn.query(query,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		let respuesta_view = JSON.parse(JSON.stringify(respuesta));
+		console.log(respuesta_view[0]);
+		console.log(respuesta_view[0].contenido.data);
+		//COnvertimos los bytes
+		let convertido = new Buffer(respuesta_view[0].contenido.data).toString('ascii');
+		console.log(convertido);
+		respuesta_view[0].contenido = convertido;
+		res.send(respuesta_view[0]);
+	});
+});
+
+//Servicio para obtener las categorias a las que pertenece determinado foro
+router.get('/categoriaForo/:foro_id',function(req,res){
+	let foro_id = req.params.foro_id;
+	let consulta = 'SELECT categoria.nombre from categoria INNER JOIN categoria_foro ON '+
+	'categoria_foro.id_categoria = categoria.id AND categoria_foro.id_foro ='+foro_id;
+	conn.query(consulta, (err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log(respuesta);
+		let respuesta_view = JSON.parse(JSON.stringify(respuesta));
+		res.send(respuesta_view);
+
+	});
+});
+
+
+
+
+
+//Servicio para obtener todo lo necesario para ver el post
 router.get('/getPostView/:id/:username',function(req,res){
 	let id_post = req.params.id;
 	let username_post = req.params.username;

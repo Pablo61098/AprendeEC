@@ -1,10 +1,17 @@
 let postVisibles=[];
-
+let foroVisibles=[];
 $(function(){
 	$('#linkLastPost').click(function(){
 		//Llamamos a la funcion que nos devolverá los ultimos posts
+		document.title='Últimos posts';
 		postPublicados();
 	});
+	$('#linkLastForos').click(function(){
+		//Llamamos a la funcion que nos devolverá los ultimos posts
+		document.title='Últimos foros';
+		forosPublicados();
+	});
+	
 });
 
 //funcion para obtener los ultimo post publicados
@@ -21,7 +28,27 @@ function postPublicados(){
             //Mandamos a imprimir eso en la pantalla de informativo 
 			let mapaCategorias = getCategoriasMapa(postVisibles);
 			limpiar();
-            printPost(postVisibles,mapaCategorias);       
+            printPost(postVisibles,mapaCategorias,'viewPost');       
+        }
+    }
+    ajaxRequest.send(null);
+}
+
+//funcion para obtener los ultimo post publicados
+function forosPublicados(){
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("GET", "/getLastForo", true);
+    ajaxRequest.onreadystatechange = function(){
+        if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
+            console.log('Foros obtenidos exitosamente');
+            //window.open('/modPublicaciones')
+            //Obtenemos la respuesta que nos da el servidor
+            foroVisibles=JSON.parse(ajaxRequest.responseText);
+            console.log(foroVisibles);
+            //Mandamos a imprimir eso en la pantalla de informativo 
+			let mapaCategorias = getCategoriasMapa(foroVisibles);
+			limpiar();
+            printPost(foroVisibles,mapaCategorias,'viewForo');       
         }
     }
     ajaxRequest.send(null);
@@ -71,7 +98,7 @@ function limpiar(){
 }
 
 //Funcion para poner en pantalla los últimos post publicados
-function printPost(lista,mapa){
+function printPost(lista,mapa,link){
 	let id=-1;
 	let mapaAuxiliar=new Map();
 	for(var i=0 ;i<lista.length; i++){
@@ -90,8 +117,7 @@ function printPost(lista,mapa){
                     '<div class="col-sm-1 mt-5">'+
                     '</div>'+
                     '<div class="col-sm-11">'+
-                    '<h3><a href="/viewPost/'+lista[i].id+"/"+lista[i].username_usuario+'/1'+'" style="color:black">'+lista[i].titulo+'</a></h3>' +
-                    '<strong>Calificación: </strong>'+lista[i].valoracion+'<br>'+
+                    '<h3><a href="/'+link+'/'+lista[i].id+"/"+lista[i].username_usuario+'/1'+'" style="color:black">'+lista[i].titulo+'</a></h3>' +
                     '<strong>Categorias: </strong>'+categorias+'<br>'+
                     '<strong>Publicado por: </strong>'+lista[i].username_usuario+'<br>'+
                     '<strong>Fecha de publicación: </strong>'+lista[i].fecha_hora+'<br>'+
