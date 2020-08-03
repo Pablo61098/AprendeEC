@@ -69,6 +69,11 @@ body {
     width: 75%;
 }
 
+.imagen_usuario {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
 
 .content {
     flex: 1 0 auto;

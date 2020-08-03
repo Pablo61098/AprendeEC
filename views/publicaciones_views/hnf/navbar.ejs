@@ -21,7 +21,9 @@
             </ul>
             <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
                 <li class="nav-item  mx-auto">
+                    <% if (typeof(userName) !== 'undefined') { %>
                     <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    <% } %>
                 </li>
                 <!-- Dropdown -->
                 <li class="nav-item dropdown mx-auto">

@@ -408,7 +408,7 @@ router.get("/direcciones/editar_direccion/:id_direccion", middleware.isLoggedIn,
     });
 });
 
-router.get("/direcciones/provincias/", middleware.isLoggedIn, function (req, res) {
+router.get("/direcciones/provincias/", function (req, res) {
     let sql = `select * from provincia order by nombre`;
     conn.query(sql, function (error, results) {
         if (error) {
@@ -420,7 +420,7 @@ router.get("/direcciones/provincias/", middleware.isLoggedIn, function (req, res
     });
 });
 
-router.get("/direcciones/cantones/:id_provincia", middleware.isLoggedIn, function (req, res) {
+router.get("/direcciones/cantones/:id_provincia", function (req, res) {
     let sql = `select nombre from ciudad where id_provincia = ${mysql.escape(req.params.id_provincia)} order by nombre`;
     conn.query(sql, function (error, results) {
         if (error) {

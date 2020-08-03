@@ -23,6 +23,11 @@ $(document).on("click", "#aceptar_eliminar_direccion", function () {
                     <hr>
                 </div>`;
                 }
+            },
+            statusCode: {
+                404: function () {
+                    window.location.replace("/login");
+                }
             }
         });
     }

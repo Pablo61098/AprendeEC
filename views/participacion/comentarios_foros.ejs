@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <title>Comentarios en Foros</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href=".././css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="jumbotron head_foot">
+            <img src=".././images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <h1><b>@prendEC</b></h1>
+        </div>
+    </header>
+    <!-- Navbar -->
+    <%- include('../publicaciones_views/hnf/navbar.ejs') %>
+    <!-- Cuerpo -->
+    <div class="container-fluid pt-4 pb-4">
+        <div class="row">
+            <!-- Barra Lateral -->
+            <aside class="col-sm-4 pt-4 pb-4 bg-light navbar-light rounded">
+                <ul class="nav nav-pills flex-column" role="tablist">
+                    <li class="nav-item"><a class="nav-link" href="/participacion"><i
+                                class="fas fa-award"></i>&nbsp;&nbsp;Valoración</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/participacion/comentarios_posts"><i
+                                class="fas fa-comments"></i>&nbsp;&nbsp;Comentarios en Posts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/participacion/calificaciones_posts"><i
+                                class="fas fa-star"></i>&nbsp;&nbsp;Calificaciones de Posts</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/participacion/comentarios_foros"><i
+                                class="fas fa-comment-alt"></i>&nbsp;&nbsp;Comentarios en Foros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/participacion/respuestas_foros"><i
+                                class="fas fa-question-circle"></i>&nbsp;&nbsp;Respuestas en Foros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/participacion/calificaciones_respuestas"><i
+                                class="fas fa-thumbs-up"></i>&nbsp;&nbsp;Calificaciones de Respuestas</a></li>
+                </ul>
+            </aside>
+            <!-- Secciones de Pestañas -->
+            <div class="col-sm-8 pt-4 pb-4">
+                <!-- Sección de Posts -->
+                <section class="container">
+                    <div class="ml-4">
+                        <h2>Comentarios en Foros</h2>
+                        <br>
+                        <% if (results.length === 0) { %>
+                        <!-- Instancia de Comentarios Vacía -->
+                        <div class="vacio">
+                            <br>
+                            <p><i class="fas fa-ban icono_vacio"></i></p>
+                            <h5>No hay más comentarios en foros.</h5>
+                            <hr>
+                        </div>
+                        <!-- Fin Instancia de Comentarios Vacía -->
+                        <% } else { %>
+                        <div id="contenedor">
+                            <% for (let i=0; i < results.length; i++) { %>
+                            <!-- Instancia de Comentario  -->
+                            <div id="<%= results[i].id %>">
+                                <p>Foro: <%= results[i].titulo %> <small>(<%= results[i].autor %> | <%= results[i].fecha_hora_foro %>)</small></p>
+                                <p>Comentario: <%= results[i].comentario %></p>
+                                <p><small><%= results[i].fecha_hora_comentario %></small></p>
+                                <div class="float-right align-self-sm-end btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-link eliminar_comentario_foro" data-toggle="modal" data-id="<%= results[i].id %>"
+                                        data-target="#modal_eliminar_comentario_foro">Eliminar</button>
+                                </div>
+                                <br>
+                                <hr>
+                            </div>
+                            <!-- Fin de Instancia de Comentario  -->
+                            <% } %>
+                        </div>
+                        <% } %>
+                        <span id="pagina" style="display: none;"><%= pagina %></span>
+                        <br>
+                        <!-- Páginas -->
+                        <div class="row  justify-content-center">
+                            <ul class="pagination">
+                                <% if (pagina > 1) { %>
+                                <li class="page-item"><a
+                                        href="/participacion/comentarios_foros?pagina=<%= parseInt(pagina, 10) - 1 %>"><button
+                                            class="page-link">Anterior</button></a>
+                                </li>
+                                <% } %>
+                                <% if (results.length >= 3) { %>
+                                <li class="page-item"><a
+                                        href="/participacion/comentarios_foros?pagina=<%= parseInt(pagina, 10) + 1 %>"><button
+                                            class="page-link">Siguiente</button></a>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="content"></div>
+    <footer>
+        <div class="jumbotron text-center head_foot">
+            <p>Aprendizaje Online para todo el Ecuador</p>
+            AprendEC 2020 <i class="far fa-copyright"></i>
+        </div>
+    </footer>
+    <!-- Modal Eliminar Comentario Foro -->
+    <div class="modal fade" id="modal_eliminar_comentario_foro" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Comentario de Foro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se procederá a eliminar el comentario del foro indicado.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="aceptar_eliminar_comentario_foro"
+                    data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src=".././javascript/eliminar_comentario_foro.js"></script>
+</body>
+
+</html>

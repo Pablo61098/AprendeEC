@@ -133,23 +133,25 @@
             <ul class="pagination">
                 <% if (busqueda) {%>
                 <% if (pagina > 1) {%>
-                <li class="page-item"><button class="page-link"><a
-                            href="/tienda/buscar?busqueda=<%= busqueda %>&pagina=<%= parseInt(pagina, 10) - 1 %>">Anterior</a></button>
+                <li class="page-item"><a
+                        href="/tienda/buscar?busqueda=<%= busqueda %>&pagina=<%= parseInt(pagina, 10) - 1 %>"><button
+                            class="page-link">Anterior</button></a>
                 </li>
                 <% } %>
                 <% if (results.length >= 3) {%>
-                <li class="page-item"><button class="page-link"><a
-                            href="/tienda/buscar?busqueda=<%= busqueda %>&pagina=<%= parseInt(pagina, 10) + 1 %>">Siguiente</a></button>
+                <li class="page-item"><a
+                        href="/tienda/buscar?busqueda=<%= busqueda %>&pagina=<%= parseInt(pagina, 10) + 1 %>"><button
+                            class="page-link">Siguiente</button></a>
                 </li>
                 <% } %>
                 <% } else { %>
                 <% if (pagina > 1) {%>
-                <li class="page-item"><button class="page-link"><a
-                            href="/tienda?pagina=<%= parseInt(pagina, 10) - 1 %>">Anterior</a></button></li>
+                <li class="page-item"><a href="/tienda?pagina=<%= parseInt(pagina, 10) - 1 %>"><button
+                            class="page-link">Anterior</button></a></li>
                 <% } %>
                 <% if (results.length >= 3) {%>
-                <li class="page-item"><button class="page-link"><a
-                            href="/tienda?pagina=<%= parseInt(pagina, 10) + 1 %>">Siguiente</a></button></li>
+                <li class="page-item"><a href="/tienda?pagina=<%= parseInt(pagina, 10) + 1 %>"><button
+                            class="page-link">Siguiente</button></a></li>
                 <% } %>
                 <% } %>
             </ul>

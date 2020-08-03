@@ -27,6 +27,11 @@ $(document).on("click", "#aceptar_quitar_producto", function () {
                     document.getElementById("boton_comprar").style.display = "none";
                     document.getElementById("contenedor_costo").style.display = "none";
                 }
+            },
+            statusCode: {
+                404: function () {
+                    window.location.replace("/login");
+                }
             }
         });
     }

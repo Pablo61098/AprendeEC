@@ -43,13 +43,16 @@ $(document).on("click", ".boton_carrito_agregar", function () {
                 modal.style.display = "block";
                 boton_cerrar.onclick = function () {
                     modal.style.display = "none";
+                    window.location.href = "/login";
                 }
                 boton_aceptar.onclick = function () {
                     modal.style.display = "none";
+                    window.location.href = "/login";
                 }
                 window.onclick = function (event) {
                     if (event.target == modal) {
                         modal.style.display = "none";
+                        window.location.href = "/login";
                     }
                 }
             }

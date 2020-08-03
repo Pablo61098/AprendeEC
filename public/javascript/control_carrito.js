@@ -12,6 +12,11 @@ $(document).on("click", ".mas", function () {
                 objeto_input_id.val(cant);
                 var nuevo_costo = bigDecimal.add(document.getElementById('costo').innerHTML, objeto_costo_producto.html());
                 document.getElementById('costo').innerHTML = `${nuevo_costo}`;
+            },
+            statusCode: {
+                404: function () {
+                    window.location.replace("/login");
+                }
             }
         });
     }
@@ -31,6 +36,11 @@ $(document).on("click", ".menos", function () {
                 objeto_input_id.val(cant);
                 var nuevo_costo = bigDecimal.subtract(document.getElementById('costo').innerHTML, objeto_costo_producto.html());
                 document.getElementById('costo').innerHTML = `${nuevo_costo}`;
+            },
+            statusCode: {
+                404: function () {
+                    window.location.replace("/login");
+                }
             }
         });
     }

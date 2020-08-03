@@ -9,7 +9,7 @@ Pero para agregar productos al carrito se debe ser un usuario registrado e inici
 -Nombre
 -Apellido
 -Cedula
--Foto (nombre del archivo en la carpeta /public/images/usuarios)
+-Foto (link del archivo en la sesion) / Faltan recibir esos cambios y ponerle (Por ahora se sacan de /public/fotos)
 
 3. Ademas se debe haber hecho el Insert del primer carrito del usuario, al momento de crear el usuario (transaccion de creacion de usuario):
 
@@ -28,3 +28,8 @@ let sql = `insert into carrito(username_usuario, fecha_hora_creacion, pendiente)
 -Stock
 -Eliminado (booleano en falso)
 -Foto (nombre del archivo en la carpeta /public/images/productos)
+
+PD: A considerar:
+
+-Me falta cambiar la foto del usuario en valoracion para que use la de la sesion.
+-Considerar poner links a posts y foros en la seccion de Participacion.
