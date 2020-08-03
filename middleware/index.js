@@ -3,7 +3,7 @@ const mysql = require("mysql");
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'luis',
+    user: 'root',
     password: process.env.LOCAL_MYSQL_PASSWORD,
     database: 'aprendecdb'
 });

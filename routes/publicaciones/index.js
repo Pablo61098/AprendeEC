@@ -152,7 +152,7 @@ router.use(function(req,res,next){
 var mysql = require('mysql')
 const conn = mysql.createConnection({
 	host: 'localhost',
-	user: 'luis',
+	user: 'root',
 	database : 'aprendecdb',
 	password: process.env.LOCAL_MYSQL_PASSWORD
 });
