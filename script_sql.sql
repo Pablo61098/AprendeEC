@@ -273,4 +273,115 @@ SET valoracion_actual = valoracion_actual / contar;
 UPDATE post SET post.valoracion=valoracion_actual WHERE post.id = NEW.id_post; 
 END;
 
-SELECT COUNT(id_post) FROM usuario_post_calificacion where usuario_post_calificacion.id_post=21 
+
+DELIMITER //
+CREATE TRIGGER updateCalificacionUsuario 
+AFTER UPDATE ON post 
+FOR EACH ROW 
+BEGIN 
+DECLARE estadoPublicacion BOOLEAN;
+DECLARE username VARCHAR(255);
+DECLARE cuantosPosts FLOAT;
+DECLARE valoracionTotalPosts FLOAT;
+DECLARE totalPosts FLOAT;
+DECLARE totalForosRespuesta FLOAT;
+DECLARE esUsuarioAcademico INT;
+DECLARE valorActualUsuario FLOAT;
+DECLARE valorNuevoUsuario FLOAT;
+DECLARE id_institucion INT;
+DECLARE usernameInstitucion VARCHAR(255);
+DECLARE calificacionInstitucionActual FLOAT;
+DECLARE esUsuarioInstitucion INT;
+DECLARE calificacionActualInsti FLOAT;
+SET estadoPublicacion = NEW.publicado;
+SET username = NEW.username_usuario;
+    IF (estadoPublicacion = 1) THEN
+        SET cuantosPosts = (SELECT COUNT(post.username_usuario) FROM post WHERE post.username_usuario = username);
+        SET valoracionTotalPosts = (SELECT SUM(post.valoracion) FROM post WHERE post.username_usuario = username);
+        SET totalPosts = valoracionTotalPosts / cuantosPosts;
+        SET totalForosRespuesta = (SELECT SUM(usuario_respuesta_calificacion.calificacion) FROM `usuario_foro_respuesta` INNER JOIN `usuario_respuesta_calificacion` WHERE usuario_foro_respuesta.id = usuario_respuesta_calificacion.id_respuesta AND usuario_foro_respuesta.username_usuario=username);
+        SET esUsuarioAcademico = (SELECT COUNT(usuario_academico.username) FROM usuario_academico WHERE
+usuario_academico.username=username);
+		SET  valorNuevoUsuario = totalPosts + totalForosRespuesta;
+		IF esUsuarioAcademico = 1 THEN
+        	SET valorActualUsuario = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = username);
+        	UPDATE usuario SET usuario.valoracion = valorNuevoUsuario
+        	WHERE usuario.username = username;
+            SET id_institucion = (SELECT `usuario_academico`.`id_institucion` FROM `usuario_academico` where `usuario_academico`.`username` = username);
+            
+            SET usernameInstitucion = (SELECT usuario_admin_inst.username FROM usuario_admin_inst WHERE usuario_admin_inst.id_institucion = id_institucion);
+            
+            SET calificacionInstitucionActual = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = usernameInstitucion);
+            UPDATE usuario SET usuario.valoracion = calificacionInstitucionActual + (valorNuevoUsuario - valorActualUsuario)
+        	WHERE usuario.username = usernameInstitucion;
+        ELSE
+        	
+        	SET esUsuarioInstitucion = (SELECT COUNT(usuario_admin_inst.username) FROM usuario_admin_inst WHERE
+usuario_admin_inst.username=username);
+			IF esUsuarioInstitucion = 1 THEN
+                SET calificacionActualInsti = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = username);
+                UPDATE usuario SET usuario.valoracion = calificacionActualInsti + valorNuevoUsuario
+        		WHERE usuario.username = usernameInstitucion;
+            ELSE
+            	UPDATE usuario SET usuario.valoracion = valorNuevoUsuario
+        		WHERE usuario.username = username;
+            END IF;
+        END IF;        
+    END IF;
+END;
+
+DELIMITER //
+CREATE TRIGGER updateCalificacionUsuarioForos 
+AFTER INSERT ON usuario_respuesta_calificacion 
+FOR EACH ROW 
+BEGIN 
+DECLARE estadoPublicacion BOOLEAN;
+DECLARE username VARCHAR(255);
+DECLARE cuantosPosts FLOAT;
+DECLARE valoracionTotalPosts FLOAT;
+DECLARE totalPosts FLOAT;
+DECLARE totalForosRespuesta FLOAT;
+DECLARE esUsuarioAcademico INT;
+DECLARE valorActualUsuario FLOAT;
+DECLARE valorNuevoUsuario FLOAT;
+DECLARE id_institucion INT;
+DECLARE usernameInstitucion VARCHAR(255);
+DECLARE calificacionInstitucionActual FLOAT;
+DECLARE esUsuarioInstitucion INT;
+DECLARE calificacionActualInsti FLOAT;
+SET estadoPublicacion = 1;
+SET username = (SELECT usuario_foro_respuesta.username_usuario FROM usuario_foro_respuesta WHERE usuario_foro_respuesta.id =NEW.id_respuesta);
+    IF (estadoPublicacion = 1) THEN
+        SET cuantosPosts = (SELECT COUNT(post.username_usuario) FROM post WHERE post.username_usuario = username);
+        SET valoracionTotalPosts = (SELECT SUM(post.valoracion) FROM post WHERE post.username_usuario = username);
+        SET totalPosts = valoracionTotalPosts / cuantosPosts;
+        SET totalForosRespuesta = (SELECT SUM(usuario_respuesta_calificacion.calificacion) FROM `usuario_foro_respuesta` INNER JOIN `usuario_respuesta_calificacion` WHERE usuario_foro_respuesta.id = usuario_respuesta_calificacion.id_respuesta AND usuario_foro_respuesta.username_usuario=username);
+        SET esUsuarioAcademico = (SELECT COUNT(usuario_academico.username) FROM usuario_academico WHERE
+usuario_academico.username=username);
+		SET  valorNuevoUsuario = totalPosts + totalForosRespuesta;
+		IF esUsuarioAcademico = 1 THEN
+        	SET valorActualUsuario = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = username);
+        	UPDATE usuario SET usuario.valoracion = valorNuevoUsuario
+        	WHERE usuario.username = username;
+            SET id_institucion = (SELECT `usuario_academico`.`id_institucion` FROM `usuario_academico` where `usuario_academico`.`username` = username);
+            
+            SET usernameInstitucion = (SELECT usuario_admin_inst.username FROM usuario_admin_inst WHERE usuario_admin_inst.id_institucion = id_institucion);
+            
+            SET calificacionInstitucionActual = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = usernameInstitucion);
+            UPDATE usuario SET usuario.valoracion = calificacionInstitucionActual + (valorNuevoUsuario - valorActualUsuario)
+        	WHERE usuario.username = usernameInstitucion;
+        ELSE
+        	
+        	SET esUsuarioInstitucion = (SELECT COUNT(usuario_admin_inst.username) FROM usuario_admin_inst WHERE
+usuario_admin_inst.username=username);
+			IF esUsuarioInstitucion = 1 THEN
+                SET calificacionActualInsti = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = username);
+                UPDATE usuario SET usuario.valoracion = calificacionActualInsti + valorNuevoUsuario
+        		WHERE usuario.username = usernameInstitucion;
+            ELSE
+            	UPDATE usuario SET usuario.valoracion = valorNuevoUsuario
+        		WHERE usuario.username = username;
+            END IF;
+        END IF;        
+    END IF;
+END;
