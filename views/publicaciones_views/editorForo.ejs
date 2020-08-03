@@ -19,6 +19,37 @@
             </div>
         </div>
     </div>
+
+    <p hidden id="editarAccion"><%= editarForo%></p>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 mt-1 mb-4">
+                <h5>Categoría</h5>     
+                <div class="col-sm" id="categoria">
+                        <select class="selectpicker" >
+                          <!-- <option>Mustard</option>
+                          <option>Ketchup</option>
+                          <option>Relish</option> -->
+                        </select>
+                </div>
+                <div class="container mt-2">
+                    <button type="button" class="btn btn-success" id="btnSeleccionar">Seleccionar</button>
+                    <button type="button" class="btn btn-danger" id="btnEliminar">Eliminar</button>
+                </div>
+                <!-- <div class="row">
+                    <h5>Hola</h5>
+                </div> -->               
+            </div>
+            <div class="col-sm-8 mt-1 mb-4">
+                <h5>Categorías seleccionadas</h5>
+                <div id="catSel" class="container">
+                   <!--  <button type="button" class="btn btn-secondary">Secondary</button> -->
+                </div>
+            </div>
+        </div>
+    </div>  
+
     <div class="container">
         <textarea id="editor1"></textarea>
     </div>

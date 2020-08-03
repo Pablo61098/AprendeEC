@@ -1,16 +1,29 @@
     <%- include('hnf/header.ejs') %> 
     <%- include('hnf/navbar.ejs') %>
 
-
     <div class="container-expand">
         <div class="row">
             <div class="col-sm-12 mt-4">
+                <div class="container mt-4 mb-4" id="contenidoForo">
+                    <% if(typeof publicacion != 'undefined'){ %>
+                        <p hidden id="pub" class="text-danger"><%= publicacionForo.titulo %></p>
+                        <p hidden id="publicado" class="text-danger"><%= publicacionForo.publicado %></p>
+                        <p hidden id="id_foro" class="text-danger"><%= publicacionForo.id %></p>
+                        <p hidden id="username_foro" class="text-danger"><%= publicacionForo.username_usuario %></p>
+                    <% } %>
+                </div>
+                <%- include('hnf/mensaje.ejs') %>
                 <div class="container">
-                    <p>Aqui se va a encontrar el foro con un formato determinado</p>
+                    <div class="col-sm-6">
+                        <p id="tags"></p>
+                    </div>
                 </div>
                 <div class="container">
-                    <!--Aquí se tendrá que cargar los comentarios. Esto se tendra que ir creando dinámicamente-->
                     <hr>
+                </div>
+                <div class="container" id="seccionComentarios">
+                    <!--Aquí se tendrá que cargar los comentarios. Esto se tendra que ir creando dinámicamente-->
+                    <!-- <hr>
                     <div class="row">
                         <div id="username" class="col-sm-2 text-center">
                             <p><strong>LuchoCode</strong></p>
@@ -27,26 +40,31 @@
                         <div id="comentario" class="col-sm-10">
                             <p>Aquí irá un comentario</p>
                         </div>
-                    </div>
+                    </div> -->
                     <!--HASTA AQUÍ-->
                 </div>
                 <!--Aqui se tendrá el text area para que el usuario, en caso de estar registrado, pueda comentar.-->
-                <hr>
-                <div class="container">
+                <div class="container mt-4">
                     <form style="display: flex; margin-right: 20px;margin-left: 20px">
-                        <input type="text" style="flex: 1" placeholder="Añade un comentario">
+                        <input id="comentario" type="text" style="flex: 1" placeholder="Añade un comentario">
                         <button id="btnEnviar" type="button" class="btn ml-3 btn-outline-primary">Enviar</button>
                     </form>
 
                 </div>
-                <!--En esta parte va las respuestas por parte de los usuario-->
-                <hr style="height:2px;border-width:0;color:gray;background-color:black">
-                <h3>Respuestas</h3>
+                <!-- En esta parte va las respuestas por parte de los usuario-->
                 <div class="container">
+                    <hr >
+                    <h3>Respuestas</h3>
+                </div>
+                
+                <div class="container" id=seccionRespuestas>
 
                     <!--Esta parte también se debería crear dinámicamente con las respuestas de los usuarios-->
-                    <p>La respuesta por parte del usuario irá en esta sección. Loremjfjsdhfjsfks jhfshfjhfdsjk fds fjhfks fsh fjkds fdkj fdsjhfjdskfjkd fsd hds dhsadhas dhuashdad iua dsa su suai du dasiuhd asu dsadhai hdsa</p>
-                    <div class="row">
+                   
+                    <!-- <div class="row">
+                        <div class="container">
+                            <p>La respuesta por parte del usuario irá en esta sección. Loremjfjsdhfjsfks jhfshfjhfdsjk fds fjhfks fsh fjkds fdkj fdsjhfjdskfjkd fsd hds dhsadhas dhuashdad iua dsa su suai du dasiuhd asu dsadhai hdsa</p>
+                        </div>
                         <div class="col-sm-2">
                             <button class="btn btn-outline-primary"><i class="fas fa-arrow-circle-up"></i></button>
                             <button class="btn btn-outline-primary"><i class="fas fa-arrow-circle-down"></i></button>
@@ -64,35 +82,14 @@
                             </p>
                         </div>
                     </div>
+                    <hr style="height:2px;border-width:0;color:gray;background-color:black"> -->
                 </div>
 
-                <hr style="height:2px;border-width:0;color:gray;background-color:black">
-                <div class="container">
-
-                    <!--Esta parte también se debería crear dinámicamente con las respuestas de los usuarios-->
-                    <p>La respuesta por parte del usuario irá en esta sección. Loremjfjsdhfjsfks jhfshfjhfdsjk fds fjhfks fsh fjkds fdkj fdsjhfjdskfjkd fsd hds dhsadhas dhuashdad iua dsa su suai du dasiuhd asu dsadhai hdsa</p>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <button class="btn btn-outline-primary"><i class="fas fa-arrow-circle-up"></i></button>
-                            <button class="btn btn-outline-primary"><i class="fas fa-arrow-circle-down"></i></button>
-                        </div>
-                        <div class="col-sm-2">
-                            <p><strong>Calificación:</strong> 10 pts</p>
-                        </div>
-                        <div class="col-sm-4">
-                            <p><strong>Respondido: </strong><em id="respFecha2"></em></p>
-                        </div>
-                        <div class="col-sm-4 text-center">
-                            <img src="images/default-user.jpeg" style="width: 60px; height: 60px">
-                            <p><strong>AliciaBerg</strong><br>
-                                <strong>Puntos: </strong>10
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <hr style="height:2px;border-width:0;color:gray;background-color:black">
                 <!--Sección para las respuestas-->
-                <h4>Responder</h4>
+                <div class="container">
+                    <hr >
+                    <h3>Responder</h3>
+                </div>
                 <div class="container mt-4">
                     <div class="row">
                         <div class="col-sm-12">

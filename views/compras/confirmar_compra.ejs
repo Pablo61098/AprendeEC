@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <title>Confirmar Compra</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href=".././css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="jumbotron head_foot">
+            <img src=".././images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <h1><b>@prendEC</b></h1>
+        </div>
+    </header>
+    <!-- Navbar -->
+    <%- include('../publicaciones_views/hnf/navbar.ejs') %>
+    <!-- Cuerpo -->
+    <section class="container pb-4 pt-4">
+        <div id="informe">
+            <h2>AprendEC - Informe de Compra</h2>
+            <br>
+            <h6><b>Nombre: </b><%= buyerData[0].nombre %> <%= buyerData[0].apellido %></h6>
+            <h6><b>CI: </b><%= buyerData[0].cedula %></h6>
+            <h6><b>Fecha: </b><%= ( new Date() ).toLocaleDateString() %></h6>
+            <h6><b>Dirección de Envío: </b><%= buyerData[0].direccion %> | <%= buyerData[0].ciudad %>, <%= buyerData[0].provincia %></h6>
+            <h6><b>Forma de Pago: </b><%= buyerData[0].compania.toUpperCase() %> (**********<%= buyerData[0].digitos %>)</h6>
+            <br>
+            <table class="table table-striped table-responsive-xl tabla">
+                <thead>
+                    <tr>
+                        <th>Institución</th>
+                        <th>Artículo</th>
+                        <th>Costo Unitario ($ USD)</th>
+                        <th>Cantidad</th>
+                        <th>Costo ($ USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% let subtotal = "0.00" %>
+                    <% for (let i=0; i < results.length; i++) { %>
+                    <tr>
+                        <td><%= results[i].institucion %></td>
+                        <td><%= results[i].nombre %></td>
+                        <td><%= results[i].precio %></td>
+                        <td><%= results[i].cantidad %></td>
+                        <% let costo = bigDecimal.multiply(results[i].precio, results[i].cantidad) %>
+                        <td><%= costo %></td>
+                        <% subtotal = bigDecimal.add(subtotal, costo) %>
+                    </tr>
+                    <% } %>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th>Subtotal:</th>
+                        <td><%= subtotal %></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <% let porcentaje_iva = iva[0].valor %>
+                        <th>IVA (<%= porcentaje_iva %>%):</th>
+                        <% porcentaje_iva = "0." + porcentaje_iva %>
+                        <% let valor_iva = bigDecimal.round(bigDecimal.multiply(subtotal, porcentaje_iva), 2, bigDecimal.RoundingModes.HALF_DOWN) %>
+                        <td><%= valor_iva %></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th>Total a Pagar:</th>
+                        <td><%= bigDecimal.add(subtotal, valor_iva) %></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div class="form-group text-right">
+            <a href="/compras"><button value="Cancelar" class="btn btn-danger">Cancelar</button></a>
+            <a href="/compras/confirmar"><button value="Confirmar" class="btn btn-primary">Confirmar</button></a>
+        </div>
+    </section>
+    <!-- Footer -->
+    <div class="content"></div>
+    <footer>
+        <div class="jumbotron text-center head_foot">
+            <p>Aprendizaje Online para todo el Ecuador</p>
+            AprendEC 2020 <i class="far fa-copyright"></i>
+        </div>
+    </footer>
+</body>
+
+</html>

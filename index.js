@@ -23,6 +23,9 @@ const sesionRoutes = require("./routes/sesion");
 const comprasRoutes = require("./routes/compras");
 const adminRoutes = require("./routes/admin");
 const accountRoutes = require("./routes/account");
+const tiendaRoutes = require("./routes/tienda");
+const participacionRoutes = require("./routes/participacion");
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(fileUpload());
@@ -32,7 +35,7 @@ app.use(methodOverride("_method"));
 
 app.use(session({
     name: 'authentication',
-    secret: process.env.SESSION_SECRET,
+    secret: 'hola',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -102,8 +105,8 @@ app.use("/compras", comprasRoutes);
 app.use("/account", accountRoutes);
 app.use(require('./routes/publicaciones'));
 app.use("/admin",adminRoutes);
-
-
+app.use("/tienda", tiendaRoutes);
+app.use("/participacion", participacionRoutes);
 
 
 

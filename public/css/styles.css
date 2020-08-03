@@ -40,6 +40,15 @@ body {
     height: 150px;
 }
 
+.comentarioForoTexto{
+    color:darkslategray;
+    font-size:11px
+}
+.comentarioForoUsername{
+    color:black;
+    font-size:11px
+}
+
 .hr_br {
     border-color: rgb(255, 255, 255)
 }
@@ -69,6 +78,11 @@ body {
     width: 75%;
 }
 
+.imagen_usuario {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
 
 .content {
     flex: 1 0 auto;

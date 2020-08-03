@@ -5,6 +5,7 @@ CREATE TABLE usuario (
     correo VARCHAR(75),
     nombre VARCHAR(50),
     apellido VARCHAR(50),
+    cedula VARCHAR(10),
     foto varchar(255),
     valoracion FLOAT,
     cedula VARCHAR(10),
@@ -136,6 +137,8 @@ create table carrito (
     costo DECIMAL(19,2),
     fecha_hora_creacion VARCHAR(255),
     fecha_hora_pago VARCHAR(255),
+    direccion_envio VARCHAR(255),
+    metodo_pago VARCHAR(255),
     pendiente BOOLEAN,
     PRIMARY KEY (id, username_usuario),
     FOREIGN KEY (username_usuario) REFERENCES usuario(username)
@@ -263,4 +266,155 @@ create table ciudad (
     PRIMARY KEY (id, id_provincia),
     FOREIGN KEY (id_provincia) REFERENCES provincia(id)
 );
+
+DELIMITER //
+CREATE TRIGGER update_post_valoraciones 
+AFTER INSERT ON usuario_post_calificacion 
+FOR EACH ROW 
+BEGIN 
+#Obtengo la valoración actual del post que se está calificando
+DECLARE valoracion_actual FLOAT; 
+DECLARE contar FLOAT;
+#SET valoracion_actual = (SELECT post.valoracion FROM post WHERE post.id=NEW.id_post); 
+#Obtengo el numero de veces que se ha calificado el post
+SET contar = (SELECT COUNT(id_post) AS contar FROM usuario_post_calificacion where usuario_post_calificacion.id_post=NEW.id_post);
+SET valoracion_actual = (SELECT SUM(usuario_post_calificacion.calificacion) FROM usuario_post_calificacion where usuario_post_calificacion.id_post=NEW.id_post);
+#Incremento la valoración dada la calificación 
+SET valoracion_actual = valoracion_actual / contar; 
+#Ingreso el nuevo valor de la valoracion en la tabla POST 
+UPDATE post SET post.valoracion=valoracion_actual WHERE post.id = NEW.id_post; 
+END;
+
+
+DELIMITER //
+CREATE TRIGGER updateCalificacionUsuario 
+AFTER UPDATE ON post 
+FOR EACH ROW 
+BEGIN 
+DECLARE estadoPublicacion BOOLEAN;
+DECLARE username VARCHAR(255);
+DECLARE cuantosPosts FLOAT;
+DECLARE valoracionTotalPosts FLOAT;
+DECLARE totalPosts FLOAT;
+DECLARE totalForosRespuesta FLOAT;
+DECLARE esUsuarioAcademico INT;
+DECLARE valorActualUsuario FLOAT;
+DECLARE valorNuevoUsuario FLOAT;
+DECLARE id_institucion INT;
+DECLARE usernameInstitucion VARCHAR(255);
+DECLARE calificacionInstitucionActual FLOAT;
+DECLARE esUsuarioInstitucion INT;
+DECLARE calificacionActualInsti FLOAT;
+SET estadoPublicacion = NEW.publicado;
+SET username = NEW.username_usuario;
+    IF (estadoPublicacion = 1) THEN
+        SET cuantosPosts = (SELECT COUNT(post.username_usuario) FROM post WHERE post.username_usuario = username);
+        SET valoracionTotalPosts = (SELECT SUM(post.valoracion) FROM post WHERE post.username_usuario = username);
+        SET totalPosts = valoracionTotalPosts / cuantosPosts;
+        SET totalForosRespuesta = (SELECT SUM(usuario_respuesta_calificacion.calificacion) FROM `usuario_foro_respuesta` INNER JOIN `usuario_respuesta_calificacion` WHERE usuario_foro_respuesta.id = usuario_respuesta_calificacion.id_respuesta AND usuario_foro_respuesta.username_usuario=username);
+        SET esUsuarioAcademico = (SELECT COUNT(usuario_academico.username) FROM usuario_academico WHERE
+usuario_academico.username=username);
+		SET  valorNuevoUsuario = totalPosts + totalForosRespuesta;
+		IF esUsuarioAcademico = 1 THEN
+        	SET valorActualUsuario = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = username);
+        	UPDATE usuario SET usuario.valoracion = valorNuevoUsuario
+        	WHERE usuario.username = username;
+            SET id_institucion = (SELECT `usuario_academico`.`id_institucion` FROM `usuario_academico` where `usuario_academico`.`username` = username);
+            
+            SET usernameInstitucion = (SELECT usuario_admin_inst.username FROM usuario_admin_inst WHERE usuario_admin_inst.id_institucion = id_institucion);
+            
+            SET calificacionInstitucionActual = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = usernameInstitucion);
+            UPDATE usuario SET usuario.valoracion = calificacionInstitucionActual + (valorNuevoUsuario - valorActualUsuario)
+        	WHERE usuario.username = usernameInstitucion;
+        ELSE
+        	
+        	SET esUsuarioInstitucion = (SELECT COUNT(usuario_admin_inst.username) FROM usuario_admin_inst WHERE
+usuario_admin_inst.username=username);
+			IF esUsuarioInstitucion = 1 THEN
+                SET calificacionActualInsti = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = username);
+                UPDATE usuario SET usuario.valoracion = calificacionActualInsti + valorNuevoUsuario
+        		WHERE usuario.username = usernameInstitucion;
+            ELSE
+            	UPDATE usuario SET usuario.valoracion = valorNuevoUsuario
+        		WHERE usuario.username = username;
+            END IF;
+        END IF;        
+    END IF;
+END;
+
+DELIMITER //
+CREATE TRIGGER updateCalificacionUsuarioForos 
+AFTER INSERT ON usuario_respuesta_calificacion 
+FOR EACH ROW 
+BEGIN 
+DECLARE estadoPublicacion BOOLEAN;
+DECLARE username VARCHAR(255);
+DECLARE cuantosPosts FLOAT;
+DECLARE valoracionTotalPosts FLOAT;
+DECLARE totalPosts FLOAT;
+DECLARE totalForosRespuesta FLOAT;
+DECLARE esUsuarioAcademico INT;
+DECLARE valorActualUsuario FLOAT;
+DECLARE valorNuevoUsuario FLOAT;
+DECLARE id_institucion INT;
+DECLARE usernameInstitucion VARCHAR(255);
+DECLARE calificacionInstitucionActual FLOAT;
+DECLARE esUsuarioInstitucion INT;
+DECLARE calificacionActualInsti FLOAT;
+SET estadoPublicacion = 1;
+SET username = (SELECT usuario_foro_respuesta.username_usuario FROM usuario_foro_respuesta WHERE usuario_foro_respuesta.id =NEW.id_respuesta);
+    IF (estadoPublicacion = 1) THEN
+        SET cuantosPosts = (SELECT COUNT(post.username_usuario) FROM post WHERE post.username_usuario = username);
+        SET valoracionTotalPosts = (SELECT SUM(post.valoracion) FROM post WHERE post.username_usuario = username);
+        SET totalPosts = valoracionTotalPosts / cuantosPosts;
+        SET totalForosRespuesta = (SELECT SUM(usuario_respuesta_calificacion.calificacion) FROM `usuario_foro_respuesta` INNER JOIN `usuario_respuesta_calificacion` WHERE usuario_foro_respuesta.id = usuario_respuesta_calificacion.id_respuesta AND usuario_foro_respuesta.username_usuario=username);
+        SET esUsuarioAcademico = (SELECT COUNT(usuario_academico.username) FROM usuario_academico WHERE
+usuario_academico.username=username);
+		SET  valorNuevoUsuario = totalPosts + totalForosRespuesta;
+		IF esUsuarioAcademico = 1 THEN
+        	SET valorActualUsuario = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = username);
+        	UPDATE usuario SET usuario.valoracion = valorNuevoUsuario
+        	WHERE usuario.username = username;
+            SET id_institucion = (SELECT `usuario_academico`.`id_institucion` FROM `usuario_academico` where `usuario_academico`.`username` = username);
+            
+            SET usernameInstitucion = (SELECT usuario_admin_inst.username FROM usuario_admin_inst WHERE usuario_admin_inst.id_institucion = id_institucion);
+            
+            SET calificacionInstitucionActual = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = usernameInstitucion);
+            UPDATE usuario SET usuario.valoracion = calificacionInstitucionActual + (valorNuevoUsuario - valorActualUsuario)
+        	WHERE usuario.username = usernameInstitucion;
+        ELSE
+        	
+        	SET esUsuarioInstitucion = (SELECT COUNT(usuario_admin_inst.username) FROM usuario_admin_inst WHERE
+usuario_admin_inst.username=username);
+			IF esUsuarioInstitucion = 1 THEN
+                SET calificacionActualInsti = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = username);
+                UPDATE usuario SET usuario.valoracion = calificacionActualInsti + valorNuevoUsuario
+        		WHERE usuario.username = usernameInstitucion;
+            ELSE
+            	UPDATE usuario SET usuario.valoracion = valorNuevoUsuario
+        		WHERE usuario.username = username;
+            END IF;
+        END IF;        
+    END IF;
+END;
+create table datos_programa (
+    id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(255),
+    valor VARCHAR(255),
+    PRIMARY KEY (id)
+);
+
+insert into datos_programa(nombre, valor) values ('iva', '12');
+insert into provincia(nombre) values ('Azuay');
+insert into provincia(nombre) values ('Pichincha');
+insert into provincia(nombre) values ('Guayas');
+insert into provincia(nombre) values ('Manabí');
+insert into ciudad(id_provincia, nombre) values (1, 'Cuenca');
+insert into ciudad(id_provincia, nombre) values (1, 'Paute');
+insert into ciudad(id_provincia, nombre) values (1, 'Gualaceo');
+insert into ciudad(id_provincia, nombre) values (2, 'Quito');
+insert into ciudad(id_provincia, nombre) values (3, 'Guayaquil');
+insert into ciudad(id_provincia, nombre) values (4, 'Portoviejo');
+insert into ciudad(id_provincia, nombre) values (4, 'Manta');
+commit;
 

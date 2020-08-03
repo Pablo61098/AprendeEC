@@ -1,45 +1,72 @@
-
 <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand mx-auto mr-md-3 " href="/informativo">AprendEC</a>
+<script type="text/javascript" src="./javascript/publicaciones/navBarAll.js"></script>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand mx-auto mr-md-3 " href="/informativo">AprendEC</a>
+        <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="colapsado">
-                <ul class="navbar-nav mx-xs-auto ml-md-3">
-                    <li class="nav-item">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
-                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
-                                    class="fas fa-search"></i></button>
-                        </form>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
-                    <li class="nav-item  mx-auto">
-                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
-                    </li>
-                    <!-- Dropdown -->
-                    <li class="nav-item dropdown mx-auto">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            <i class="far fa-user"></i>
-                            <span><%= name %></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="/modPublicaciones">Publicaciones</a>
-                            <a class="dropdown-item" href="../participacion/">Participación</a>
-                            <a class="dropdown-item" href="/account/<%= name %>/edit">Cuenta</a>
-                            <a class="dropdown-item" href="../compras/">Compras</a>
-                            <a class="dropdown-item" href="../tienda/">Tienda</a>
-                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
-                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
-                        </div>
-                    </li>
-                </ul>
-
-            </div>
+        <div class="collapse navbar-collapse" id="colapsado">
+            <ul class="navbar-nav mx-xs-auto ml-md-3">
+                <li class="nav-item">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar"
+                            name="busqueda">
+                        <button id="btnSearch" class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="button"><i
+                                class="fas fa-search"></i></button>
+                        <button id="btnFiltro" class=" btn btn-outline-primary mx-auto mr-2 my-2 my-sm-0"
+                            type="button"><i class="fas fa-filter"></i></button>
+                    </form>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
+                <li class="nav-item  mx-auto">
+                    <% if (typeof(userName) !== 'undefined') { %>
+                    <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    <% } %>
+                </li>
+                <!-- Dropdown -->
+                <li class="nav-item dropdown mx-auto">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        <i class="far fa-user"></i>
+                        <% if (typeof(userName) !== 'undefined') { %>
+                        <span><%= userName %></span>
+                        <% } else { %>
+                        <span></span>
+                        <% } %>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <% if (typeof(userName) !== 'undefined') { %>
+                        <!-- Ver aqui a que cosas dar acceso dependiendo tipo de usuario -->
+                        <a class="dropdown-item" href="/modPublicaciones">Publicaciones</a>
+                        <a class="dropdown-item" href="/participacion">Participación</a>
+                        <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
+                        <a class="dropdown-item" href="/compras">Compras</a>
+                        <a class="dropdown-item" href="/tienda">Tienda</a>
+                        <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
+                        <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
+                        <% } else { %>
+                        <a class="dropdown-item" href="/login">Iniciar Sesión</a>
+                        <% } %>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
+
+<nav id="navFilter" class="navbar navbar-light" style="background-color: #e3f2fd; display: none">
+    <!-- Navbar content -->
+    <div class="container">
+        <form>
+            <input id="search_tipo" type="checkbox" data-toggle="toggle" data-on="Post" data-off="Foro"
+                data-onstyle="primary" data-offstyle="info" data-width="115">
+            <input id="search_categoria" type="checkbox" data-toggle="toggle" data-on="Categoría" data-off="Categoría"
+                data-onstyle="primary" data-offstyle="light" data-width="115">
+            <input id="search_username" type="checkbox" data-toggle="toggle" data-on="Username" data-off="Username"
+                data-onstyle="primary" data-offstyle="light" data-width="115">
+        </form>
+    </div>
+</nav>

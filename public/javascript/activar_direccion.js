@@ -10,6 +10,11 @@ $(document).on("click", ".boton_activar_dir", function () {
             estado.prop("checked", false);
             esto.prop("disabled", true);
             objeto_check_id.prop("checked", true);
+        },
+        statusCode: {
+            404: function () {
+                window.location.replace("/login");
+            }
         }
     });
 });

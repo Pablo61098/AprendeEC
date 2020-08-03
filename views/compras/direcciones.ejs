@@ -23,51 +23,7 @@
         </div>
     </header>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
-
-            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="colapsado">
-                <ul class="navbar-nav mx-xs-auto ml-md-3">
-                    <li class="nav-item">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar"
-                                name="busqueda">
-                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
-                                    class="fas fa-search"></i></button>
-                        </form>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
-                    <li class="nav-item  mx-auto">
-                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
-                    </li>
-                    <!-- Dropdown -->
-                    <li class="nav-item dropdown mx-auto">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            <i class="far fa-user"></i>
-                            <span>Nombre de Usuario</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
-                            <a class="dropdown-item" href="../participacion/">Participación</a>
-                            <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
-                            <a class="dropdown-item" href="../compras/">Compras</a>
-                            <a class="dropdown-item" href="../tienda/">Tienda</a>
-                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
-                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
-                        </div>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </nav>
+    <%- include('../publicaciones_views/hnf/navbar.ejs') %>
     <!-- Cuerpo -->
     <div class="container-fluid pt-4 pb-4">
         <div class="row">
@@ -169,8 +125,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                 </div>
-                                <input type="number" id="cedula" name="cedula" class="form-control" required
-                                    placeholder="Cédula" pattern="[0-9]{10}">
+                                <input type="text" id="cedula" name="cedula" class="form-control" pattern="[0-9]{10}" required
+                                    placeholder="Cédula">
                                 <div class="valid-feedback">Correcto.</div>
                                 <div class="invalid-feedback">Por favor rellene el campo. Formato: Cédula Ecuatoriana de
                                     10 Dígitos.
@@ -194,28 +150,22 @@
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-archway"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
                                 </div>
-                                <input type="text" id="canton" name="canton" class="form-control" required
-                                    placeholder="Cantón">
-                                <div class="valid-feedback">Correcto.</div>
-                                <div class="invalid-feedback">Por favor rellene el campo.</div>
+                                <select id="provincia" name="provincia" class="form-control" required></select>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-archway"></i></span>
                                 </div>
-                                <input type="text" id="provincia" name="provincia" class="form-control" required
-                                    placeholder="Provincia">
-                                <div class="valid-feedback">Correcto.</div>
-                                <div class="invalid-feedback">Por favor rellene el campo.</div>
+                                <select id="canton" name="canton" class="form-control" required></select>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-atlas"></i></span>
                                 </div>
-                                <input type="number" id="codigo" name="codigo" class="form-control" required
-                                    pattern="[0-9]{6}" placeholder="Código Postal">
+                                <input type="text" id="codigo" name="codigo" class="form-control" pattern="[0-9]{6}" required
+                                    placeholder="Código Postal">
                                 <div class="valid-feedback">Correcto.</div>
                                 <div class="invalid-feedback">Por favor rellene el campo. Formato: Código Postal
                                     Ecuatoriano de 6 Dígitos.</div>
@@ -224,10 +174,11 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                                <input type="tel" id="telefono" name="telefono" class="form-control"
-                                    class="form-control" required placeholder="Teléfono">
+                                <input type="text" id="telefono" name="telefono" class="form-control"
+                                    class="form-control" pattern="[0-9]{9,10}" required placeholder="Teléfono">
                                 <div class="valid-feedback">Correcto.</div>
-                                <div class="invalid-feedback">Por favor rellene el campo.</div>
+                                <div class="invalid-feedback">Por favor rellene el campo. Formato: Teléfono
+                                    Ecuatoriano de 9 (Convencional) o 10 Dígitos (Celular).</div>
                             </div>
                             <div class="form-group float-right">
                                 <input type="submit" value="Aceptar" class="btn btn-primary">
@@ -267,6 +218,7 @@
             </div>
         </div>
     </div>
+    <script src=".././javascript/combos_direcciones.js"></script>
     <script src=".././javascript/form_validation.js"></script>
     <script src=".././javascript/activar_direccion.js"></script>
     <script src=".././javascript/eliminar_direccion.js"></script>

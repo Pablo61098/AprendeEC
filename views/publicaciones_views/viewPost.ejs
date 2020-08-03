@@ -4,15 +4,22 @@
     <div class="container-expand">
         <div class="row">
             <div class="col-sm-12">
-                <div class="container">
-                    <p>Aqui se va a encontrar el post con un formato determinado</p>
+                <div class="container mt-4 mb-4" id="contenidoPost">
+                    <% if(typeof publicacion != 'undefined'){ %>
+                        <p hidden id="pub" class="text-danger"><%= publicacion.titulo %></p>
+                        <p hidden id="publicado" class="text-danger"><%= publicacion.publicado %></p>
+                        <p hidden id="id_post" class="text-danger"><%= publicacion.id %></p>
+                        <p hidden id="username_post" class="text-danger"><%= publicacion.username_usuario %></p>
+                        <p hidden id="valoracion" class="text-danger"><%= publicacion.valoracion %></p>
+                    <% } %>
+                    
                 </div>
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-6">
-                            <p><strong>Tags:</strong> #tagsHere</p>
+                            <p id="tags"></p>
                         </div>
-                        <div class="col-sm-6" >
+                        <div class="col-sm-6" id="contenedorEstrellas">
                             <button id="btnStar1" class="btn"><i class="fas fa-star "></i></button>
                             <button id="btnStar2" class="btn"><i class="fas fa-star "></i></button>
                             <button id="btnStar3" class="btn"><i class="fas fa-star "></i></button>
@@ -21,6 +28,7 @@
                         </div>
                     </div>
                     <hr>
+                    <%- include('hnf/mensaje.ejs') %>
                     <!--Aquí va la parte en donde el usuario puede comentar-->
                     <div class="container">
                         <div class="row">
@@ -30,7 +38,7 @@
                             <div class="col-sm-11">
                                 <div class="container">
                                     <form style="display: flex; margin-right: 20px;margin-left: 20px">
-                                        <input type="text" style="flex: 1" placeholder="Añade un comentario">
+                                        <input id="comentario" type="text" style="flex: 1" placeholder="Añade un comentario">
                                         <button id="btnEnviar" type="button" class="btn ml-3 btn-outline-primary">Enviar</button>
                                     </form>
                                 </div>
@@ -41,31 +49,13 @@
                     <hr>
                     <h3>Comentarios</h3>
                     <!--Contenedor dinámico-->
-                    <div class="container mt-4">
-                        <div class="row">
-                            <div class="col-sm-1 text-right">
-                                <img src="images/default-user.jpeg" width="60px" height="60px">
-                            </div>
-                            <div class="col-sm-11 ">
-                                <h6><strong>Crack666</strong></h6>
-                                <p>Esto debe ser dinámico. Uno por cada comentario se debe crear en el html.</p>
-                            </div>
-                        </div>
+                    <div class="container mt-4" id="seccionComentarios">
                     </div>
-                    <hr>
+                    
                     <!--FIn de contenedor dinámico-->
                     <div class="container mt-4">
-                        <div class="row">
-                            <div class="col-sm-1 text-right">
-                                <img src="images/default-user.jpeg" width="60px" height="60px">
-                            </div>
-                            <div class="col-sm-11 ">
-                                <h6><strong>Crack999</strong></h6>
-                                <p>Esto debe ser dinámico. Uno por cada comentario se debe crear en el html.</p>
-                            </div>
-                        </div>
+                        
                     </div>
-                    <hr>
 
                 </div>
             </div>
