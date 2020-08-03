@@ -368,7 +368,7 @@ router.get("/historial", middleware.isLoggedIn, function (req, res) {
     carrito_producto.costo_unitario as precio, carrito_producto.cantidad as cantidad, carrito_producto.nombre_institucion as institucion, 
     carrito.costo as costo, carrito.direccion_envio as direccion_envio, carrito.metodo_pago as metodo_pago from carrito
     JOIN carrito_producto on carrito.id = carrito_producto.id_carrito where carrito.username_usuario = ${mysql.escape(res.locals.userName)} and 
-    carrito.pendiente = false and carrito_producto.costo_unitario is not null`;
+    carrito.pendiente = false and carrito_producto.costo_unitario is not null order by carrito.id DESC`;
     conn.query(sql, function (error, results) {
         if (error) {
             console.log(error);
