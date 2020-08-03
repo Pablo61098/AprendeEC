@@ -136,6 +136,8 @@ var publicacion={};
 var publicacionForo={};
 var editarPost=-1;
 var editarForo=-1;
+var infoBusqueda={};
+infoBusqueda.buscar=0;
 
 
 router.use(function(req,res,next){
@@ -143,6 +145,7 @@ router.use(function(req,res,next){
 	res.locals.publicacionForo = publicacionForo;
 	res.locals.editarPost = editarPost;
 	res.locals.editarForo = editarForo;
+	res.locals.infoBusqueda = infoBusqueda;
 	next();
 });
 
@@ -798,6 +801,22 @@ router.get('/getRespuestas/:id',function(req,res){
 	})
 })
 
+
+//Informativo set 
+router.post('/informativoSet',function(req,res){
+	console.log('Informativo set');
+	console.log(req.body);
+	infoBusqueda = req.body;
+	infoBusqueda.buscar=1;
+	console.log(infoBusqueda);
+	res.send('informativo set Finish');
+})
+
+//
+router.get('/setInfo',function(req,res){
+	infoBusqueda.buscar=0;
+	res.send('Seteando a cero');
+})
 
 
 router.get('/modPublicaciones', function (req, res) {

@@ -1,5 +1,6 @@
 
 <!-- Navbar -->
+<script type="text/javascript" src="./javascript/publicaciones/navBarAll.js"></script>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand mx-auto mr-md-3 " href="/informativo">AprendEC</a>
@@ -13,8 +14,10 @@
                     <li class="nav-item">
                         <form class="form-inline">
                             <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
-                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
+                            <button id="btnSearch" class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="button"><i
                                     class="fas fa-search"></i></button>
+                            <button id="btnFiltro" class=" btn btn-outline-primary mx-auto mr-2 my-2 my-sm-0" type="button"><i
+                                class="fas fa-filter"></i></button>
                         </form>
                     </li>
                 </ul>
@@ -42,5 +45,15 @@
                 </ul>
 
             </div>
+        </div>
+    </nav>
+    <nav id="navFilter" class="navbar navbar-light" style="background-color: #e3f2fd; display: none">
+        <!-- Navbar content -->
+        <div class="container">
+            <form  >
+                <input id="search_tipo" type="checkbox" data-toggle="toggle" data-on="Post" data-off="Foro" data-onstyle="primary" data-offstyle="info" data-width="115">
+                <input id="search_categoria" type="checkbox" data-toggle="toggle" data-on="Categoría" data-off="Categoría" data-onstyle="primary" data-offstyle="light" data-width="115">       
+                <input id="search_username" type="checkbox" data-toggle="toggle" data-on="Username" data-off="Username" data-onstyle="primary" data-offstyle="light" data-width="115">                 
+            </form>
         </div>
     </nav>
