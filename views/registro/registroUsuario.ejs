@@ -69,7 +69,15 @@
                             <label  for="">Nombre de usuario</label>
                         </div>
                         <div class="col-12 col-sm-6 text-center">
-                            <input name="userName" type="text" required id="nombreUsuario">
+                            <input name="userName" type="text" maxlength="20" required id="nombreUsuario">
+                        </div>
+                    </div>
+                    <div class="row col-12">
+                        <div class="col-12 col-sm-6">
+                            <label  for="">Cedula: </label>
+                        </div>
+                        <div class="col-12 col-sm-6 text-center">
+                            <input name="cedula" maxlength="10" type="number" required id="cedula">
                         </div>
                     </div>
                     <div class="row col-12">
@@ -119,10 +127,10 @@
                             <label for="">Acerca de ti</label>
                         </div>
                         <div class="col-12 col-sm-6 text-center">
-                            <textarea rows="8" class="form-control"></textarea>
+                            <textarea name="acerca" rows="8" class="form-control"></textarea>
                         </div>
                     </div>
-                    <div class="row col-12">
+                    <!-- <div class="row col-12">
                         <div class="col-12 col-sm-6">
                             <label for="">Redes Sociales</label>
                         </div>
@@ -145,7 +153,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-12">
                         <input type="checkbox" required id="aceptar">
                         <label for="">Aceptar Terminos y condiciones</label>

@@ -2,7 +2,7 @@
     font-size: 80px;
 }
 
-input[type="text"]{
+input[type="text"],input[type="number"]{
     width: 100%;
     background-color: rgb(230, 230, 230);
     border-radius: 5px;
@@ -35,6 +35,12 @@ textarea{
 .formBody:hover {
   border: 1px solid rgba(0,0,0,0.3);
   transition: background-color 0.7s;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
   
   

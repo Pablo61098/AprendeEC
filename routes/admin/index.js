@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mysql = require("mysql");
+const bcrypt = require('bcryptjs');
 const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -34,7 +35,7 @@ router.get("/adminSolicitudes", (req, res) => {
     
 });
 
-router.put("/aceptarSolicitud/:idSolicitud", function(req, res){
+router.put("asdjkaskj/aceptarSolicitud/:idSolicitud", function(req, res){
     console.log("hola");
     connection.query(`update solicitud set pendiente = 0, aceptado = 1 where id = ${req.params.idSolicitud}`, function(err, results, fields){
         if(err){
@@ -73,16 +74,16 @@ router.put("/aceptarSolicitud/:idSolicitud", function(req, res){
                                 console.log("Se ha insertado la institucion");
                                 let idInstitucion = results3.insertId;
                                 // console.log(fields3);
-                                let contrasena = 'abcdefghijk'; // Should be radomly generated and encrypted
+                                let contrasena = returnGibberish(15); // Should be radomly generated and encrypted
                                 connection.query(
-                                    `insert into usuario(username, ciudad, contrasena, correo, nombre, apellido,valoracion) values('${nombreAdministrador} ${apellidosAdministrador}',
-                                        '${ciudad}','${contrasena}','${correo_administrador}','${nombreAdministrador}','${apellidosAdministrador}',0)`, function(err4, results4, fields4){
+                                    `insert into usuario(username, ciudad, contrasena, correo, cedula, nombre, apellido,valoracion, confirmado, tipoRegistro) values('${nombreAdministrador} ${apellidosAdministrador}',
+                                        '${ciudad}','${contrasena}','${correo_administrador}', '${cedula_administrador}','${nombreAdministrador}','${apellidosAdministrador}',0, 0, 0)`, function(err4, results4, fields4){
                                             if(err4){
                                                 console.log(err4);
                                                 res.send(err4);
                                             }else{
                                                 console.log("Se ha insertado el usuario");
-                                                connection.query(`insert into usuario_admin_inst values('${nombreAdministrador} ${apellidosAdministrador}', ${idInstitucion}, '${cedula_administrador}', '${cargoAdministrador}')`, function(err5, results5, fields5){
+                                                connection.query(`insert into usuario_admin_inst values('${nombreAdministrador} ${apellidosAdministrador}', ${idInstitucion}, '${cargoAdministrador}')`, function(err5, results5, fields5){
                                                     if(err5){
                                                         console.log(err5);
                                                         res.send(err5);
@@ -90,7 +91,7 @@ router.put("/aceptarSolicitud/:idSolicitud", function(req, res){
                                                         console.log("Se ha insertado el usuario_admin_inst");
                                                         console.log(`${correo_administrador}`);
                                                         const msg = {
-                                                            to: `pablosolano61098@gmail.com`,
+                                                            to: `${correo_administrador}`,
                                                             from: 'pablosolano61098@gmail.com',
                                                             subject: 'Se ha acepto su solicitud de registro.',
                                                             text: 'Mensaje automatico de AprendEC',
@@ -101,7 +102,7 @@ router.put("/aceptarSolicitud/:idSolicitud", function(req, res){
                                                                         <p>
                                                                         <label>Querido usuario, su solicitud para la inclusión de su institucion: <strong>${nombreInstitucion}</strong>, en nuestra aplicación ha sido aceptada.
                                                                                 Sus alumnos podran resgitrarse a la aplicación con el correo institucional que termine de esta forma: ${dominioCorreo}.
-                                                                                Agradecemos su preferencia. Puede entrar a nuestra aplicacion mediante este link: <a href="http://localhost:3000/login">AprendEC login</a>, con el el nombre de usuario: <strong>${nombreAdministrador} ${apellidosAdministrador}</strong> y la contraseña: <strong>${contrasena}</strong>.Continue segun se le indique.</label> 
+                                                                                Agradecemos su preferencia. Puede entrar a nuestra aplicacion mediante este link: <a href="http://localhost:3000/firstLogin/">AprendEC login</a>, con el el nombre de usuario: <strong>${nombreAdministrador} ${apellidosAdministrador}</strong> y la clave: <strong>${contrasena}</strong>. Para configurar su contraseña permanentemente.</label> 
                                                                         <br>
                                                                         </p>
                                                                     </div>`,
@@ -187,6 +188,17 @@ router.put("/rechazarSolicitud/:idSolicitud", function(req, res){
     });
     console.log(req.params);
 });
+
+function returnGibberish(length){
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+     
+}
 
 
 module.exports = router;

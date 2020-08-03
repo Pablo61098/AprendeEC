@@ -3,9 +3,12 @@ const express = require("express"),
       bodyParser = require("body-parser"),
       fileUpload = require('express-fileupload'),
       session = require("express-session"),
-      mysql = require("mysql")
+      mysql = require("mysql"),
+      methodOverride = require("method-override")
+      fs = require('fs')
     //   flash = require("connect-flash")
       ;
+
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -16,19 +19,16 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-
-
 const sesionRoutes = require("./routes/sesion");
 const comprasRoutes = require("./routes/compras");
 const adminRoutes = require("./routes/admin");
-
-
-
+const accountRoutes = require("./routes/account");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(fileUpload());
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 app.use(session({
     name: 'authentication',
@@ -36,7 +36,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge:  1000 * 60  * 10
+        maxAge:  1000 * 60 * 10
     }
 }));
 
@@ -63,8 +63,23 @@ app.use((req, res, next) => {
         console.log('4');
         user = results[0];
         user.contrasena = undefined;
-
+        // console.log(user);
         req.user = user;
+        
+        if(fs.existsSync(`./public/fotos/${req.user.foto}`)) {
+            console.log("The file exists.");
+            req.user.profilePictureRoute = `http://localhost:3000/fotos/${req.user.foto}`;
+        } else {
+            console.log('The file does not exist.');
+            req.user.profilePictureRoute = `${req.user.foto}`;
+        }
+        
+        if(req.user.tipoRegistro == 1 ){
+            res.locals.name = `${req.user.nombre}  ${req.user.apellido}`;
+        }else{
+            res.locals.name = user.username;
+        }
+        
         res.locals.userName = user.username;
         console.log(res.locals);
         console.log('5');
@@ -84,6 +99,7 @@ app.use((req, res, next) => {
 
 app.use(sesionRoutes);
 app.use("/compras", comprasRoutes);
+app.use("/account", accountRoutes);
 app.use(require('./routes/publicaciones'));
 app.use("/admin",adminRoutes);
 

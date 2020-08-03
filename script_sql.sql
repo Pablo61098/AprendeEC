@@ -1,5 +1,5 @@
 CREATE TABLE usuario (
-    username VARCHAR(20),
+    username VARCHAR(100),
     ciudad VARCHAR(25),
     contrasena VARCHAR(255),
     correo VARCHAR(75),
@@ -7,12 +7,22 @@ CREATE TABLE usuario (
     apellido VARCHAR(50),
     foto varchar(255),
     valoracion FLOAT,
+    cedula VARCHAR(10),
+    acerca VARCHAR(255),
     confirmado boolean,
+    tipoRegistro tiny,
     PRIMARY KEY (username)
 );
 
+CREATE TABLE redes(
+    username VARCHAR(100),
+    red VARCHAR(255),
+    link VARCHAR(255),
+    FOREIGN KEY (username) REFERENCES usuario(username)
+);
+
 CREATE TABLE telefono_usuario(
-    username VARCHAR(20), 
+    username VARCHAR(100), 
     telefono VARCHAR(15), 
     PRIMARY KEY (username, telefono), 
     FOREIGN KEY (username) REFERENCES usuario(username)
@@ -31,7 +41,7 @@ create table institucion (
 );
 
 create table usuario_academico(
-    username VARCHAR(20),
+    username VARCHAR(100),
     id_institucion INT,
     PRIMARY KEY (id_institucion, username),
     FOREIGN KEY (username) REFERENCES usuario(username),
@@ -39,9 +49,8 @@ create table usuario_academico(
 );
 
 create table usuario_admin_inst(
-    username VARCHAR(20),
+    username VARCHAR(100),
     id_institucion INT,
-    cedula VARCHAR(10),
     cargo VARCHAR(255),
     PRIMARY KEY (id_institucion, username),
     FOREIGN KEY (username) REFERENCES usuario(username),
@@ -77,7 +86,7 @@ create table solicitud (
 
 create table direccion (
     id INT NOT NULL AUTO_INCREMENT,
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     nombre_encargado VARCHAR(255),
     cedula_encargado VARCHAR(10),
     ciudad VARCHAR(255),
@@ -93,7 +102,7 @@ create table direccion (
 
 create table metodo_pago (
     id INT NOT NULL AUTO_INCREMENT,
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     titular VARCHAR(255),
     token VARCHAR(255),
     cuatro_ultimos_digitos VARCHAR(4),
@@ -108,7 +117,7 @@ create table metodo_pago (
 
 create table producto (
     id INT NOT NULL AUTO_INCREMENT,
-    username_inst VARCHAR(20),
+    username_inst VARCHAR(100),
     id_institucion INT,
     nombre VARCHAR(255),
     descripcion VARCHAR(255),
@@ -123,7 +132,7 @@ create table producto (
 
 create table carrito (
     id INT NOT NULL AUTO_INCREMENT,
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     costo DECIMAL(19,2),
     fecha_hora_creacion VARCHAR(255),
     fecha_hora_pago VARCHAR(255),
@@ -152,7 +161,7 @@ create table categoria (
 
 create table post (
     id INT NOT NULL AUTO_INCREMENT,
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     valoracion FLOAT,
     titulo VARCHAR(255),
     fecha_hora VARCHAR(255),
@@ -164,7 +173,7 @@ create table post (
 
 create table foro (
     id INT NOT NULL AUTO_INCREMENT,
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     titulo VARCHAR(255),
     fecha_hora VARCHAR(255),
     contenido BLOB,
@@ -191,7 +200,7 @@ create table categoria_foro (
 
 create table usuario_post_comentario (
     id INT NOT NULL AUTO_INCREMENT,
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     id_post INT,
     texto TEXT,
     fecha_hora VARCHAR(250),
@@ -202,7 +211,7 @@ create table usuario_post_comentario (
 
 create table usuario_foro_comentario (
     id INT NOT NULL AUTO_INCREMENT,
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     id_foro INT,
     texto TEXT,
     fecha_hora VARCHAR(250),
@@ -212,7 +221,7 @@ create table usuario_foro_comentario (
 );
 
 create table usuario_post_calificacion (
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     id_post INT,
     calificacion INT,
     PRIMARY KEY (id_post, username_usuario),
@@ -222,7 +231,7 @@ create table usuario_post_calificacion (
 
 create table usuario_foro_respuesta (
     id INT NOT NULL AUTO_INCREMENT,
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     id_foro INT,
     respuesta BLOB,
     valoracion INT,
@@ -233,7 +242,7 @@ create table usuario_foro_respuesta (
 );
 
 create table usuario_respuesta_calificacion (
-    username_usuario VARCHAR(20),
+    username_usuario VARCHAR(100),
     id_respuesta INT,
     calificacion INT,
     PRIMARY KEY (id_respuesta, username_usuario),

@@ -22,4 +22,15 @@ middlewareObj.isLoggedIn = function(req, res, next){
     next();
 }
 
+middlewareObj.isFirstLogin = function(req, res, next){
+    console.log('\ncomo vamos 1');
+    if(!req.session.firstLogin){
+        console.log('\ncomo vamos 2');
+        return res.redirect("/login");
+    }
+    console.log('\ncomo vamos 2');
+    next();
+}
+
+
 module.exports = middlewareObj;
