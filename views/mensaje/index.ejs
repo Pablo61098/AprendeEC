@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <title>Mensaje</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href=".././css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="jumbotron head_foot">
+            <img src=".././images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <h1><b>@prendEC</b></h1>
+        </div>
+    </header>
+    <!-- Navbar -->
+    <%- include('../publicaciones_views/hnf/navbar.ejs') %>
+    <!-- Cuerpo -->
+    <section class="container pb-4 pt-4">
+        <div id="mensaje" class="h-100 text-center">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <img src=".././images/<%= tipo %>.png" alt="<%= tipo %>">
+                    <h3 class="card-text"><%= mensaje %></h3><br>
+                    <a href="/<%= redireccion %>"><button class="btn btn-primary">Volver a <%= volver %></button></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <div class="content"></div>
+    <footer>
+        <div class="jumbotron text-center head_foot">
+            <p>Aprendizaje Online para todo el Ecuador</p>
+            AprendEC 2020 <i class="far fa-copyright"></i>
+        </div>
+    </footer>
+</body>
+
+</html>

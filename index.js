@@ -21,6 +21,8 @@ connection.connect();
 const sesionRoutes = require("./routes/sesion");
 const comprasRoutes = require("./routes/compras");
 const adminRoutes = require("./routes/admin");
+const tiendaRoutes = require("./routes/tienda");
+const participacionRoutes = require("./routes/participacion");
 
 
 
@@ -36,7 +38,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge:  1000 * 60  * 10
+        maxAge:  /*1000 * 60  * 10*/1000 * 60  * 60 * 24
     }
 }));
 
@@ -86,8 +88,8 @@ app.use(sesionRoutes);
 app.use("/compras", comprasRoutes);
 app.use(require('./routes/publicaciones'));
 app.use("/admin",adminRoutes);
-
-
+app.use("/tienda", tiendaRoutes);
+app.use("/participacion", participacionRoutes);
 
 
 

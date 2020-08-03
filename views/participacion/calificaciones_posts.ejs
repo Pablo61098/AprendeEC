@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <title>Calificaciones de Posts</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href=".././css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="jumbotron head_foot">
+            <img src=".././images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <h1><b>@prendEC</b></h1>
+        </div>
+    </header>
+    <!-- Navbar -->
+    <%- include('../publicaciones_views/hnf/navbar.ejs') %>
+    <!-- Cuerpo -->
+    <div class="container-fluid pt-4 pb-4">
+        <div class="row">
+            <!-- Barra Lateral -->
+            <aside class="col-sm-4 pt-4 pb-4 bg-light navbar-light rounded">
+                <ul class="nav nav-pills flex-column" role="tablist">
+                    <li class="nav-item"><a class="nav-link" href="/participacion"><i
+                                class="fas fa-award"></i>&nbsp;&nbsp;Valoración</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/participacion/comentarios_posts"><i
+                                class="fas fa-comments"></i>&nbsp;&nbsp;Comentarios en Posts</a></li>
+                    <li class="nav-item"><a class="nav-link  active" href="/participacion/calificaciones_posts"><i
+                                class="fas fa-star"></i>&nbsp;&nbsp;Calificaciones de Posts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/participacion/comentarios_foros"><i
+                                class="fas fa-comment-alt"></i>&nbsp;&nbsp;Comentarios en Foros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/participacion/respuestas_foros"><i
+                                class="fas fa-question-circle"></i>&nbsp;&nbsp;Respuestas en Foros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/participacion/calificaciones_respuestas"><i
+                                class="fas fa-thumbs-up"></i>&nbsp;&nbsp;Calificaciones de Respuestas</a></li>
+                </ul>
+            </aside>
+            <!-- Secciones de Pestañas -->
+            <div class="col-sm-8 pt-4 pb-4">
+                <!-- Sección de Posts -->
+                <section class="container">
+                    <div class="ml-4">
+                        <h2>Calificaciones de Posts</h2>
+                        <br>
+                        <% if (results.length === 0) { %>
+                        <!-- Instancia de Comentarios Vacía -->
+                        <div class="vacio">
+                            <br>
+                            <p><i class="fas fa-ban icono_vacio"></i></p>
+                            <h5>No hay más posts calificados.</h5>
+                            <hr>
+                        </div>
+                        <!-- Fin Instancia de Comentarios Vacía -->
+                        <% } else { %>
+                        <div id="contenedor">
+                            <% for (let i=0; i < results.length; i++) { %>
+                            <!-- Instancia de Calificación  -->
+                            <div>
+                                <p>Post: <%= results[i].titulo %> <small>(<%= results[i].autor %> |
+                                        <%= results[i].fecha_hora_post %>)</small></p>
+                                <p>Calificación:
+                                    <% let calif = parseInt(results[i].calificacion, 10) %>
+                                    <% for (let i=0; i < calif; i++) { %>
+                                    <span class="fa fa-star star_checked"></span>
+                                    <% } %>
+                                    <% for (let i=calif; i < 5; i++) { %>
+                                    <span class="fa fa-star"></span>
+                                    <% } %>
+                                    <br>
+                                    <hr>
+                            </div>
+                            <!-- Fin de Instancia de Calificación  -->
+                            <% } %>
+                        </div>
+                        <% } %>
+                        <span id="pagina" style="display: none;"><%= pagina %></span>
+                        <br>
+                        <!-- Páginas -->
+                        <div class="row  justify-content-center">
+                            <ul class="pagination">
+                                <% if (pagina > 1) { %>
+                                <li class="page-item"><a
+                                        href="/participacion/calificaciones_posts?pagina=<%= parseInt(pagina, 10) - 1 %>"><button
+                                            class="page-link">Anterior</button></a>
+                                </li>
+                                <% } %>
+                                <% if (results.length >= 3) { %>
+                                <li class="page-item"><a
+                                        href="/participacion/calificaciones_posts?pagina=<%= parseInt(pagina, 10) + 1 %>"><button
+                                            class="page-link">Siguiente</button></a>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="content"></div>
+    <footer>
+        <div class="jumbotron text-center head_foot">
+            <p>Aprendizaje Online para todo el Ecuador</p>
+            AprendEC 2020 <i class="far fa-copyright"></i>
+        </div>
+    </footer>
+</body>
+
+</html>

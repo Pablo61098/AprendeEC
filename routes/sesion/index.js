@@ -19,7 +19,7 @@ connection.connect();
 
 router.get("/hola", middleware.isLoggedIn ,function(req, res){
     console.log("YOU ARE LOGGED IN");
-    res.send("hola");
+    res.send("hola" + res.locals.userName);
 });
 
 
