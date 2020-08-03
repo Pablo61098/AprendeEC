@@ -134,10 +134,15 @@ var middleware = require("../../middleware");
 
 var publicacion={};
 var publicacionForo={};
+var editarPost=-1;
+var editarForo=-1;
+
 
 router.use(function(req,res,next){
 	res.locals.publicacion = publicacion;
 	res.locals.publicacionForo = publicacionForo;
+	res.locals.editarPost = editarPost;
+	res.locals.editarForo = editarForo;
 	next();
 });
 
@@ -176,7 +181,66 @@ router.post('/saveForo',function(req,res){
 	});	
 });
 
+//Seervicio para actualizar el foro
+router.put('/updateForo',function(req,res){
+	let consulta = 'UPDATE foro  SET id='+ req.body.id+", username_usuario='"+req.body.username_usuario+
+	"', titulo='"+req.body.titulo+"'"+
+	", contenido='"+req.body.contenido+"' WHERE id="+req.body.id;
+	conn.query(consulta,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+            res.status(404).send('Not found');
+		}
+		console.log('Recibiendo respuesta de updateForo...');
+		console.log(respuesta);
+		let consultaEliminar='DELETE FROM categoria_foro WHERE id_foro='+req.body.id;
+		conn.query(consultaEliminar,(err,respuesta)=>{
+			if(err){
+				console.error(err);
+				res.status(404).send('Not found');
+			}
+			console.log('Recibiendo respuesta de eliminar categorias...');
+			console.log(respuesta);
+			saveCatePostOrForo(req.body.id,req.body.id_categoria,'id_categoria','id_foro','categoria_foro');
+			res.send('Actualizado con exito');
+		})
+	}) 
+})
 
+
+
+//Servicio para definir 
+router.get('/defEditorForo/:id',function(req,res){
+	editarForo=req.params.id;
+	console.log('Definido');
+	res.send('definido');
+})
+
+//Seervicio para actualizar el post
+router.put('/updatePost',function(req,res){
+	let consulta = 'UPDATE post  SET id='+ req.body.id+", username_usuario='"+req.body.username_usuario+
+	"', titulo='"+req.body.titulo+"'"+
+	", contenido='"+req.body.contenido+"' WHERE id="+req.body.id;
+	conn.query(consulta,(err,respuesta)=>{
+		if(err){
+			console.error(err);
+            res.status(404).send('Not found');
+		}
+		console.log('Recibiendo respuesta de updatePost...');
+		console.log(respuesta);
+		let consultaEliminar='DELETE FROM categoria_post WHERE id_post='+req.body.id;
+		conn.query(consultaEliminar,(err,respuesta)=>{
+			if(err){
+				console.error(err);
+				res.status(404).send('Not found');
+			}
+			console.log('Recibiendo respuesta de eliminar categorias...');
+			console.log(respuesta);
+			saveCatePostOrForo(req.body.id,req.body.id_categoria,'id_categoria','id_post','categoria_post');
+			res.send('Actualizado con exito');
+		})
+	}) 
+})
 
 
 
@@ -195,7 +259,6 @@ router.post('/savePost',function(req,res){
 		// comsole.log(req.locals.userName);
 		console.log('Insertado exitosamente');
 		recuperarIdMaxAndSaveCategorias(req.body.username_usuario,'id','post','username_usuario',req.body.id_categoria,'id_categoria','id_post','categoria_post');
-
 		res.send('Agregado exitosamente');
 	});	
 });
@@ -211,7 +274,6 @@ function saveCatePostOrForo(idPostForo, idsCategoria,nomCampoCategoria, nomCampo
 			res.status(404).send('Not found');
 		}
 		console.log('Insertando en saveCatePostOrForo');
-
 	});
 }
 
@@ -228,7 +290,7 @@ function formarValores(idPostForo,listaCategorias){
 	return valores.substring(0,valores.length-1);
 }
 
-//Funcion para recuperar el id max de un post o foro dado un username y segui el hilo para guardar las categorias
+//Funcion para recuperar el id max de un post o foro dado un username y seguir el hilo para guardar las categorias
 function recuperarIdMaxAndSaveCategorias(username,nombreCampo, nombreTabla,campoUserId,idsCategoria,nomCampoCategoria,nomCampoPostForo,nombreTablaCategoria){
 	let query = 'Select max(' + nombreCampo+') as max_id from '+ nombreTabla + ' where '+campoUserId+"='" + username +"'";
 	conn.query(query,(err,respuesta)=>{
@@ -560,8 +622,44 @@ router.get('/categoriaForo/:foro_id',function(req,res){
 	});
 });
 
+//Servicio para definir 
+router.get('/defEditorPost/:id',function(req,res){
+	editarPost=req.params.id;
+	console.log('Definido');
+	res.send('definido');
+})
 
+router.get('/getEditorPost/:id',function(req,res){
+	let consulta = 'SELECT * FROM post WHERE id='+req.params.id;
+	conn.query(consulta, (err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log('OBteniendo la respuesta de defEDitorPost..');
+		let respuesta_view = JSON.parse(JSON.stringify(respuesta));
+		let convertido = new Buffer(respuesta_view[0].contenido.data).toString('ascii');
+		console.log(convertido);
+		respuesta_view[0].contenido = convertido;
+		res.send(respuesta_view);
+	});
+})
 
+router.get('/getEditorForo/:id',function(req,res){
+	let consulta = 'SELECT * FROM foro WHERE id='+req.params.id;
+	conn.query(consulta, (err,respuesta)=>{
+		if(err){
+			console.error(err);
+			res.status(404).send('Not found');
+		}
+		console.log('OBteniendo la respuesta de getEDitorForo..');
+		let respuesta_view = JSON.parse(JSON.stringify(respuesta));
+		let convertido = new Buffer(respuesta_view[0].contenido.data).toString('ascii');
+		console.log(convertido);
+		respuesta_view[0].contenido = convertido;
+		res.send(respuesta_view);
+	});
+})
 
 
 //Servicio para obtener todo lo necesario para ver el post
@@ -589,6 +687,8 @@ router.get('/getPostView/:id/:username',function(req,res){
 });
 
 router.get('/categoriaPost/:post_id',function(req,res){
+	console.log('>>>>> categoriaPost');
+	console.log(req.params)
 	let post_id = req.params.post_id;
 	let consulta = 'SELECT categoria.nombre from categoria INNER JOIN categoria_post ON '+
 	'categoria_post.id_categoria = categoria.id AND categoria_post.id_post ='+post_id;

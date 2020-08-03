@@ -5,11 +5,12 @@ const NO_PUBLICADO='No publicado';
 let accion=0;
 $(function() {
     // $('#barraNavegacion').load('navbar.html');
+    document.title='Posts'
     disabledButtons();
     console.log($('#usuarioActivo').text());
     getPosts($('#usuarioActivo').text());
     $('#btnCrear').click(function() {
-        window.open('/editor', '_self')
+        editar(-1);
     });
     $('#btnPublicar').click(function() {
         //Debajo debe ir el evento que se genera. En este caso la publicación del post en el sitio
@@ -41,8 +42,26 @@ $(function() {
         if(accion==2)
             eliminarPost($('#usuarioActivo').text());
     });
+    $('#btnEditar').click(function(){
+        //Mando el objeto a editar
+        editar(checked);
+    });
 
 });
+
+//Funcion para definir el objeto que voy a editar
+function editar(id){
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("GET", "/defEditorPost/"+id, true);
+    ajaxRequest.onreadystatechange = function(){
+        if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
+            console.log('Definido exitosamente');
+            window.open('/editor', '_self')
+        }
+    }
+    ajaxRequest.send(null);
+}
+
 
 //Llamada a la vista del post
 function verPost(id,username){

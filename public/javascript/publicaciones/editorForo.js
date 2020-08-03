@@ -1,5 +1,6 @@
 var mapaCategorias=new Map();
 var tam=0;
+var edicion=-1;
 $(function() {
     CKEDITOR.replace("editor1",{
         extraPlugins: 'imagebrowser',
@@ -27,7 +28,13 @@ $(function() {
             }else{
                 alert('Se ha guardado los cambios');
                 titulo = $('#tituloForo').val();
-                saveForo(contenido,titulo);
+                if(edicion==-1){
+                    saveForo(contenido,titulo);
+                }else{
+                    console.log('mandando datos para actualizar el foro');
+                    updateForo(titulo,contenido);
+                }
+                
             }
             
             
@@ -54,7 +61,99 @@ $(function() {
         window.open('/modPubForos', '_self');
     });
 
+    verificarEdicion($('#editarAccion').text());
+    console.log('Editar accion '+ $('#editarAccion').text());
+
 });
+
+//Funcion para verificar si es edicion o creacion
+function verificarEdicion(id){
+    edicion=id;
+    if(id==-1){
+        console.log('Creando un nuevo foro');
+        return;
+    }else{
+        console.log('Entrando a fase de edicion');
+        cargarForoParaEdicion(edicion)
+    }
+};
+
+function cargarForoParaEdicion(id_foro_edicion){
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("GET", "/getEditorForo/"+id_foro_edicion, true);
+    ajaxRequest.onreadystatechange = function(){
+        if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
+            console.log(ajaxRequest.responseText);
+            let foro=JSON.parse(ajaxRequest.responseText);
+            console.log('>>>>>>>'+foro[0].titulo);
+            cargarCategoriasParaEdicion(foro[0]);
+        }
+    
+    }
+    ajaxRequest.send(null);
+}
+
+function cargarCategoriasParaEdicion(objeto){
+    let ajaxRequest = new XMLHttpRequest();
+    console.log('Objetoooo >> '+ objeto.id);
+    ajaxRequest.open("GET", "/categoriaForo/"+objeto.id, true);
+    ajaxRequest.onreadystatechange = function(){
+        if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
+            console.log('Categorias pertenecientes: ')
+            console.log(ajaxRequest.responseText);
+            let categorias=JSON.parse(ajaxRequest.responseText);
+            console.log(categorias[0].nombre);
+            //Cargamos los datos en los campos correspondientes.
+            cargarDatosEdicion(objeto,categorias);
+        }
+    }
+    ajaxRequest.send(null);
+}
+
+function cargarDatosEdicion(objeto,categorias){
+    $('#tituloForo').val(objeto.titulo);
+    CKEDITOR.instances.editor1.setData(objeto.contenido);
+    cargarCategoriasEdicionForo(categorias);
+}
+
+//funcion papara cargar las categorias para la edicion
+function cargarCategoriasEdicionForo(categorias){
+    for(var i=0 ; i< categorias.length; i++){
+        $('#categoria > select> option').each(function(){
+            if(categorias[i].nombre==$(this).text()){
+                id=$(this).prop('id');
+                nombre=$(this).text()
+                mapaCategorias.set(id,nombre);
+                //break;
+            }
+            //console.log($(this).text())
+        });
+    }
+    cargarSeleccion(mapaCategorias);
+}
+
+//Funcion para mandar a actualizar los datos
+function updateForo(titulo,contenido){
+    let cat = getCategorias(mapaCategorias);
+    let user= $('#usuarioActivo').text();
+    let foroUpdate = 'id='+edicion+
+    '&username_usuario='+user+
+    '&titulo='+titulo+
+    '&contenido='+contenido+'&'+cat;
+    console.log(foroUpdate); 
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("PUT", "/updateForo", true);
+    ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajaxRequest.onreadystatechange = function(){
+    if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
+        let respuesta  =ajaxRequest.responseText;
+        console.log('Respuesta exitoso');
+        console.log(respuesta);
+        window.location.href = "/modPublicaciones";
+        }
+    }
+    ajaxRequest.send(foroUpdate);
+}
 
 //Funcion para limpiar los botones de las categorias 
 function limpiar(){

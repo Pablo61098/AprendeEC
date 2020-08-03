@@ -4,12 +4,13 @@ const PUBLICADO='Publicado';
 const NO_PUBLICADO='No publicado';
 let accion=0;
 $(function() {
+    document.title='Foros';
     //Dsabilitamos botones
     disabledButtons();
     console.log($('#usuarioActivo').text());
     getForos($('#usuarioActivo').text());
     $('#btnCrear').click(function() {
-        window.open('/editorForo', '_self')
+        editar(-1);
     });
     
     $('#btnPublicar').click(function() {
@@ -39,6 +40,7 @@ $(function() {
 
     $('#btnEditar').click(function() {
         //Aquí se debe obtener de la base de datos el foro publicado y mandarlo al editor de texto
+        editar(checked);
     });
 
     $('#btnVer').click(function() {
@@ -50,6 +52,19 @@ $(function() {
     });
 
 });
+
+//Funcion para definir el objeto que voy a editar
+function editar(id){
+    let ajaxRequest = new XMLHttpRequest();
+    ajaxRequest.open("GET", "/defEditorForo/"+id, true);
+    ajaxRequest.onreadystatechange = function(){
+        if(ajaxRequest.readyState == 4 && ajaxRequest.status == 200){
+            console.log('Definido exitosamente');
+            window.open('/editorForo', '_self')
+        }
+    }
+    ajaxRequest.send(null);
+}
 
 //Llamada a la vista del post
 function verForo(id,username){
