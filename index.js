@@ -12,7 +12,7 @@ const express = require("express"),
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
+    user: 'luis',
     password: process.env.LOCAL_MYSQL_PASSWORD,
     database: 'aprendecdb'
 });
@@ -39,7 +39,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge:  1000 * 60 * 10
+        maxAge:  1000 * 60 * 30
     }
 }));
 

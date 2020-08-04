@@ -33,6 +33,7 @@
                         <i class="far fa-user"></i>
                         <% if (typeof(userName) !== 'undefined') { %>
                         <span><%= userName %></span>
+                        <p hidden id="usuarioActivo"><%= userName %></p>
                         <% } else { %>
                         <span></span>
                         <% } %>
