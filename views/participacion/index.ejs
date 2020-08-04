@@ -54,10 +54,12 @@
                         <div class="card bg-light">
                             <div class="card-body text-center">
                                 <!-- Poner Foto de Sesion -->
-                                <!-- <img src="<%= user.ProfilePictureRoute %>"> -->
-                                <img class="card-img-top imagen_usuario"
+                                <!-- <img src="<%= user.profilePictureRoute %>"> -->
+                                <!--  <img class="card-img-top imagen_usuario"
                                     src=".././fotos/<%= results[0].foto %>"
-                                    alt="<%= results[0].foto %>"><br><br>
+                                    alt="<%= results[0].foto %>"> -->
+                                <img class="card-img-top imagen_usuario" src="<%= profilePictureRoute %>"
+                                    alt="<%= profilePictureRoute %>"><br><br>
                                 <h4 class="card-text"><b><%= results[0].username %></b></h4>
                                 <p class="card-text"><b>Valoración: </b><%= results[0].valoracion %></p>
                             </div>
