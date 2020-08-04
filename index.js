@@ -69,13 +69,13 @@ app.use((req, res, next) => {
         // console.log(user);
         req.user = user;
         
-        if(fs.existsSync(`./public/fotos/${req.user.foto}`)) {
-            console.log("The file exists.");
-            req.user.profilePictureRoute = `http://localhost:3000/fotos/${req.user.foto}`;
-        } else {
-            console.log('The file does not exist.');
-            req.user.profilePictureRoute = `${req.user.foto}`;
-        }
+        // if(fs.existsSync(`./public/fotos/${req.user.foto}`)) {
+        //     console.log("The file exists.");
+        //     req.user.profilePictureRoute = `http://localhost:3000/fotos/${req.user.foto}`;
+        // } else {
+        // console.log('The file does not exist.');
+        res.locals.profilePictureRoute = `${req.user.foto}`;
+        // }
         
         if(req.user.tipoRegistro == 1 ){
             res.locals.name = `${req.user.nombre}  ${req.user.apellido}`;

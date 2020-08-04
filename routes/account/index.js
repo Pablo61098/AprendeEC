@@ -76,13 +76,13 @@ router.put("/:userName/picture", middleware.isLoggedIn,function(req, res){
 
         let foto = req.files.foto;
         let formato = req.files.foto.name.split('.')[1];
-        let userName = req.params.userName;
+        let userName = res.locals.userName.replace(/\s/g, '');;
 
         foto.mv(`./public/fotos/${userName}Foto.${formato}`, function(err){
             if(err){
                 return res.send(err);
             }
-            connection.query(`update usuario set foto = '${userName}Foto.${formato}' where username = '${userName}'`, function(err, results, fields){
+            connection.query(`update usuario set foto = 'http://localhost:3000/fotos/${userName}Foto.${formato}' where username = '${res.locals.userName}'`, function(err, results, fields){
                 if(err){
                     return res.send(err);
                 }else{
