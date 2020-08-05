@@ -42,54 +42,87 @@ const storage = multer.diskStorage({
 //Add a controller
 //Show all images in folder upload 
 router.get('/files',function(req,res){
-	const images = fs.readdirSync('public/images/usuarios/');
-	var sorted = [];
-	for (let item of images){
-		if(item.split('.').pop()=== 'png' ||
-		item.split('.').pop()=== 'jpg' ||
-		item.split('.').pop()=== 'jpeg' ||
-		item.split('.').pop()=== 'svg'){
-			var abc = {
-				"image": "/images/usuarios/"+item,
-				"folder": "/"
+	console.log('FILES');
+	console.log(req.user);
+	let dir = __dirname +'/../../public/images/usuarios/'+req.user.username;
+	let cortoDis="/images/usuarios/"+req.user.username+"/" 
+	if (fs.existsSync(dir)) {
+		console.log('Directory exists!');
+		const images = fs.readdirSync(dir);
+		var sorted = [];
+		for (let item of images){
+			if(item.split('.').pop()=== 'png' ||
+			item.split('.').pop()=== 'jpg' ||
+			item.split('.').pop()=== 'jpeg' ||
+			item.split('.').pop()=== 'svg'){
+				var abc = {
+					"image": cortoDis+item,
+					"folder": "/"
+				}
+				sorted.push(abc);
+			} 
+		}
+		res.send(sorted);
+	}else{
+		fs.mkdir(dir, function(err) {
+			if (err) {
+			  console.log(err)
+			} else {
+				console.log("New directory successfully created.");
+				const images = fs.readdirSync(dir);
+				var sorted = [];
+				for (let item of images){
+					if(item.split('.').pop()=== 'png' ||
+					item.split('.').pop()=== 'jpg' ||
+					item.split('.').pop()=== 'jpeg' ||
+					item.split('.').pop()=== 'svg'){
+						var abc = {
+							"image": cortoDis+item,
+							"folder": "/"
+						}
+						sorted.push(abc);
+					} 
+				}
+				res.send(sorted);
 			}
-			sorted.push(abc);
-		} 
+		  })
 	}
-	res.send(sorted);
+	
 });
 //Upload image to folder upload 
 router.post('/upload',function(req,res,next){
 	console.log(req.files);
-	//copiamos el archivo a la carpeta definitiva de fotos
-	//fs.createReadStream('uploads/'+req.files.filename.name).pipe(fs.createWriteStream('public/images/usuarios/'+req.files.filename.name, function(error){}));
-	// //borramos el archivo temporal creado
-	// fs.unlink('./uploads/'+req.files[x].filename, function(error){});
-	let upload = multer({ storage: storage, fileFilter: helpers.imageFilter }).single('filename');
-
-    upload(req, res, function(err) {
-        // req.file contains information of uploaded file
-        // req.body contains information of text fields, if there were any
-
-        if (req.fileValidationError) {
-            return res.send(req.fileValidationError);
-        }
-        else if (!req.file) {
-            return res.send('Please select an image to upload');
-        }
-        else if (err instanceof multer.MulterError) {
-            return res.send(err);
-        }
-        else if (err) {
-            return res.send(err);
-        }
-
-        // Display uploaded image for user validation
-        res.send(`You have uploaded this image: <hr/><img src="${req.file.path}" width="500"><hr /><a href="./">Upload another image</a>`);
-    });
-	console.log('entrando');
-	res.send('back');
+	console.log(req.body);
+	var startup_image = req.files.filename;
+	var dir = __dirname +'/../../public/images/usuarios/'+req.user.username;
+	if (fs.existsSync(dir)) {
+		console.log('Directory exists!');
+		subirImagen(startup_image,dir);
+	}else{
+		console.log('Creamos el directorio');
+		fs.mkdir(dir, function(err) {
+			if (err) {
+			  console.log(err)
+			} else {
+			  console.log("New directory successfully created.");
+			  subirImagen(startup_image,dir);
+			}
+		  })
+	}
+   	res.send('back');
 });
+
+//Funcion para subir la imagen 
+function subirImagen(startup_image,dir){
+	// Use the mv() method to place the file somewhere on your server
+	startup_image.mv(dir+"/"+ startup_image.name, function(err) {
+		if(err){
+		console.log(err);
+		}else{
+			console.log("uploaded");
+		}
+	});
+}
 
 ///delete file
 router.post('delete_file',function(req,res,next){
@@ -188,6 +221,8 @@ router.post('/saveForo',middleware.isLoggedIn,function(req,res){
 
 //Seervicio para actualizar el foro
 router.put('/updateForo',middleware.isLoggedIn,function(req,res){
+	console.log('UPDATEEEEEEEEEE');
+	console.log(req.body);
 	let consulta = 'UPDATE foro  SET id='+ req.body.id+", username_usuario='"+req.body.username_usuario+
 	"', titulo='"+req.body.titulo+"'"+
 	", contenido='"+req.body.contenido+"' WHERE id="+req.body.id;
