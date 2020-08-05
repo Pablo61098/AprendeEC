@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var http = require('http').createServer(router);
 var io = require('socket.io')(http);
+const request = require("request-promise")
 
 
 var mysql = require('mysql');
@@ -22,6 +23,51 @@ conn.connect(function(err) {
 });
 
 
+const RUTA = "https://api.duckduckgo.com";
+
+const RUTA_CORE="https://core.ac.uk:443/api-v2/search/";
+const apikey_core = "2k9IVpgoHBwqXvQaPbUDSThixfZ1ytR5";
+
+const respuestaArticulos = titulo =>request({
+    uri: `${RUTA_CORE}title=${titulo}?page=1&pageSize=10&apiKey=${apikey_core}`,
+    json: true
+})
+
+
+router.get('/getArticleRelated/:titulo',function(req,res){
+    console.log('Obteniendo articulo----------');
+    console.log(req.params.titulo);
+    respuestaArticulos(req.params.titulo)
+    .then(respuestaURL =>{
+        console.log(respuestaURL);
+        res.send(respuestaURL);
+    });
+});
+
+
+const respuestaInmediata = busqueda => request({
+    uri: `${RUTA}/?q=${encodeURIComponent(busqueda)}&format=json`,
+    headers: {
+        'Accept-Language': 'es_LA', // Para consumirla en español
+    },
+    json: true, // Para que lo decodifique automáticamente 
+});
+
+router.get('/getTopicsRelated/:q',function(req,res){
+    console.log('ENTRANDO A GETTOPICSRELATED..');
+    console.log(req.params.q);
+    respuestaInmediata(req.params.q)
+    .then(datosRespuesta => {
+        let definicion = datosRespuesta.Definition,
+            resumen = datosRespuesta.AbstractText,
+            respuesta = datosRespuesta.Answer,
+            url = datosRespuesta.AbstractURL,
+            imagen = datosRespuesta.Image,
+            relacionados = datosRespuesta.RelatedTopics.map(relacionado => relacionado.Text);
+        console.log({ definicion, resumen, respuesta, url, imagen, relacionados });
+        res.send(datosRespuesta);
+    });
+})
 
 http.listen(4000,function(){
     console.log("EScuchando");
