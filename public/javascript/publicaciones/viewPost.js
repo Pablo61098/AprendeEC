@@ -171,6 +171,7 @@ function calificar(puntaje, id_, username,tabla,campoBuscar){
             console.log(calificacion);
             //Una vez calificado tengo que quitar las estrellas
             quitarEstrellasYPonerCalificacion(calificacion,1);
+            sendMessage("post", $('#id_post').text(),$('#usuarioActivo').text()+ " le ha otorgado " + calificacion + " puntos a su post: " + $('#tituloPost').text());
         }
     }
     let objeto = "username_usuario="+username+
@@ -204,6 +205,9 @@ function getComentarios(id_,tabla,campoBuscar){
 
 function limpiarComentarios(){
     $('#seccionComentarios > div').each(function(){
+        $(this).remove();
+    })
+    $('#seccionComentarios > hr').each(function(){
         $(this).remove();
     })
 }
@@ -250,6 +254,7 @@ function saveComment(comentario,username,id_post){
             //En este objeto se almacena el post que se requiere
             mensaje('Guardado','Se ha guardado el comentario exitosamente','OK');
             $('#comentario').val('');
+            sendMessage("post", $('#id_post').text(),"El usuario " +  $('#usuarioActivo').text() + " ha comentado su post: " + $('#tituloPost').text());
             limpiarComentarios();
             getComentarios($('#id_post').text(),'usuario_post_comentario','id_post');
 
@@ -330,8 +335,21 @@ function getCategoriasTag(lista){
 //Ponemos el contenido del post en el front end
 function putPostFrontEnd(objeto, categorias){
     document.title = objeto.titulo;
-    let titulo = '<h3 style="text-align:center">'+objeto.titulo+'</h3>';
+    let titulo = '<h3 style="text-align:center" id=tituloPost>'+objeto.titulo+'</h3>';
     $('#contenidoPost').append(titulo);
     $('#contenidoPost').append(objeto.contenido);
     $('#tags').append(getCategoriasTag(categorias));
+}
+
+//Para las notificaciones
+function sendMessage( tipo, id_post,sms){
+    var socket = io('http://localhost:4000');
+    // socket.emit($('#username_post').text(),{
+    socket.emit("SMS",{
+        "from" : $("#usuarioActivo").text(),
+        "To": $('#username_post').text(),
+        "Message" : sms,
+        "id": id_post,
+        "tipo":tipo
+    })
 }

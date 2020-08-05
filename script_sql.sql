@@ -267,6 +267,19 @@ create table ciudad (
     FOREIGN KEY (id_provincia) REFERENCES provincia(id)
 );
 
+CREATE TABLE notificaciones (
+	id_notificacion INT NOT NULL AUTO_INCREMENT,
+    username_to VARCHAR(100),
+    username_from VARCHAR(100),
+    sms VARCHAR(300),
+    tipo VARCHAR(50),
+    id_tipo INT,
+    visto BOOLEAN,
+    PRIMARY KEY (id_notificacion, username_to, username_from),
+    FOREIGN KEY (username_to) REFERENCES usuario(username),
+    FOREIGN KEY (username_from) REFERENCES usuario(username)
+);
+
 DELIMITER //
 CREATE TRIGGER update_post_valoraciones 
 AFTER INSERT ON usuario_post_calificacion 

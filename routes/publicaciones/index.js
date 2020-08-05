@@ -7,6 +7,8 @@ var helpers = require('./helpers');
 var crypto = require('crypto');
 
 
+
+
 //Add config multer
 // var storage = multer.diskStorage({
 // 	//Carpeta donde se almacenaran los archivos
@@ -168,7 +170,7 @@ conn.connect(function(err) {
 
 
 //Funcion para guardar el foro
-router.post('/saveForo',function(req,res){
+router.post('/saveForo',middleware.isLoggedIn,function(req,res){
 	console.log(req.body);
 	let query= 'Insert into foro values('+req.body.id+','+"'"+req.body.username_usuario+"'"+",'"+req.body.titulo+"'"+','+"'"+req.body.fecha_hora+"'"+','+"'"+req.body.contenido+"',"+""+req.body.publicado+")";
 	console.log(query);
@@ -185,7 +187,7 @@ router.post('/saveForo',function(req,res){
 });
 
 //Seervicio para actualizar el foro
-router.put('/updateForo',function(req,res){
+router.put('/updateForo',middleware.isLoggedIn,function(req,res){
 	let consulta = 'UPDATE foro  SET id='+ req.body.id+", username_usuario='"+req.body.username_usuario+
 	"', titulo='"+req.body.titulo+"'"+
 	", contenido='"+req.body.contenido+"' WHERE id="+req.body.id;
@@ -213,14 +215,14 @@ router.put('/updateForo',function(req,res){
 
 
 //Servicio para definir 
-router.get('/defEditorForo/:id',function(req,res){
+router.get('/defEditorForo/:id',middleware.isLoggedIn,function(req,res){
 	editarForo=req.params.id;
 	console.log('Definido');
 	res.send('definido');
 })
 
 //Seervicio para actualizar el post
-router.put('/updatePost',function(req,res){
+router.put('/updatePost',middleware.isLoggedIn,function(req,res){
 	let consulta = 'UPDATE post  SET id='+ req.body.id+", username_usuario='"+req.body.username_usuario+
 	"', titulo='"+req.body.titulo+"'"+
 	", contenido='"+req.body.contenido+"' WHERE id="+req.body.id;
@@ -250,7 +252,7 @@ router.put('/updatePost',function(req,res){
 
 
 //Funcion para guardar el post
-router.post('/savePost',function(req,res){
+router.post('/savePost',middleware.isLoggedIn,function(req,res){
 	console.log(req.body);
 	let query= 'Insert into post values('+req.body.id+','+"'"+req.body.username_usuario+"'"+','+req.body.valoracion+','+"'"+req.body.titulo+"'"+','+"'"+req.body.fecha_hora+"'"+','+""+req.body.publicado+",'"+req.body.contenido+"')";
 	console.log(query);
@@ -408,7 +410,7 @@ router.get('/getLastForo',function(req,res){
 });
 
 //Servicio para añadir un comentario a un post o foro
-router.post('/putComentario',function(req,res){
+router.post('/putComentario',middleware.isLoggedIn,function(req,res){
 	//obtenemos el nombre de los campos y los valores, así como también las tablas
 	console.log(req.body);
 	let id = req.body.id;
@@ -466,7 +468,7 @@ router.get('/getComentarios/:id_p_f/:tabla/:campo_p_f',function(req,res){
 
 
 //Servicio para poner una respuesta en la base de datos
-router.post('/putRespuesta',function(req,res){
+router.post('/putRespuesta',middleware.isLoggedIn, function(req,res){
 	let insertar= "INSERT INTO usuario_foro_respuesta(id,username_usuario,id_foro,respuesta,fecha_hora) VALUES("+
 	"null,'"+req.body.username_usuario+"',"+req.body.id_foro+", '"+req.body.respuesta+"', '"+req.body.fecha_hora+"')";
 	conn.query(insertar,(err,respuesta)=>{
@@ -511,11 +513,11 @@ router.get('/modPublicaciones', middleware.isLoggedIn ,function (req, res) {
 	res.render('./publicaciones_views/modPublicaciones');
 });
 
-router.get('/modPubForos',function(req,res){
+router.get('/modPubForos',middleware.isLoggedIn,function(req,res){
 	res.render('./publicaciones_views/modPubForos')
 });
 
-router.get('/editor',function(req,res){
+router.get('/editor',middleware.isLoggedIn,function(req,res){
 	res.render('./publicaciones_views/editor')
 });
 
@@ -726,7 +728,7 @@ router.get('/verificar_calificacion/:id_/:username/:tabla/:campo_p_f', function(
 })
 
 //Servicio para calificar un post o foro
-router.post('/calificar/',function(req,res){
+router.post('/calificar/',middleware.isLoggedIn,function(req,res){
 	let tabla = req.body.tabla;
 	let id_=req.body.id_;
 	let campo_p_f = req.body.nameCampo;
@@ -819,17 +821,17 @@ router.get('/setInfo',function(req,res){
 })
 
 
-router.get('/modPublicaciones', function (req, res) {
-	res.render('./publicaciones_views/modPublicaciones');
-});
+// router.get('/modPublicaciones', function (req, res) {
+// 	res.render('./publicaciones_views/modPublicaciones');
+// });
 
-router.get('/modPubForos',function(req,res){
-	res.render('./publicaciones_views/modPubForos')
-});
+// router.get('/modPubForos',function(req,res){
+// 	res.render('./publicaciones_views/modPubForos')
+// });
 
-router.get('/editor',function(req,res){
-	res.render('./publicaciones_views/editor')
-});
+// router.get('/editor',function(req,res){
+// 	res.render('./publicaciones_views/editor')
+// });
 
 
 router.get('/verPost',function(req,res){
@@ -841,7 +843,7 @@ router.get('/informativo',function(req,res){
 	res.render('./publicaciones_views/informativo')
 });
 
-router.get('/editorForo',function(req,res){
+router.get('/editorForo',middleware.isLoggedIn,function(req,res){
 	res.render('./publicaciones_views/editorForo')
 });
 
