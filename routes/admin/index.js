@@ -35,7 +35,7 @@ router.get("/adminSolicitudes", (req, res) => {
     
 });
 
-router.put("asdjkaskj/aceptarSolicitud/:idSolicitud", function(req, res){
+router.put("/aceptarSolicitud/:idSolicitud", function(req, res){
     console.log("hola");
     connection.query(`update solicitud set pendiente = 0, aceptado = 1 where id = ${req.params.idSolicitud}`, function(err, results, fields){
         if(err){

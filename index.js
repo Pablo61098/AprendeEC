@@ -25,6 +25,7 @@ const adminRoutes = require("./routes/admin");
 const accountRoutes = require("./routes/account");
 const tiendaRoutes = require("./routes/tienda");
 const participacionRoutes = require("./routes/participacion");
+const stackRoutes = require("./routes/stack_estudio");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -107,6 +108,7 @@ app.use(require('./routes/publicaciones'));
 app.use("/admin",adminRoutes);
 app.use("/tienda", tiendaRoutes);
 app.use("/participacion", participacionRoutes);
+app.use("/stack_estudio", stackRoutes);
 
 
 
