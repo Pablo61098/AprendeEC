@@ -327,8 +327,18 @@ SET username = NEW.username_usuario;
     IF (estadoPublicacion = 1) THEN
         SET cuantosPosts = (SELECT COUNT(post.username_usuario) FROM post WHERE post.username_usuario = username);
         SET valoracionTotalPosts = (SELECT SUM(post.valoracion) FROM post WHERE post.username_usuario = username);
+        IF cuantosPosts = 0 THEN
+            SET cuantosPosts =1;
+        END IF;
+        IF valoracionTotalPosts IS NULL THEN
+            SET valoracionTotalPosts = 0;
+        END IF;
         SET totalPosts = valoracionTotalPosts / cuantosPosts;
         SET totalForosRespuesta = (SELECT SUM(usuario_respuesta_calificacion.calificacion) FROM `usuario_foro_respuesta` INNER JOIN `usuario_respuesta_calificacion` WHERE usuario_foro_respuesta.id = usuario_respuesta_calificacion.id_respuesta AND usuario_foro_respuesta.username_usuario=username);
+        IF totalForosRespuesta IS NULL THEN
+            SET totalForosRespuesta = 0;
+        END IF;
+        
         SET esUsuarioAcademico = (SELECT COUNT(usuario_academico.username) FROM usuario_academico WHERE
 usuario_academico.username=username);
 		SET  valorNuevoUsuario = totalPosts + totalForosRespuesta;
@@ -384,11 +394,20 @@ SET username = (SELECT usuario_foro_respuesta.username_usuario FROM usuario_foro
     IF (estadoPublicacion = 1) THEN
         SET cuantosPosts = (SELECT COUNT(post.username_usuario) FROM post WHERE post.username_usuario = username);
         SET valoracionTotalPosts = (SELECT SUM(post.valoracion) FROM post WHERE post.username_usuario = username);
+        IF cuantosPosts = 0 THEN
+            SET cuantosPosts =1;
+        END IF;
+        IF valoracionTotalPosts IS NULL THEN
+            SET valoracionTotalPosts = 0;
+        END IF;
         SET totalPosts = valoracionTotalPosts / cuantosPosts;
         SET totalForosRespuesta = (SELECT SUM(usuario_respuesta_calificacion.calificacion) FROM `usuario_foro_respuesta` INNER JOIN `usuario_respuesta_calificacion` WHERE usuario_foro_respuesta.id = usuario_respuesta_calificacion.id_respuesta AND usuario_foro_respuesta.username_usuario=username);
         SET esUsuarioAcademico = (SELECT COUNT(usuario_academico.username) FROM usuario_academico WHERE
 usuario_academico.username=username);
-		SET  valorNuevoUsuario = totalPosts + totalForosRespuesta;
+        IF totalForosRespuesta IS NULL THEN
+            SET valoracionTotalPosts = 0;
+        END IF;
+        SET  valorNuevoUsuario = totalPosts + totalForosRespuesta;
 		IF esUsuarioAcademico = 1 THEN
         	SET valorActualUsuario = (SELECT usuario.valoracion FROM usuario WHERE usuario.username = username);
         	UPDATE usuario SET usuario.valoracion = valorNuevoUsuario
@@ -424,17 +443,5 @@ create table datos_programa (
     PRIMARY KEY (id)
 );
 
-insert into datos_programa(nombre, valor) values ('iva', '12');
-insert into provincia(nombre) values ('Azuay');
-insert into provincia(nombre) values ('Pichincha');
-insert into provincia(nombre) values ('Guayas');
-insert into provincia(nombre) values ('Manabí');
-insert into ciudad(id_provincia, nombre) values (1, 'Cuenca');
-insert into ciudad(id_provincia, nombre) values (1, 'Paute');
-insert into ciudad(id_provincia, nombre) values (1, 'Gualaceo');
-insert into ciudad(id_provincia, nombre) values (2, 'Quito');
-insert into ciudad(id_provincia, nombre) values (3, 'Guayaquil');
-insert into ciudad(id_provincia, nombre) values (4, 'Portoviejo');
-insert into ciudad(id_provincia, nombre) values (4, 'Manta');
 commit;
 

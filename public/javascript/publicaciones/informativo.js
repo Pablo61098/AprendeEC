@@ -290,6 +290,7 @@ function printPost(lista,mapa,link,p_o_f){
 	 }
 	 if($('#infoBuscar').text()=='1'){
 		if(contador==0){
+			limpiar();
 			getRelacionados($('#info_texto').text())
 			//no se encontraron resultados y entonces muestro los artículos relacionados
 			$('#contenido').append('<div class="container text-center"><i style="text-aling: center" class="fas fa-ban fa-7x"></i></div>');
