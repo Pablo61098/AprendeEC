@@ -25,13 +25,10 @@ const adminRoutes = require("./routes/admin");
 const accountRoutes = require("./routes/account");
 const tiendaRoutes = require("./routes/tienda");
 const participacionRoutes = require("./routes/participacion");
-<<<<<<< HEAD
 const ventasRoutes = require("./routes/ventas");
 const rankingRoutes = require("./routes/ranking");
-=======
 const notificaciones = require("./routes/notificaciones");
 const stackRoutes = require("./routes/stack_estudio");
->>>>>>> 357c04552fb0f57ec5d29c65b09434b0c76eae9c
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -46,11 +43,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-<<<<<<< HEAD
         maxAge:  1000 * 60 * 60 * 24
-=======
-        maxAge:  1000 * 60 * 30
->>>>>>> 357c04552fb0f57ec5d29c65b09434b0c76eae9c
     }
 }));
 
