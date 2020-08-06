@@ -5,7 +5,7 @@ const { connect } = require('../admin');
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
+    user: process.env.LOCAL_MYSQL_USER,
     password: process.env.LOCAL_MYSQL_PASSWORD,
     database: 'aprendecdb'
 });
