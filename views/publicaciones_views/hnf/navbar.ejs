@@ -26,8 +26,10 @@
             <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
                 <li class="nav-item dropdown mx-auto">
                     <% if (typeof(userName) !== 'undefined') { %>
-                    <a class="nav-link dropdown" href="#" id="notificacionesBtn" data-toggle="dropdown"><i class="fas fa-bell"></i></a>
-                    <div class="dropdown-menu dropdown-menu-right" id="notificacionContainer" style="overflow-y:auto; max-height:50vh; text-size-adjust: inherit; max-width : 80vh">
+                    <a class="nav-link dropdown" href="#" id="notificacionesBtn" data-toggle="dropdown"><i
+                            class="fas fa-bell"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" id="notificacionContainer"
+                        style="overflow-y:auto; max-height:50vh; text-size-adjust: inherit; max-width : 80vh">
                         <!-- <a class="dropdown-item" href="/modPublicaciones">Publicaciones</a> -->
                     </div>
                     <% } %>
@@ -53,7 +55,9 @@
                         <a class="dropdown-item" href="/tienda">Tienda</a>
                         <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
                         <a class="dropdown-item" href="/login">Cerrar Sesión</a>
+                        <a class="dropdown-item" href="/stack_estudio">Stack de Estudio</a>
                         <% } else { %>
+                        <a class="dropdown-item" href="/stack_estudio">Stack de Estudio</a>
                         <a class="dropdown-item" href="/login">Iniciar Sesión</a>
                         <% } %>
                     </div>

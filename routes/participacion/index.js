@@ -5,7 +5,7 @@ var middleware = require("../../middleware");
 
 var conn = mysql.createConnection({
     host: 'localhost',
-    user: 'luis',
+    user: process.env.LOCAL_MYSQL_USER,
     password: process.env.LOCAL_MYSQL_PASSWORD,
     database: 'aprendecdb',
     multipleStatements: true

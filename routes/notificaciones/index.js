@@ -9,7 +9,7 @@ var mysql = require('mysql');
 const middlewareObj = require('../../middleware');
 const conn = mysql.createConnection({
 	host: 'localhost',
-	user: 'luis',
+	user: process.env.LOCAL_MYSQL_USER,
 	database : 'aprendecdb',
 	password: process.env.LOCAL_MYSQL_PASSWORD
 });

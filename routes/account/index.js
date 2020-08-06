@@ -8,7 +8,7 @@ const express = require('express'),
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'luis',
+    user: process.env.LOCAL_MYSQL_USER,
     password: process.env.LOCAL_MYSQL_PASSWORD,
     database: 'aprendecdb'
 });

@@ -12,9 +12,10 @@ $(function() {
         });
     }else{
         $('#contEdit > textarea').remove();
-        $('#contEdit').append('<p><strong>No esta registrado. No puede responder en el foro</strong></p>')
+        $('#contEdit').append('<p><strong>No está registrado. No puede responder en el foro</strong></p>')
         $('#btnEnviar').attr('disabled', true);
         $('#comentario').attr('disabled', true);
+        $('#btnEnviarResp').attr('hidden', true);
     }
     
     printPost();
@@ -402,6 +403,11 @@ function listenToButtons(id_seccion){
             let id=botones[i].id.substring(5);
             console.log(id);
             botones[i].addEventListener('click',function(){
+                if(!$('#usuarioActivo').text()){
+                    accion=-1;
+                    mensaje('Usuario no registrado','Para calificar respuestas debe estar registrado en el sitio AprendEC.','Aceptar');
+                    return;
+                }
                 if($('#publicado').text()=='1'){
                     //quitarEstrellasYPonerCalificacion(0,0);
                     verificacionCalificacion(id,$('#usuarioActivo').text(),'usuario_respuesta_calificacion','id_respuesta',1);
@@ -415,6 +421,11 @@ function listenToButtons(id_seccion){
             let id=botones[i].id.substring(7);
             console.log(id);
             botones[i].addEventListener('click',function(){
+                if(!$('#usuarioActivo').text()){
+                    accion=-1;
+                    mensaje('Usuario no registrado','Para calificar respuestas debe estar registrado en el sitio AprendEC.','Aceptar');
+                    return;
+                }
                 if($('#publicado').text()=='1'){
                     //quitarEstrellasYPonerCalificacion(0,0);
                     verificacionCalificacion(id,$('#usuarioActivo').text(),'usuario_respuesta_calificacion','id_respuesta',-1);
