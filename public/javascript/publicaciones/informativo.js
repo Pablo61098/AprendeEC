@@ -221,7 +221,8 @@ function printPost(lista,mapa,link,p_o_f){
 		//Obtengo un string con las categorias del post
 		let listaCate = mapa.get(lista[i].id);
 		for (var j = 0 ; j<listaCate.length; j++){
-			categorias=categorias +"<em>"+ listaCate[j] + "</em>, ";
+			if(listaCate[j])
+				categorias=categorias +"<em>"+ listaCate[j] + "</em>, ";
 		}
 		let agregado = " ";
 		//SI es 1 entonces es post y se debe agregar la calificación, sino es un foro

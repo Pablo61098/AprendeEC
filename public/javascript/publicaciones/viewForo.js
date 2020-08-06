@@ -2,13 +2,22 @@ let foro_Show={};
 let categoria_foro={};
 let accion=-1;
 $(function() {
-    CKEDITOR.replace("editor1",{
-        extraPlugins: 'imagebrowser',
-        removePlugins: 'easyimage',
-        //filebrowserBrowseUrl: '/files',
-        imageBrowser_listUrl: '/files'
-        // filebrowserUploadUrl: '/upload'
-    });
+    if($('#usuarioActivo').text()){
+        CKEDITOR.replace("editor1",{
+            extraPlugins: 'imagebrowser',
+            removePlugins: 'easyimage',
+            //filebrowserBrowseUrl: '/files',
+            imageBrowser_listUrl: '/files'
+            // filebrowserUploadUrl: '/upload'
+        });
+    }else{
+        $('#contEdit > textarea').remove();
+        $('#contEdit').append('<p><strong>No está registrado. No puede responder en el foro</strong></p>')
+        $('#btnEnviar').attr('disabled', true);
+        $('#comentario').attr('disabled', true);
+        $('#btnEnviarResp').attr('hidden', true);
+    }
+    
     printPost();
     getComentarios($('#id_foro').text(),'usuario_foro_comentario','id_foro');
     getRespuestas($('#id_foro').text())
@@ -267,6 +276,10 @@ function printRespuestas(lista){
         $('#seccionRespuestas').append('<div><strong>No existe respuestas en esta publicación.</strong></div>');
     }else{
         for(var i = 0 ; i < lista.length; i++){
+            let imagen = lista[i].foto;
+            if(imagen==null){
+                imagen='images/user_default.png';
+            }
             let fin = "<hr>";
             if(i>=lista.length-1)
                 fin="";
@@ -286,7 +299,7 @@ function printRespuestas(lista){
                     '<p><strong>Respondido: </strong><em id="respFecha'+lista[i].id+'">'+lista[i].fecha_hora+'</em></p>'+
                 '</div>'+
                 '<div class="col-sm-4 text-center">'+
-                    '<img src="images/user_default.png" style="width: 60px; height: 60px">'+
+                    '<img src="'+imagen+'" style="width: 60px; height: 60px">'+
                     '<p id=ownResp'+lista[i].id+'><strong>'+lista[i].username_usuario+'</strong></p>'+
                 '</div>'+
             '</div>'+
@@ -390,6 +403,11 @@ function listenToButtons(id_seccion){
             let id=botones[i].id.substring(5);
             console.log(id);
             botones[i].addEventListener('click',function(){
+                if(!$('#usuarioActivo').text()){
+                    accion=-1;
+                    mensaje('Usuario no registrado','Para calificar respuestas debe estar registrado en el sitio AprendEC.','Aceptar');
+                    return;
+                }
                 if($('#publicado').text()=='1'){
                     //quitarEstrellasYPonerCalificacion(0,0);
                     verificacionCalificacion(id,$('#usuarioActivo').text(),'usuario_respuesta_calificacion','id_respuesta',1);
@@ -403,6 +421,11 @@ function listenToButtons(id_seccion){
             let id=botones[i].id.substring(7);
             console.log(id);
             botones[i].addEventListener('click',function(){
+                if(!$('#usuarioActivo').text()){
+                    accion=-1;
+                    mensaje('Usuario no registrado','Para calificar respuestas debe estar registrado en el sitio AprendEC.','Aceptar');
+                    return;
+                }
                 if($('#publicado').text()=='1'){
                     //quitarEstrellasYPonerCalificacion(0,0);
                     verificacionCalificacion(id,$('#usuarioActivo').text(),'usuario_respuesta_calificacion','id_respuesta',-1);
