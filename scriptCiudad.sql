@@ -22,4 +22,3 @@ insert into provincia values(21,'El Oro');
 insert into provincia values(22,'Loja');
 insert into provincia values(23,'Zamora Chinchipe');
 insert into provincia values(24,'Galápagos');
-insert into provincia values(25,'Esmeraldas');
