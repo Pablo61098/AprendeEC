@@ -3,6 +3,7 @@ const router = express.Router();
 const mysql = require("mysql");
 const bcrypt = require('bcryptjs');
 const sgMail = require('@sendgrid/mail');
+const middleware = require("../../middleware");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -15,7 +16,7 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-router.get("/adminSolicitudes", (req, res) => {
+router.get("/adminSolicitudes", middleware.isAdmin , (req, res) => {
 
     console.log("heyyyy");
     console.log(req.query);
@@ -31,8 +32,29 @@ router.get("/adminSolicitudes", (req, res) => {
         // console.log(fields);
         res.render("./registro/adminSolicitudes", {results : results, institucion: req.query.institucion, tipo : req.query.tipo});
     });
-    
-    
+});
+
+router.get("/", function(req, res){
+    res.render("./registro/adminLogin");
+});
+
+router.post("/", function(req, res){
+
+    connection.query(`select * from usuario_admin_plat where (username = '${req.body.username}' &&  contrasena = '${req.body.password}')`, function(err, results, fields){
+        if(err){
+            console.log(err);
+            return res.send(err);
+        }
+        if(results.length > 0){
+            req.session.admin = req.body.username;
+            return res.redirect("/admin/adminSolicitudes");
+        }else{
+            return res.redirect("/admin");
+        }
+        
+    })
+
+
 });
 
 router.put("/aceptarSolicitud/:idSolicitud", function(req, res){
