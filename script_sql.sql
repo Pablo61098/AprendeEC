@@ -270,7 +270,6 @@ create table ciudad (
     FOREIGN KEY (id_provincia) REFERENCES provincia(id)
 );
 
-
 CREATE TABLE notificaciones (
 	id_notificacion INT NOT NULL AUTO_INCREMENT,
     username_to VARCHAR(100),
@@ -283,6 +282,15 @@ CREATE TABLE notificaciones (
     FOREIGN KEY (username_to) REFERENCES usuario(username),
     FOREIGN KEY (username_from) REFERENCES usuario(username)
 );
+
+create table datos_programa (
+    id INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(255),
+    valor VARCHAR(255),
+    PRIMARY KEY (id)
+);
+
+insert into datos_programa (nombre, valor) values ('iva', '12');
 
 DELIMITER //
 CREATE TRIGGER update_post_valoraciones 
@@ -435,13 +443,3 @@ usuario_admin_inst.username=username);
     END IF;
 END;
 //
-
-create table datos_programa (
-    id INT NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR(255),
-    valor VARCHAR(255),
-    PRIMARY KEY (id)
-);
-
-commit;
-
