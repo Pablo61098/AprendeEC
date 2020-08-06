@@ -31,12 +31,16 @@
     "flash": "^1.1.0",
     "fs": "0.0.1-security",
     "googleapis": "^58.0.0",
+    "http": "0.0.1-security",
     "js-big-decimal": "^1.2.3",
     "method-override": "^3.0.0",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "nodemailer": "^6.4.11",
     "prince": "^1.8.2",
-    "sessions": "0.0.2-7"
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "sessions": "0.0.2-7",
+    "socket.io": "^2.3.0"
   }
 }

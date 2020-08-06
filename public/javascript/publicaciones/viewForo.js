@@ -34,10 +34,10 @@ $(function() {
     });
     $('#btnYesPublicar').click(function(){
             if(accion==1){
-            let contenidoRespuesta=CKEDITOR.instances.editor1.getData();
-            console.log(contenidoRespuesta);
-            putRespuesta($('#usuarioActivo').text(),$('#id_foro').text(),contenidoRespuesta);
-        }
+                let contenidoRespuesta=CKEDITOR.instances.editor1.getData();
+                console.log(contenidoRespuesta);
+                putRespuesta($('#usuarioActivo').text(),$('#id_foro').text(),contenidoRespuesta);
+            }
         $('#modalMessage').modal('toggle');  
     });
 
@@ -73,7 +73,7 @@ function saveComment(comentario,username,id_foro){
             $('#comentario').val('');
             limpiarComentarios();
             getComentarios($('#id_foro').text(),'usuario_foro_comentario','id_foro');
-
+            sendMessage($('#username_foro').text(),'foro',$('#id_foro').text(),'El usuario '+$('#usuarioActivo').text()+' a comentado su foro: '+$('#pub').text());
         }
     }
     //Construimos el objeto que vamos a mandar 
@@ -223,6 +223,7 @@ function putRespuesta(username,id_foro,resp){
             //console.log(http.responseText);
             CKEDITOR.instances.editor1.setData();
             getRespuestas($('#id_foro').text());
+            sendMessage($('#username_foro').text(),'foro',$('#id_foro').text(),'El usuario '+$('#usuarioActivo').text()+' a respondido a su foro: '+$('#pub').text());
         }
     }
     let fecha = new Date();
@@ -286,9 +287,7 @@ function printRespuestas(lista){
                 '</div>'+
                 '<div class="col-sm-4 text-center">'+
                     '<img src="images/user_default.png" style="width: 60px; height: 60px">'+
-                    '<p><strong>'+lista[i].username_usuario+'</strong><br>'+
-                        // '<strong>Puntos: </strong>0'+
-                    '</p>'+
+                    '<p id=ownResp'+lista[i].id+'><strong>'+lista[i].username_usuario+'</strong></p>'+
                 '</div>'+
             '</div>'+
             //' <hr style="height:2px;border-width:0;color:gray;background-color:black">';
@@ -344,6 +343,8 @@ function calificar(puntaje, id_, username,tabla,campoBuscar){
             mensaje('Calificado','Respuesta calificada','OK');
             //Actualizo el puntaje de la calificacion
             obtenerCalificacion(id_);
+            sendMessage($('#ownResp'+id_).text(),'foro',$('#id_foro').text(),'El usuario '+username+' a calificado su respuesta con '+puntaje+' punto en el foro: '+$('#pub').text());
+
         }
     }
     let objeto = "username_usuario="+username+
@@ -413,4 +414,17 @@ function listenToButtons(id_seccion){
         }
 
     }
+}
+
+//Para las notificaciones
+function sendMessage( destinatario,tipo, id_foro,sms){
+    var socket = io('http://localhost:4000');
+    // socket.emit($('#username_post').text(),{
+    socket.emit("SMS",{
+        "from" : $("#usuarioActivo").text(),
+        "To": destinatario,
+        "Message" : sms,
+        "id": id_foro,
+        "tipo":tipo,
+    })
 }

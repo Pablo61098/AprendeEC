@@ -2,6 +2,8 @@ let postVisibles=[];
 let foroVisibles=[];
 let mapaCategoriasPost;
 let mapaCategoriasForo;
+let resArticulos={};
+let resDuck = {};
 $(function(){
 	document.title='Informativo AprendEC';
 	verificarSearch();
@@ -27,10 +29,61 @@ function verificarSearch(){
 	if($('#infoBuscar').text()=='1'){
 		//Pongo el contenido de la búsqueda
 		postPublicados(0);
+
 	}else{
 		//Poner una imagen en el inicio de la página informativa en el contenedor.
+
+
+		
 	}
 }
+//FUncion para obtener los resultados relacionados en la búsqueda en DuckDuckGo
+function getArticles(text){
+	let http = new XMLHttpRequest();
+	http.open('GET','/notificacion/getArticleRelated/'+text, true);
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	http.onreadystatechange = function(){
+		if(http.readyState == 4 && http.status==200){
+			//Exitosa la respuesta
+			resArticulos = JSON.parse(http.responseText)
+			console.log(resArticulos);
+			articulosPrint();
+		}
+	}
+	http.send(null);
+}
+
+//FUncion para obtener los articulos relacionados en la búsqueda en CORE
+function getRelacionados(text){
+	let http = new XMLHttpRequest();
+	http.open('GET','/notificacion/getTopicsRelated/'+text, true);
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	http.onreadystatechange = function(){
+		if(http.readyState == 4 && http.status==200){
+			//Exitosa la respuesta
+			resDuck = JSON.parse(http.responseText)
+			console.log(resDuck);
+			imprimirBusquedaDuck();
+			getArticles($('#info_texto').text());
+		}
+	}
+	http.send(null);
+}
+
+//Funcion para imprimir la bussqueda en duck duck go
+function imprimirBusquedaDuck(){
+	if(resDuck.AbstractText){
+		let tem = '<div class="container text-left mt-4" id=busRel>'+
+		'</div>';
+		$('#contenido').append(tem);
+		$('#busRel').append('<h3> Algo sobre la busqueda... </h3>');
+		$('#busRel').append('<p>'+resDuck.AbstractText+'</p>');
+		if(resDuck.AbstractURL){
+			$('#busRel').append('<p><strong>Para más información: </strong><a href="'+resDuck.AbstractURL+'">'+resDuck.AbstractURL+'</a></p>');
+		}
+	}
+}
+
 
 //funcion para obtener los ultimo post publicados
 function postPublicados(codigo){
@@ -236,7 +289,36 @@ function printPost(lista,mapa,link,p_o_f){
 	 }
 	 if($('#infoBuscar').text()=='1'){
 		if(contador==0){
+			getRelacionados($('#info_texto').text())
+			//no se encontraron resultados y entonces muestro los artículos relacionados
 			$('#contenido').append('<div class="container text-center"><i style="text-aling: center" class="fas fa-ban fa-7x"></i></div>');
 		}
 	 }
+}
+
+function articulosPrint(){
+	let tem = '<div class="container text-left mt-4" id=artRel>'+
+			'</div>';
+	$('#contenido').append(tem);
+	$('#artRel').append('<h3> Articulos relacionados </h3>');
+	for(var i = 0 ; i< resArticulos.data.length ; i++){
+		console.log(resArticulos.data[i]._source.title);
+		if(resArticulos.data[i]._source.title.includes("<title>")) continue;
+		let urls = getUrls(resArticulos.data[i]._source.urls);
+		if(urls=="") continue;
+		let registro = "<div class='container'><h6><strong>Título: </strong>"+resArticulos.data[i]._source.title+"</h6>"+
+		"<strong>Año: </strong>"+resArticulos.data[i]._source.year+"<br><strong>Urls: </strong>"+urls+
+		"<hr>"+
+		"</div>"
+		$('#artRel').append(registro);
+	}
+}
+
+function getUrls(urls){
+	let u_r_l="";
+	for(var j = 0 ; j< urls.length; j++){
+		if(urls[j]=="null") continue;
+		u_r_l = "<a href='"+urls[j]+"'>"+urls[j]+"</a>"
+	}
+	return u_r_l;
 }

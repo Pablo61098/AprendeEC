@@ -1,5 +1,7 @@
 <!-- Navbar -->
 <script type="text/javascript" src="./javascript/publicaciones/navBarAll.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
     <div class="container">
         <a class="navbar-brand mx-auto mr-md-3 " href="/informativo">AprendEC</a>
@@ -22,9 +24,14 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
-                <li class="nav-item  mx-auto">
+                <li class="nav-item dropdown mx-auto">
                     <% if (typeof(userName) !== 'undefined') { %>
-                    <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    <a class="nav-link dropdown" href="#" id="notificacionesBtn" data-toggle="dropdown"><i
+                            class="fas fa-bell"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" id="notificacionContainer"
+                        style="overflow-y:auto; max-height:50vh; text-size-adjust: inherit; max-width : 80vh">
+                        <!-- <a class="dropdown-item" href="/modPublicaciones">Publicaciones</a> -->
+                    </div>
                     <% } %>
                 </li>
                 <!-- Dropdown -->
@@ -32,7 +39,8 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                         <i class="far fa-user"></i>
                         <% if (typeof(userName) !== 'undefined') { %>
-                        <span><%= name %></span>
+                            <span><%= name %></span>
+                            <p hidden id="usuarioActivo"><%= userName %></p>
                         <% } else { %>
                         <span></span>
                         <% } %>
@@ -48,8 +56,10 @@
                             <% if(typeof(adminInstitucion) !== 'undefined'){ %>
                                 <a class="dropdown-item" href="ventas/productos">Gestión de Ventas</a>
                             <% } %>
+                        <a class="dropdown-item" href="/stack_estudio">Stack de Estudio</a>
                         <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
                         <% } else { %>
+                        <a class="dropdown-item" href="/stack_estudio">Stack de Estudio</a>
                         <a class="dropdown-item" href="/login">Iniciar Sesión</a>
                         <% } %>
                     </div>
