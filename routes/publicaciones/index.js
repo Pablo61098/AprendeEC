@@ -3,8 +3,7 @@ var router = express.Router();
 var multer = require('multer');
 var fs = require('fs');
 var path = require('path');
-var helpers = require('./helpers');
-var crypto = require('crypto');
+
 
 
 
@@ -26,6 +25,8 @@ var crypto = require('crypto');
 // 		// })
 // 	}
 // });
+
+
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -201,6 +202,11 @@ conn.connect(function(err) {
 });
 
 
+
+//Servicio para entregar la homepage
+router.get('/',function(req,res){
+	res.render('index')
+})
 
 //Funcion para guardar el foro
 router.post('/saveForo',middleware.isLoggedIn,function(req,res){

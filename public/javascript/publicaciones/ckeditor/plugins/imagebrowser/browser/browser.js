@@ -108,7 +108,7 @@ CkEditorImageBrowser.renderImagesForFolder = function (folderName) {
 		html = html.replace('%thumbUrl%', imageData.thumbUrl);
 
 		var $item = $($.parseHTML(html));
-
+		// CkEditorImageBrowser.$imagesContainer.append();
 		CkEditorImageBrowser.$imagesContainer.append($item);
 	});
 };
