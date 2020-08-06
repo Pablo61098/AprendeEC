@@ -35,7 +35,7 @@ router.get("/adminSolicitudes", (req, res) => {
     
 });
 
-router.put("asdjkaskj/aceptarSolicitud/:idSolicitud", function(req, res){
+router.put("/aceptarSolicitud/:idSolicitud", function(req, res){
     console.log("hola");
     connection.query(`update solicitud set pendiente = 0, aceptado = 1 where id = ${req.params.idSolicitud}`, function(err, results, fields){
         if(err){
@@ -53,6 +53,7 @@ router.put("asdjkaskj/aceptarSolicitud/:idSolicitud", function(req, res){
                     //Institute information
                     let nombreInstitucion = results2[0].nombre_institucion;
                     let ciudad = results2[0].ciudad;
+                    let provincia = results2[0].provincia;
                     let direccion = results2[0].direccion;
                     let numeroCuentaBancaria = results2[0].numero_cuenta_bancaria;
                     let dominioCorreo = results2[0].dominio_correo_institucion;
@@ -65,8 +66,8 @@ router.put("asdjkaskj/aceptarSolicitud/:idSolicitud", function(req, res){
                     let cargoAdministrador = results2[0].cargo_administrador;
 
                     console.log("HEY GOT HERE");
-                    connection.query(`insert into institucion(nombre, ciudad, direccion, numero_cuenta_bancaria, dominio_correo, pagina_web, valoracion)
-                         values('${nombreInstitucion}', '${ciudad}', '${direccion}', '${numeroCuentaBancaria}' 
+                    connection.query(`insert into institucion(nombre, ciudad, provincia, direccion, numero_cuenta_bancaria, dominio_correo, pagina_web, valoracion)
+                         values('${nombreInstitucion}', ${ciudad},  ${provincia},'${direccion}', '${numeroCuentaBancaria}' 
                         ,'${dominioCorreo}', '${paginaWeb}', 0)`, function(err3, results3, fields3){
                             if(err3){
                                 res.send(err3);
@@ -76,8 +77,7 @@ router.put("asdjkaskj/aceptarSolicitud/:idSolicitud", function(req, res){
                                 // console.log(fields3);
                                 let contrasena = returnGibberish(15); // Should be radomly generated and encrypted
                                 connection.query(
-                                    `insert into usuario(username, ciudad, contrasena, correo, cedula, nombre, apellido,valoracion, confirmado, tipoRegistro) values('${nombreAdministrador} ${apellidosAdministrador}',
-                                        '${ciudad}','${contrasena}','${correo_administrador}', '${cedula_administrador}','${nombreAdministrador}','${apellidosAdministrador}',0, 0, 0)`, function(err4, results4, fields4){
+                                    `insert into usuario(username, ciudad, provincia ,contrasena, correo, cedula, nombre, apellido,valoracion, confirmado, tipoRegistro) values('${nombreAdministrador} ${apellidosAdministrador}',${ciudad}, ${provincia}, '${contrasena}','${correo_administrador}', '${cedula_administrador}','${nombreAdministrador}','${apellidosAdministrador}',0, 0, 0)`, function(err4, results4, fields4){
                                             if(err4){
                                                 console.log(err4);
                                                 res.send(err4);
@@ -88,37 +88,44 @@ router.put("asdjkaskj/aceptarSolicitud/:idSolicitud", function(req, res){
                                                         console.log(err5);
                                                         res.send(err5);
                                                     }else{
-                                                        console.log("Se ha insertado el usuario_admin_inst");
-                                                        console.log(`${correo_administrador}`);
-                                                        const msg = {
-                                                            to: `${correo_administrador}`,
-                                                            from: 'pablosolano61098@gmail.com',
-                                                            subject: 'Se ha acepto su solicitud de registro.',
-                                                            text: 'Mensaje automatico de AprendEC',
-                                                            html: `<div class='text-center'> 
-                                                                    <label><strong>APRENDEC</strong></label>
-                                                                    </div>
-                                                                    <div>
-                                                                        <p>
-                                                                        <label>Querido usuario, su solicitud para la inclusión de su institucion: <strong>${nombreInstitucion}</strong>, en nuestra aplicación ha sido aceptada.
-                                                                                Sus alumnos podran resgitrarse a la aplicación con el correo institucional que termine de esta forma: ${dominioCorreo}.
-                                                                                Agradecemos su preferencia. Puede entrar a nuestra aplicacion mediante este link: <a href="http://localhost:3000/firstLogin/">AprendEC login</a>, con el el nombre de usuario: <strong>${nombreAdministrador} ${apellidosAdministrador}</strong> y la clave: <strong>${contrasena}</strong>. Para configurar su contraseña permanentemente.</label> 
-                                                                        <br>
-                                                                        </p>
-                                                                    </div>`,
-                                                        };
-                                                        sgMail.send(msg)
-                                                        .then(function(result){
-                                                            console.log(result);
-                                                            res.send({nombreInstitucion: nombreInstitucion, tipo: "aceptado"});
-                                                            console.log("Se ha enviado el correo exitosamente");
-                                                        })
-                                                        .catch(function(err){
-                                                            console.log(err);
-                                                            console.log("No se envio el correo");
+                                                        let date = new Date();
+                                                        let fecha = date.toLocaleDateString();
+                                                        let hora = date.toLocaleTimeString();
+                                                        connection.query(`insert into carrito(username_usuario, fecha_hora_creacion, pendiente) values('${nombreAdministrador} ${apellidosAdministrador}', '${fecha} ${hora}', true)`, function(err6, results6, fields6){
+                                                            if(err6){
+                                                                console.log(err6);
+                                                                return res.send(err6);
+                                                            }
+                                                            console.log("Se ha insertado el usuario_admin_inst");
+                                                            console.log(`${correo_administrador}`);
+                                                            const msg = {
+                                                                to: `${correo_administrador}`,
+                                                                from: 'pablosolano61098@gmail.com',
+                                                                subject: 'Se ha acepto su solicitud de registro.',
+                                                                text: 'Mensaje automatico de AprendEC',
+                                                                html: `<div class='text-center'> 
+                                                                        <label><strong>APRENDEC</strong></label>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p>
+                                                                            <label>Querido usuario, su solicitud para la inclusión de su institucion: <strong>${nombreInstitucion}</strong>, en nuestra aplicación ha sido aceptada.
+                                                                                    Sus alumnos podran resgitrarse a la aplicación con el correo institucional que termine de esta forma: ${dominioCorreo}.
+                                                                                    Agradecemos su preferencia. Puede entrar a nuestra aplicacion mediante este link: <a href="http://localhost:3000/firstLogin/">AprendEC login</a>, con el el nombre de usuario: <strong>${nombreAdministrador} ${apellidosAdministrador}</strong> y la clave: <strong>${contrasena}</strong>. Para configurar su contraseña permanentemente.</label> 
+                                                                            <br>
+                                                                            </p>
+                                                                        </div>`,
+                                                            };
+                                                            sgMail.send(msg)
+                                                            .then(function(result){
+                                                                console.log(result);
+                                                                res.send({nombreInstitucion: nombreInstitucion, tipo: "aceptado"});
+                                                                console.log("Se ha enviado el correo exitosamente");
+                                                            })
+                                                            .catch(function(err){
+                                                                console.log(err);
+                                                                console.log("No se envio el correo");
+                                                            });
                                                         });
-                    
-                                                        
                                                     }
                                                 });
                                             }

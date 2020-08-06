@@ -34,10 +34,24 @@
                         <input  name="nombreInstitucion" type="text" placeholder="" class="form-control" required id="nombreInstitucion">
                     </div>
                     <div class="col-sm-6 py-1">
-                        <label for="">Ciudad</label>
+                        <label for="">Provincia </label>
                     </div>
                     <div class="col-sm-6 py-1">
-                        <input name="ciudad" type="text" placeholder="" class="form-control" required id="ciudad">
+                        <select name="provincia" id="provincias" class="form-control">
+                            <% for(let i = 0; i <provincias.length; i++){ %>
+                                <option id="provincia<%= i %>" value="<%= provincias[i].id %>"> <%= provincias[i].nombre %> </option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 py-1">
+                        <label for="">Ciudad: </label>
+                    </div>
+                    <div class="col-sm-6 py-1">
+                        <select name="ciudad" id="ciudades" class="form-control">
+                            <% for(let i = 0; i <cantones.length; i++){ %>
+                                <option value="<%= cantones[i].id %>"><%= cantones[i].nombre %></option>
+                            <% } %>
+                        </select>
                     </div>
                     <div class="col-sm-6 py-1">
                         <label  for="">Direccion</label>
@@ -130,6 +144,8 @@
         </div>
     </footer>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="../../javascript/inscripcionU.js"></script>
 
 </body>

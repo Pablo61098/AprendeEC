@@ -41,7 +41,7 @@ ul li {
   list-style-type: none;
 }
 
-input[type="text"]{
+input[type="text"],input[type="number"]{
   width: 100%;
   background-color: rgb(230, 230, 230);
   border-radius: 7px;

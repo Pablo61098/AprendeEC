@@ -1,17 +1,18 @@
 CREATE TABLE usuario (
     username VARCHAR(100),
-    ciudad VARCHAR(25),
+    ciudad INT,
+    provincia INT,
     contrasena VARCHAR(255),
     correo VARCHAR(75),
     nombre VARCHAR(50),
     apellido VARCHAR(50),
-    cedula VARCHAR(10),
     foto varchar(255),
     valoracion FLOAT,
     cedula VARCHAR(10),
     acerca VARCHAR(255),
     confirmado boolean,
-    tipoRegistro tiny,
+    tipoRegistro tinyint,
+    tipo tinyint,
     PRIMARY KEY (username)
 );
 
@@ -32,7 +33,8 @@ CREATE TABLE telefono_usuario(
 create table institucion (
     id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(50),
-    ciudad VARCHAR(25),
+    ciudad INT,
+    provincia INT,
     direccion VARCHAR(50),
     numero_cuenta_bancaria VARCHAR(255),
     dominio_correo VARCHAR(255),
@@ -67,7 +69,8 @@ create table usuario_admin_plat(
 create table solicitud (
     id INT NOT NULL AUTO_INCREMENT,
     nombre_institucion VARCHAR(255),
-    ciudad VARCHAR(255),
+    ciudad INT,
+    provincia INT,
     direccion VARCHAR(255),
     pagina_web VARCHAR(255),
     numero_cuenta_bancaria VARCHAR(255),
@@ -267,6 +270,8 @@ create table ciudad (
     FOREIGN KEY (id_provincia) REFERENCES provincia(id)
 );
 
+
+
 DELIMITER //
 CREATE TRIGGER update_post_valoraciones 
 AFTER INSERT ON usuario_post_calificacion 
@@ -284,7 +289,7 @@ SET valoracion_actual = valoracion_actual / contar;
 #Ingreso el nuevo valor de la valoracion en la tabla POST 
 UPDATE post SET post.valoracion=valoracion_actual WHERE post.id = NEW.id_post; 
 END;
-
+//
 
 DELIMITER //
 CREATE TRIGGER updateCalificacionUsuario 
@@ -341,6 +346,7 @@ usuario_admin_inst.username=username);
         END IF;        
     END IF;
 END;
+//
 
 DELIMITER //
 CREATE TRIGGER updateCalificacionUsuarioForos 
@@ -397,6 +403,8 @@ usuario_admin_inst.username=username);
         END IF;        
     END IF;
 END;
+//
+
 create table datos_programa (
     id INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(255),

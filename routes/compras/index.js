@@ -22,6 +22,7 @@ var conn = mysql.createConnection({
     password: process.env.LOCAL_MYSQL_PASSWORD,
     database: 'aprendecdb',
     multipleStatements: true
+
 });
 
 conn.connect();

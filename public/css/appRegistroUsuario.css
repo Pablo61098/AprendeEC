@@ -8,6 +8,10 @@ input[type="text"],input[type="number"]{
     border-radius: 5px;
   }
 
+select{
+  width: 100%;
+}
+
 .botonRedSocial{
   border: 0;
   background-color: transparent;

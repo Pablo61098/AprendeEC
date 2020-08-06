@@ -25,6 +25,8 @@ const adminRoutes = require("./routes/admin");
 const accountRoutes = require("./routes/account");
 const tiendaRoutes = require("./routes/tienda");
 const participacionRoutes = require("./routes/participacion");
+const ventasRoutes = require("./routes/ventas");
+const rankingRoutes = require("./routes/ranking");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -39,12 +41,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge:  1000 * 60 * 10
+        maxAge:  1000 * 60 * 60 * 24
     }
 }));
 
 app.use((req, res, next) => {
-    
+    res.locals.SITE_URL = process.env.SITE_URL;
     console.log('\n0');
     console.log(req.session);
     console.log(res.locals);
@@ -87,7 +89,20 @@ app.use((req, res, next) => {
         console.log(res.locals);
         console.log('5');
 
-        next();
+        connection.query(`select * from usuario_admin_inst where username = '${req.session.userName}'`, function(err2, results2, fields2){
+            if(err2){
+                console.log('6');
+                return next(err2);
+            }
+            if(results2.length == 0){
+                console.log('7');
+                return next();
+            }
+            console.log('8');
+            res.locals.adminInstitucion = true;
+            req.user.institucionId = results2[0].id_institucion;
+            next();
+        });
     });
 
 });
@@ -107,6 +122,8 @@ app.use(require('./routes/publicaciones'));
 app.use("/admin",adminRoutes);
 app.use("/tienda", tiendaRoutes);
 app.use("/participacion", participacionRoutes);
+app.use("/ventas", ventasRoutes);
+app.use(rankingRoutes);
 
 
 

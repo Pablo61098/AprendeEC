@@ -86,33 +86,55 @@ router.get("/signin-google", function(req, res){
                         try{
                             console.log("Tratando");
                             let correoDomain = userInformation.email.split('@')[1];
-                            connection.query(`select * from institucion where dominio_correo = '${correoDomain}'`, function(err2, results2, fields2){
+                            console.log(correoDomain);
+                            connection.query(`select * from institucion where dominio_correo = '@${correoDomain}'`, function(err2, results2, fields2){
                                 if(err2){
                                     return req.send(err2);
                                 }
-                                if(results2 == 0){
+                                if(results2.length == 0){
                                     console.log("NO HAY Us");
-                                    connection.query(`insert into usuario(username, correo, nombre, apellido, foto, tipoRegistro) values('${userInformation.id}', '${userInformation.email}','${userInformation.given_name}', '${userInformation.family_name}', '${userInformation.picture}', 1)`, function(err3, results3, fields3){
+                                    console.log(results2);
+                                    connection.query(`insert into usuario(username, correo, nombre, apellido, foto, tipoRegistro, valoracion) values('${userInformation.id}', '${userInformation.email}','${userInformation.given_name}', '${userInformation.family_name}', '${userInformation.picture}', 1, 0)`, function(err3, results3, fields3){
                                         if(err3){
                                             return res.send(err3);
                                         }
                                         console.log("insetando usuario normal");
-                                        req.session.userName = userInformation.id;
-                                        return res.redirect("/modPublicaciones");
+                                        let date = new Date();
+                                        let fecha = date.toLocaleDateString();
+                                        let hora = date.toLocaleTimeString();
+                                        connection.query(`insert into carrito(username_usuario, fecha_hora_creacion, pendiente) values('${userInformation.id}', '${fecha} ${hora}', true)`, function(err4, results4, fields4){
+                                            if(err4){
+                                                console.log(err4);
+                                                return res.send(err4);
+                                            }
+                                            req.session.userName = userInformation.id;
+                                            return res.redirect("/modPublicaciones");
+                                        });
+                                        
                                     });
                                 }else{
                                     console.log("SI HAY Us");
-                                    connection.query(`insert into usuario(username, correo, nombre, apellido, foto, tipoRegistro) values('${userInformation.name}', '${userInformation.email}', '${userInformation.given_name}', '${userInformation.family_name}', '${userInformation.picture}',1)`, function(err3, results3, fields3){
+                                    connection.query(`insert into usuario(username, ciudad, provincia, correo, nombre, apellido, foto, tipoRegistro, valoracion) values('${userInformation.id}', ${results2[0].ciudad}, ${results2[0].provincia},'${userInformation.email}', '${userInformation.given_name}', '${userInformation.family_name}', '${userInformation.picture}',1, 0)`, function(err3, results3, fields3){
                                         if(err3){
                                             return res.send(err3);
                                         }
-                                        connection.query(`insert into usuario_academico values('${userInformation.name}', ${results2[0].id})`, function(err4, results4, fields4){
+                                        connection.query(`insert into usuario_academico values('${userInformation.id}', ${results2[0].id})`, function(err4, results4, fields4){
                                             if(err4){
                                                 res.send(err4);
                                             }
+
                                             console.log("insertando usuario academico");
-                                            req.session.userName = userInformation.id;
-                                            return res.redirect("/modPublicaciones");       
+                                            let date = new Date();
+                                            let fecha = date.toLocaleDateString();
+                                            let hora = date.toLocaleTimeString();
+                                            connection.query(`insert into carrito(username_usuario, fecha_hora_creacion, pendiente) values('${userInformation.id}', '${fecha} ${hora}', true)`, function(err5, results5, fields5){
+                                                if(err5){
+                                                    console.log(err5);
+                                                    return res.send(err5);
+                                                }
+                                                req.session.userName = userInformation.id;
+                                                return res.redirect("/modPublicaciones");     
+                                            });   
                                         });
                                     });
                                     
@@ -195,8 +217,22 @@ router.get("/register", function(req, res){
             console.log("err");
             console.log(err);
         }else{
-            console.log(results);
-            res.render("./registro/registroUsuario", {instituciones: results});     
+
+            connection.query(`select * from provincia`, function(err2, results2, fields2){
+                if(err2){
+                    console.log(err2);
+                    return res.send(err2);
+                }
+                connection.query(`select * from ciudad where id_provincia = ${results2[19].id}`, function(err3, results3, fields3){
+                    if(err3){
+                        console.log(err3);
+                        return res.send(err3);
+                    }
+                    console.log(results3);
+                    res.render("./registro/registroUsuario", {instituciones: results, provincias: results2, cantones: results3});
+                });
+                
+            });
         }
     });    
 });
@@ -260,75 +296,29 @@ router.post("/register", function(req, res){
         let contrasena = bcrypt.hashSync(req.body.contrasena, 14);
         let acerca = req.body.acerca;
         let cedula = req.body.cedula;
+        let ciudad = req.body.ciudad;
+        let provincia = req.body.provincia;
 
         if(req.body.universityId == '-1'){
             console.log(`${req.body.correo}`);
             let correo = `${req.body.correo}`;
 
-            connection.query(`insert into usuario(username, contrasena, correo, cedula, acerca, valoracion, confirmado, tipoRegistro) 
-                values('${userName}', '${contrasena}', '${correo}', '${cedula}' ,'${acerca}',0, 0, 0)`, function(err, results, fields){
+            connection.query(`insert into usuario(username, ciudad, provincia,contrasena, correo, cedula, acerca, valoracion, confirmado, tipoRegistro) 
+                values('${userName}', ${ciudad}, ${provincia},'${contrasena}', '${correo}', '${cedula}' ,'${acerca}',0, 0, 0)`, function(err, results, fields){
                     if(err){
                         return res.send(err);
                     }else{
                         console.log("Se ha registrado al usuario correctamente");
                         console.log(results);
 
-                        const msg = {
-                            to: `${correo}`,
-                            from: 'pablosolano61098@gmail.com',
-                            subject: 'AprendEC confirmación.',
-                            text: 'Mensaje automatico de AprendEC',
-                            html:   `<div class='text-center'> 
-                                        <label><strong>APRENDEC</strong></label>
-                                    </div>
-                                    <div>
-                                        <label> Se ha hecho una peticion de registro para la aplicacion <strong>AprendEC</strong> con el correo electronico <strong></strong>.</label>
-                                        <br>
-                                        <label>Si usted ha realizado esta peticion de click en el boton CONFIRMAR</label>
-                                        <br>
-                                        <label>De otro modo de click en el boton RECHAZAR</label>
-                                        <br>
-                                        <label>Username: ${userName}</label>
-                                        <br>
-                                        <label>E-mail: ${correo}</label>
-                                        <div><a href="http://localhost:3000/register/aceptar/${userName}"><button>CONFIRMAR</button></a> <a href="http://localhost:3000/register/rechazar/${userName}"><button>RECHAZAR</button></a></div>
-                                    </div>`,
-                        };
-                        sgMail.send(msg)
-                        .then(function(result){
-                            console.log(result);
-                            console.log("Se ha enviado el correo exitosamente");
-                            return res.redirect('/login');
-                        })
-                        .catch(function(err){
-                            console.log(err);
-                            console.log("No se envio el correo");
-                        });
-
-                        
-                    }
-            });
-
-        }else{
-            console.log(`${req.body.correo}${req.body.correoDominio}`);
-            let correo = `${req.body.correo}${req.body.correoDominio}`;
-            let universityID = req.body.universityId;
-
-            connection.query(`insert into usuario(username, contrasena, cedula, correo, acerca,valoracion, confirmado, tipoRegistro) 
-                values('${userName}', '${contrasena}', '${cedula}','${correo}', '${acerca}', 0, 0, 0)`, function(err, results, fields){
-
-                if(err){
-                    return res.send(err);
-                }else{
-                    console.log(results);
-
-                    connection.query(`insert into usuario_academico(username, id_institucion) values('${userName}', ${universityID})`, function(err2, results2, fields2){
-                        if(err2){
-                            return res.send(err2);
-                        }else{
-                            console.log("Se ha registrado al usuario academico exitosamente");
-                            console.log(results2);
-
+                        let date = new Date();
+                        let fecha = date.toLocaleDateString();
+                        let hora = date.toLocaleTimeString();
+                        connection.query(`insert into carrito(username_usuario, fecha_hora_creacion, pendiente) values('${userName}', '${fecha} ${hora}', true)`, function(err2, results2, fields2){
+                            if(err2){
+                                console.log(err2);
+                                return res.send(err2);
+                            }
                             const msg = {
                                 to: `${correo}`,
                                 from: 'pablosolano61098@gmail.com',
@@ -354,13 +344,76 @@ router.post("/register", function(req, res){
                             .then(function(result){
                                 console.log(result);
                                 console.log("Se ha enviado el correo exitosamente");
-                                res.redirect('/login');
+                                return res.redirect('/login');
                             })
                             .catch(function(err){
                                 console.log(err);
                                 console.log("No se envio el correo");
                             });
+                        });
+                    }
+            });
 
+        }else{
+            console.log(`${req.body.correo}${req.body.correoDominio}`);
+            let correo = `${req.body.correo}${req.body.correoDominio}`;
+            let universityID = req.body.universityId;
+
+            connection.query(`insert into usuario(username, ciudad, provincia,contrasena, cedula, correo, acerca,valoracion, confirmado, tipoRegistro) 
+                values('${userName}', ${ciudad}, ${provincia},'${contrasena}', '${cedula}','${correo}', '${acerca}', 0, 0, 0)`, function(err, results, fields){
+
+                if(err){
+                    return res.send(err);
+                }else{
+                    console.log(results);
+
+                    connection.query(`insert into usuario_academico(username, id_institucion) values('${userName}', ${universityID})`, function(err2, results2, fields2){
+                        if(err2){
+                            return res.send(err2);
+                        }else{
+                            console.log("Se ha registrado al usuario academico exitosamente");
+                            console.log(results2);
+                            let date = new Date();
+                            let fecha = date.toLocaleDateString();
+                            let hora = date.toLocaleTimeString();
+                            connection.query(`insert into carrito(username_usuario, fecha_hora_creacion, pendiente) values('${userName}', '${fecha} ${hora}', true)`, function(err3, results3, fields3){
+                                if(err3){
+                                    console.log(err3);
+                                    return res.send(err3);
+                                }
+                                const msg = {
+                                    to: `${correo}`,
+                                    from: 'pablosolano61098@gmail.com',
+                                    subject: 'AprendEC confirmación.',
+                                    text: 'Mensaje automatico de AprendEC',
+                                    html:   `<div class='text-center'> 
+                                                <label><strong>APRENDEC</strong></label>
+                                            </div>
+                                            <div>
+                                                <label> Se ha hecho una peticion de registro para la aplicacion <strong>AprendEC</strong> con el correo electronico <strong></strong>.</label>
+                                                <br>
+                                                <label>Si usted ha realizado esta peticion de click en el boton CONFIRMAR</label>
+                                                <br>
+                                                <label>De otro modo de click en el boton RECHAZAR</label>
+                                                <br>
+                                                <label>Username: ${userName}</label>
+                                                <br>
+                                                <label>E-mail: ${correo}</label>
+                                                <div><a href="http://localhost:3000/register/aceptar/${userName}"><button>CONFIRMAR</button></a> <a href="http://localhost:3000/register/rechazar/${userName}"><button>RECHAZAR</button></a></div>
+                                            </div>`,
+                                };
+                                sgMail.send(msg)
+                                .then(function(result){
+                                    console.log(result);
+                                    console.log("Se ha enviado el correo exitosamente");
+                                    res.redirect('/login');
+                                })
+                                .catch(function(err){
+                                    console.log(err);
+                                    console.log("No se envio el correo");
+                                });
+
+                            });
                         }
                     });
                 }
@@ -376,12 +429,27 @@ router.post("/register", function(req, res){
 
 
 router.get("/registrarUniversidad", function(req, res){
-    res.render("./registro/inscripcionU");
+    connection.query(`select * from provincia`, function(err, results, fields){
+        if(err){
+            console.log(err);
+            return res.send(err);
+        }
+        connection.query(`select * from ciudad where id_provincia = ${results[19].id}`, function(err2, results2, fields2){
+            if(err2){
+                console.log(err2);
+                return res.send(err2);
+            }
+            res.render("./registro/inscripcionU", {provincias: results, cantones: results2});
+        });
+        
+    });
 });
 
 router.post("/registrarUniversidad", function(req, res){
     console.log("Se esta tratando de registrar una universidad");
-
+    console.log(req.body);
+    console.log(req.params);
+    
     if(req.files){
         console.log(req.files);
 
@@ -395,6 +463,7 @@ router.post("/registrarUniversidad", function(req, res){
 
                 let nombreInstitucion = req.body.nombreInstitucion;
                 let ciudad = req.body.ciudad;
+                let provincia = req.body.provincia;
                 let direccion = req.body.direccion;
                 let paginaWeb = req.body.paginaWeb;
                 let numeroCuentaBancaria = req.body.numeroCuentaBancaria;
@@ -405,8 +474,8 @@ router.post("/registrarUniversidad", function(req, res){
                 let correoAdministrador = req.body.correoAdministrador;
                 let correoInstitucional = req.body.correoInstitucional;
 
-                connection.query(`insert into solicitud (nombre_institucion, ciudad , direccion,pagina_web,numero_cuenta_bancaria,certificado_caces,nombres_administrador,apellidos_administrador,cedula_administrador,cargo_administrador,correo_administrador, dominio_correo_institucion, pendiente, aceptado) 
-                    values( '${nombreInstitucion}', '${ciudad}' , '${direccion}', '${paginaWeb}','${numeroCuentaBancaria}', '${certificadoName}' ,'${nombres}', '${apellidos}', '${numeroCedula}', '${cargo}', '${correoAdministrador}' ,'${correoInstitucional}', 1, 0)`, function(error, results, fields){
+                connection.query(`insert into solicitud (nombre_institucion, ciudad, provincia, direccion,pagina_web,numero_cuenta_bancaria,certificado_caces,nombres_administrador,apellidos_administrador,cedula_administrador,cargo_administrador,correo_administrador, dominio_correo_institucion, pendiente, aceptado) 
+                    values( '${nombreInstitucion}', ${ciudad}, ${provincia}, '${direccion}', '${paginaWeb}','${numeroCuentaBancaria}', '${certificadoName}' ,'${nombres}', '${apellidos}', '${numeroCedula}', '${cargo}', '${correoAdministrador}' ,'${correoInstitucional}', 1, 0)`, function(error, results, fields){
                     if(error){
                         res.send(error);
                     }else{
@@ -450,6 +519,8 @@ router.post('/firstLogin', function(req, res){
                         console.log('6');
                         req.session.firstLogin = data.username;
                         res.redirect('/stablishPassword');
+                    }else{
+                        res.redirect("/login");
                     }
                 }
             });
@@ -481,6 +552,20 @@ router.post('/stablishPassword', middleware.isFirstLogin ,function(req, res){
         });
     }
     
+});
+
+router.get("/cantones/:idProvincia", function(req, res){
+    console.log("Se esta haciendo una peticion de cantones de una provincia");
+
+    connection.query(`select * from ciudad where id_provincia= ${req.params.idProvincia}`, function(err, results, fields){
+        if(err){
+            console.log(err);
+            return res.send(err);
+        }
+        console.log("Enviando informacion de cantones");
+        res.send(results);
+    });
+
 });
 
 module.exports = router;

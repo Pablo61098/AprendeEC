@@ -1,3 +1,5 @@
+let ciudades = document.getElementById("ciudades");
+let provincias = document.getElementById("provincias");
 
 
 function init(){
@@ -41,6 +43,36 @@ function init(){
 
         }
     });
+
+    provincias.addEventListener("click", function(e){
+        console.log(this.selectedIndex);
+        let optionProvincia = document.getElementById(`provincia${this.selectedIndex}`);
+        console.log("optionProvincia");
+        console.log(optionProvincia.value);
+        ciudades.innerHTML = "";
+        $.ajax({
+            url: `/cantones/${optionProvincia.value}`, type: 'GET', success: function (result) {
+                console.log("SUCCEEEESS");
+                console.log(result);
+                for(let i = 0; i < result.length ; i++ ){
+                    let informacion = `<option value=" ${result[i].id} "> ${result[i].nombre} </option>`;
+                    $('#ciudades').append(informacion);
+                }  
+            },
+            statusCode: {
+                404: function () {
+                    alert("No se ha podido conseguir la infomracion del producto, intentelo otra vez.");
+                }
+            }
+        });
+    
+    });
+    
+    ciudades.addEventListener("click", function(e){
+        console.log(this.selectedIndex);
+        
+    });
+
 }
 
 init();

@@ -81,6 +81,30 @@
                         </div>
                     </div>
                     <div class="row col-12">
+                        <div class="col-sm-6 py-1">
+                            <label for="">Provincia </label>
+                        </div>
+                        <div class="col-sm-6 py-1">
+                            <select name="provincia" id="provincias" class="form-control">
+                                <% for(let i = 0; i <provincias.length; i++){ %>
+                                    <option id="provincia<%= i %>" value="<%= provincias[i].id %>"> <%= provincias[i].nombre %> </option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row col-12">
+                        <div class="col-sm-6 py-1">
+                            <label for="">Ciudad: </label>
+                        </div>
+                        <div class="col-sm-6 py-1">
+                            <select name="ciudad" id="ciudades" class="form-control">
+                                <% for(let i = 0; i <cantones.length; i++){ %>
+                                    <option value="<%= cantones[i].id %>"><%= cantones[i].nombre %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row col-12">
                         <div class="col-12 col-sm-6">
                             <label  for="">Contraseña</label>
                         </div>
@@ -176,6 +200,8 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="../../javascript/registroUsuario.js"></script>
     </body>
 
