@@ -1,6 +1,21 @@
 let post_Show={};
 let categoria_post={};
 $(function() {
+    if($('#usuarioActivo').text()){
+        //Está logeado
+        console.log('Logeado')
+        
+    }else{
+        //Deshabilitar la seccion de comentarios, botones de calificacion y enviar respuesta.
+        $('#btnEnviar').attr('disabled',true);
+        $('#comentario').attr('disabled',true);
+        $('#imagenComentario').attr('hidden',true);
+        $('#btnStar1').attr('disabled',true);
+        $('#btnStar2').attr('disabled',true);
+        $('#btnStar3').attr('disabled',true);
+        $('#btnStar4').attr('disabled',true);
+        $('#btnStar5').attr('disabled',true);
+    }
     //CKEDITOR.replace("editor1");
     getComentarios($('#id_post').text(),'usuario_post_comentario','id_post');
         //Visualización de las estrellas entrada

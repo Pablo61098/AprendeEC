@@ -32,8 +32,13 @@
                     <!--Aquí va la parte en donde el usuario puede comentar-->
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-1">
-                                <img src="images/default-user.jpeg" width="60px" height="60px">
+                            <div class="col-sm-1" id="imagenComentario">
+                                <% if (typeof(profilePictureRoute) !== 'undefined') { %>
+                                <img src="<%= profilePictureRoute %>" width="60px" height="60px">
+                                <% } else { %>
+                                    <img src="" width="60px" height="60px">
+                                <% } %>
+                                
                             </div>
                             <div class="col-sm-11">
                                 <div class="container">

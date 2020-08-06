@@ -528,7 +528,10 @@ function filtrar(lista){
 
 //Servicio para obtener respuestas
 router.get('/respuestas/:id_foro/',function(req,res){
-	let consulta= "SELECT * FROM usuario_foro_respuesta WHERE id_foro="+req.params.id_foro;
+	let consulta= "SELECT usuario_foro_respuesta.id, usuario_foro_respuesta.username_usuario,"+
+	" usuario_foro_respuesta.id_foro, usuario_foro_respuesta.respuesta, usuario_foro_respuesta.valoracion, "+
+	"usuario_foro_respuesta.fecha_hora, usuario.foto FROM usuario_foro_respuesta INNER JOIN "+
+	"usuario ON usuario.username = usuario_foro_respuesta.username_usuario AND usuario_foro_respuesta.id_foro="+req.params.id_foro;
 	conn.query(consulta, (err,respuesta)=>{
 		if(err){
 			console.error(err);
