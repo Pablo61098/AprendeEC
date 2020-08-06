@@ -61,7 +61,7 @@
                                 <!--  <img class="card-img-top imagen_usuario"
                                     src=".././fotos/<%= results[0].foto %>"
                                     alt="<%= results[0].foto %>"> -->
-                                <% if (profilePictureRoute === "null") { %>
+                                <% if (profilePictureRoute === "null" || profilePictureRoute === null) { %>
                                 <img class="card-img-top imagen_usuario" src=".././images/user_default.png"
                                     alt="default-user-image"><br><br>
                                 <% } else { %>
