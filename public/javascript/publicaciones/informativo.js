@@ -29,10 +29,12 @@ function verificarSearch(){
 	if($('#infoBuscar').text()=='1'){
 		//Pongo el contenido de la búsqueda
 		postPublicados(0);
-		
 
 	}else{
 		//Poner una imagen en el inicio de la página informativa en el contenedor.
+
+
+		
 	}
 }
 //FUncion para obtener los resultados relacionados en la búsqueda en DuckDuckGo

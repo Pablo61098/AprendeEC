@@ -339,6 +339,7 @@ function putPostFrontEnd(objeto, categorias){
     $('#contenidoPost').append(titulo);
     $('#contenidoPost').append(objeto.contenido);
     $('#tags').append(getCategoriasTag(categorias));
+    
 }
 
 //Para las notificaciones
