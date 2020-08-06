@@ -2,30 +2,33 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
     <title>Align nav bar item into center</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <meta name="viewport" content="width=device-width, initial-scale-1">
     <link rel="stylesheet" href="../../css/appRankingU.css">
 
-    <link rel="stylesheet" href="../../css/styles.css">
+
+    <link rel="stylesheet" href="../../../css/styles.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale-1">
 </head>
 
 <body>
-    <!-- Header -->
+    <!--NAVBAR STARTING-->
+
     <header>
         <div class="jumbotron head_foot">
-            <img src="../../images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
+            <img src="../../../images/ecuador.png" class="float-right imagen_header" alt="Escudo de Armas del Ecuador">
             <h1><b>@prendEC</b></h1>
         </div>
     </header>
     <!-- Navbar -->
+    <script type="text/javascript" src="../../javascript/publicaciones/navBarAll.js"></script>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand mx-auto mr-md-3 " href="../public_mod/informativo.html">AprendEC</a>
-
-            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado" aria-label="Toggle navigation">
+            <a class="navbar-brand mx-auto mr-md-3 " href="/informativo">AprendEC</a>
+            <button class="navbar-toggler mx-auto mb-2" data-toggle="collapse" data-target="#colapsado"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -33,35 +36,64 @@
                 <ul class="navbar-nav mx-xs-auto ml-md-3">
                     <li class="nav-item">
                         <form class="form-inline">
-                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar" name="busqueda">
-                            <button class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="submit"><i
+                            <input class="form-control mr-sm-2 " id="barraBuscar" type="search" placeholder="Buscar"
+                                name="busqueda">
+                            <button id="btnSearch" class=" btn btn-outline-primary mx-auto my-2 my-sm-0" type="button"><i
                                     class="fas fa-search"></i></button>
+                            <button id="btnFiltro" class=" btn btn-outline-primary mx-auto mr-2 my-2 my-sm-0"
+                                type="button"><i class="fas fa-filter"></i></button>
                         </form>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-md-auto mx-xs-auto" id="hey">
                     <li class="nav-item  mx-auto">
+                        <% if (typeof(userName) !== 'undefined') { %>
                         <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                        <% } %>
                     </li>
                     <!-- Dropdown -->
                     <li class="nav-item dropdown mx-auto">
                         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                             <i class="far fa-user"></i>
-                            <span>Nombre de Usuario</span>
+                            <% if (typeof(userName) !== 'undefined') { %>
+                            <span><%= name %></span>
+                            <% } else { %>
+                            <span></span>
+                            <% } %>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="../public_mod/modPublicaciones.html">Publicaciones</a>
-                            <a class="dropdown-item" href="../participacion/">Participación</a>
-                            <a class="dropdown-item" href="../manejoCuenta/cuenta.html  ">Cuenta</a>
-                            <a class="dropdown-item" href="../compras/">Compras</a>
-                            <a class="dropdown-item" href="../tienda/">Tienda</a>
-                            <a class="dropdown-item" href="../tienda/gestionVentas.html">Gestión de Ventas</a>
-                            <a class="dropdown-item" href="../registro/login.html">Cerrar Sesión</a>
+                            <% if (typeof(userName) !== 'undefined') { %>
+                            <!-- Ver aqui a que cosas dar acceso dependiendo tipo de usuario -->
+                            <a class="dropdown-item" href="/modPublicaciones">Publicaciones</a>
+                            <a class="dropdown-item" href="/participacion">Participación</a>
+                            <a class="dropdown-item" href="/account/<%= userName %>/edit">Cuenta</a>
+                            <a class="dropdown-item" href="/compras">Compras</a>
+                            <a class="dropdown-item" href="/tienda">Tienda</a>
+                                <% if(typeof(adminInstitucion) !== 'undefined'){ %>
+                                    <a class="dropdown-item" href="/ventas/productos">Gestión de Ventas</a>
+                                <% } %>
+                            <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
+                            <% } else { %>
+                            <a class="dropdown-item" href="/login">Iniciar Sesión</a>
+                            <% } %>
                         </div>
                     </li>
                 </ul>
-
             </div>
+        </div>
+    </nav>
+
+    <nav id="navFilter" class="navbar navbar-light" style="background-color: #e3f2fd; display: none">
+        <!-- Navbar content -->
+        <div class="container">
+            <form>
+                <input id="search_tipo" type="checkbox" data-toggle="toggle" data-on="Post" data-off="Foro"
+                    data-onstyle="primary" data-offstyle="info" data-width="115">
+                <input id="search_categoria" type="checkbox" data-toggle="toggle" data-on="Categoría" data-off="Categoría"
+                    data-onstyle="primary" data-offstyle="light" data-width="115">
+                <input id="search_username" type="checkbox" data-toggle="toggle" data-on="Username" data-off="Username"
+                    data-onstyle="primary" data-offstyle="light" data-width="115">
+            </form>
         </div>
     </nav>
 
@@ -69,147 +101,172 @@
         <h1 class="text-center header mb-5">Ranking</h1>
         <div class="row flex-column align-items-center">
             <div class="col-12">
-                <select name="" id="tipoRanking" class="browser-default custom-select">
-                    <option id="universidad">Universidades</option>
-                    <option id="estudiantes">Estudiantes</option>
-                </select>
-                <select name="" id="tipo" class="browser-default custom-select">
-                        <option >Todos</option>
-                        <option ><a href="/informativo">Ciudad</a></option>
-                        <option >Region</option>
+                <select name="" id="selectTipo" class="browser-default custom-select">
+                        <option >País</option>
+                        <option >Cantón</option>
                         <option >Provincia</option>
                 </select>
             </div>
-            <div class="row flex-row mt-5 col-12 justify-content-center align-items-center">
-                <div class="row col-12 align-items-center p-3 posicion">
-                    <div class="col-12 col-lg-3 text-center ">
-                        <img src="../../images/first.png" alt="" id="primerLugar">
-                    </div>
-                    <div class="col-12 col-lg-9">
-                        <div class="row flex-column align-items-center text-center">
-                            <div class="col-12">
-                                <h1>Universidad de Cuenca</h1>
+            <div class="row col-12" id="provinciasDiv">
+                <div class="col-sm-6 py-1">
+                    <label for="">Provincia </label>
+                </div>
+                <div class="col-sm-6 py-1">
+                    <select name="provincia" id="provincias" class="form-control">
+                        <% for(let i = 0; i <provincias.length; i++){ %>
+                            <option id="provincia<%= i %>" value="<%= provincias[i].id %>"> <%= provincias[i].nombre %> </option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-12" id="ciudadesDiv">
+                <div class="col-sm-6 py-1">
+                    <label for="">Ciudad/Pueblo: </label>
+                </div>
+                <div class="col-sm-6 py-1">
+                    <select name="ciudad" id="ciudades" class="form-control">
+                        <% for(let i = 0; i <cantones.length; i++){ %>
+                            <option id="ciudad<%= i %>" value="<%= cantones[i].id %>"><%= cantones[i].nombre %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="row flex-row mt-5 col-12 justify-content-center align-items-center" id="universidades">
+                <% for(let i=0; i<instituciones.length; i++){ %>
+                    <% if(i==0){ %>
+                        <div class="row col-12 align-items-center p-3 posicion">
+                            <div class="col-12 col-lg-3 text-center ">
+                                <img src="../../images/first.png" alt="" id="primerLugar">
                             </div>
-                            <div class="col-12">
-                                <div class="row col-12">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">Estudiantes registrados: </label>
+                            <div class="col-12 col-lg-9">
+                                <div class="row flex-column align-items-center text-center">
+                                    <div class="col-12">
+                                        <h1> <%= instituciones[i].nombre %></h1>
                                     </div>
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">1723</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="row col-12">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">Puntuacion: </label>
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">156660321</label>
+                                    <!-- <div class="col-12">
+                                        <div class="row col-12">
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">Estudiantes registrados: </label>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">1723</label>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-12">
+                                        <div class="row col-12">
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">Puntuacion: </label>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label for=""><%= instituciones[i].valoracion %></label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row col-12 align-items-center p-3 posicion">
-                    <div class="col-12 col-lg-3 text-center">
-                        <img src="../../images/second.png" alt="" id="segundoLugar">
-                    </div>
-                    <div class="col-12 col-lg-9">
-                        <div class="row flex-column align-items-center text-center">
-                            <div class="col-12">
-                                <h1>Universidad de Cuenca</h1>
+                <%    }else if(i==1){ %>
+                        <div class="row col-12 align-items-center p-3 posicion">
+                            <div class="col-12 col-lg-3 text-center">
+                                <img src="../../images/second.png" alt="" id="segundoLugar">
                             </div>
-                            <div class="col-12">
-                                <div class="row col-12">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">Estudiantes registrados: </label>
+                            <div class="col-12 col-lg-9">
+                                <div class="row flex-column align-items-center text-center">
+                                    <div class="col-12">
+                                        <h1> <%= instituciones[i].nombre %></h1>
                                     </div>
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">1723</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="row col-12">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">Puntuacion: </label>
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">156660321</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row col-12 align-items-center p-3 posicion">
-                    <div class="col-12 col-lg-3 text-center">
-                        <img src="../../images/third.png" alt="" id="tercerLugar">
-                    </div>
-                    <div class="col-12 col-lg-9">
-                        <div class="row flex-column align-items-center text-center">
-                            <div class="col-12">
-                                <h1>Universidad de Cuenca</h1>
-                            </div>
-                            <div class="col-12">
-                                <div class="row col-12">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">Estudiantes registrados: </label>
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">1723</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="row col-12">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">Puntuacion: </label>
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">156660321</label>
+                                    <!-- <div class="col-12">
+                                        <div class="row col-12">
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">Estudiantes registrados: </label>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">1723</label>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-12">
+                                        <div class="row col-12">
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">Puntuacion: </label>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label for=""><%= instituciones[i].valoracion %></label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row col-12 align-items-center p-3 posicion">
-                    <div class="col-12 col-sm-3 text-center">
-                        <h1>#4</h1>
-                    </div>
-                    <div class="col-12 col-sm-9">
-                        <div class="row flex-column align-items-center text-center">
-                            <div class="col-12">
-                                <h1>Universidad de Cuenca</h1>
+                    <% }else if(i==2){ %>
+                        <div class="row col-12 align-items-center p-3 posicion">
+                            <div class="col-12 col-lg-3 text-center">
+                                <img src="../../images/third.png" alt="" id="segundoLugar">
                             </div>
-                            <div class="col-12">
-                                <div class="row col-12">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">Estudiantes registrados: </label>
+                            <div class="col-12 col-lg-9">
+                                <div class="row flex-column align-items-center text-center">
+                                    <div class="col-12">
+                                        <h1> <%= instituciones[i].nombre %></h1>
                                     </div>
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">1723</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="row col-12">
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">Puntuacion: </label>
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <label for="">156660321</label>
+                                    <!-- <div class="col-12">
+                                        <div class="row col-12">
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">Estudiantes registrados: </label>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">1723</label>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-12">
+                                        <div class="row col-12">
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">Puntuacion: </label>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label for=""><%= instituciones[i].valoracion %></label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
+                    <% }else{ %>
+                        <div class="row col-12 align-items-center p-3 posicion">
+                            <div class="col-12 col-sm-3 text-center">
+                                <h1><%= i+1 %></h1>
+                            </div>
+                            <div class="col-12 col-sm-9">
+                                <div class="row flex-column align-items-center text-center">
+                                    <div class="col-12">
+                                        <h1> <%= instituciones[i].nombre %></h1>
+                                    </div>
+                                    <!-- <div class="col-12">
+                                        <div class="row col-12">
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">Estudiantes registrados: </label>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">1723</label>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-12">
+                                        <div class="row col-12">
+                                            <div class="col-12 col-sm-6">
+                                                <label for="">Puntuacion: </label>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label for=""><%= instituciones[i].valoracion %></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
             </div>
         </div>
     </div>
@@ -220,6 +277,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="../javascript/rankingU.js"></script>
 
 </body>
 
