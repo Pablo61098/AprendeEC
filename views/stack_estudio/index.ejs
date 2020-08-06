@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Stack de Estudio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <h1>Stack de Estudio</h1>
+    <p>Encuentra recursos de aprendizaje en distintas fuentes.</p>
+    <form>
+        <input type="text" name="busqueda" id="busqueda">
+        <input type="submit" value="Buscar">
+    </form>
+    <% if (show) { %>
+    <script>
+        document.getElementById("busqueda").value = "<%= busqueda %>";
+    </script>
+    <h1>YouTube</h1>
+    <iframe width="420" height="345" src="http://www.youtube.com/embed?listType=search&list=<%= busqueda %>">
+    </iframe>
+    <h1>Google Books</h1>
+    <script src="https://www.google.com/books/jsapi.js"></script>
+    <script>
+        google.books.load({ "language": "es" });
+        function initialize() {
+            var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+            viewer.load('<%= book %>');
+        }
+        google.books.setOnLoadCallback(initialize);
+    </script>
+    <div id="viewerCanvas" style="width: 600px; height: 500px"></div>
+    <h1>iTunes Podcasts</h1>
+    <div id="contenidoItunes"></div>
+    <script>
+        function handleItunesResponse(response) {
+            if (response.resultCount) {
+                var item = response.results[0];
+                document.getElementById("contenidoItunes").innerHTML += "<h2>" + item.collectionName + "</h2>";
+                document.getElementById("contenidoItunes").innerHTML += '<img src="' + item.artworkUrl600 + '">';
+                document.getElementById("contenidoItunes").innerHTML += "<p>" + "<b>Autor:</b> " + item.artistName + "</p>";
+                document.getElementById("contenidoItunes").innerHTML += "<p>" + '<b>Enlace:</b> <a href="' + item.collectionViewUrl + '" target="_blank">' + item.collectionViewUrl + "</a></p>";
+            } else {
+                document.getElementById("contenidoItunes").innerHTML += "<p>No hay podcasts que cumplan con la búsqueda.</p>";
+            }
+        }
+    </script>
+    <script
+        src="https://itunes.apple.com/search?term=<%= busqueda %>&media=podcast&limit=1&callback=handleItunesResponse"></script>
+    <h1>Aprende Inglés con Citas de Anime</h1>
+    <div id="citaAnime"></div>
+    <script>
+        $.ajax({
+            url: "https://anime-chan.herokuapp.com/api/quotes/random", type: "GET", success: function (result) {
+                document.getElementById("citaAnime").innerHTML = `<blockquote>
+                <dl>
+                <dt><cite>${result[0].quote}<cite></dt>
+                <dd>${result[0].character} - ${result[0].anime}</dd>
+                </dl>
+                </blockquote>`;
+            }
+        });
+    </script>
+    <% } %>
+</body>
+
+</html>

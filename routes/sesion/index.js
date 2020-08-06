@@ -126,7 +126,7 @@ router.get("/signin-google", function(req, res){
                         
                     }else{
                         console.log("Si existe el usuario");
-                        connection.query(`update usuario set foto = '${userInformation.picture}' where username='${userInformation.id}';`)
+                        // connection.query(`update usuario set foto = '${userInformation.picture}' where username='${userInformation.id}';`)
                         req.session.userName = results[0].username;
                         return res.redirect("/modPublicaciones");
                     }

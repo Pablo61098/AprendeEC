@@ -63,7 +63,7 @@ router.get("/calificaciones_posts", middleware.isLoggedIn, function (req, res) {
     if (!pagina) {
         pagina = 1;
     }
-    let sql = `select post.username_usuario as autor, post.titulo as titulo, post.fecha_hora as fecha_hora_post, 
+    let sql = `select post.username_usuario as autor, post.titulo as titulo, post.fecha_hora as fecha_hora_post, post.id as id,
     usuario_post_calificacion.calificacion as calificacion from usuario_post_calificacion JOIN post on usuario_post_calificacion.id_post = post.id
     where usuario_post_calificacion.username_usuario = ${mysql.escape(res.locals.userName)} order by post.id DESC LIMIT 3 
     OFFSET ${(pagina - 1) * 3}`;
@@ -148,7 +148,7 @@ router.get("/calificaciones_respuestas", middleware.isLoggedIn, function (req, r
     if (!pagina) {
         pagina = 1;
     }
-    let sql = `select foro.username_usuario as forista, foro.titulo as titulo, foro.fecha_hora as fecha_hora_foro, usuario_foro_respuesta.username_usuario as autor,
+    let sql = `select foro.username_usuario as forista, foro.titulo as titulo, foro.fecha_hora as fecha_hora_foro, usuario_foro_respuesta.username_usuario as autor, foro.id as id,
     usuario_foro_respuesta.username_usuario as autor, usuario_foro_respuesta.fecha_hora as fecha_hora_respuesta, usuario_respuesta_calificacion.calificacion as calificacion from usuario_respuesta_calificacion JOIN usuario_foro_respuesta on 
     usuario_respuesta_calificacion.id_respuesta = usuario_foro_respuesta.id JOIN foro on usuario_foro_respuesta.id_foro = foro.id
     where usuario_respuesta_calificacion.username_usuario = ${mysql.escape(res.locals.userName)} order by usuario_foro_respuesta.id DESC LIMIT 3 

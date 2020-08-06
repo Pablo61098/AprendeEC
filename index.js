@@ -26,6 +26,7 @@ const accountRoutes = require("./routes/account");
 const tiendaRoutes = require("./routes/tienda");
 const participacionRoutes = require("./routes/participacion");
 const notificaciones = require("./routes/notificaciones");
+const stackRoutes = require("./routes/stack_estudio");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -70,13 +71,13 @@ app.use((req, res, next) => {
         // console.log(user);
         req.user = user;
         
-        if(fs.existsSync(`./public/fotos/${req.user.foto}`)) {
-            console.log("The file exists.");
-            req.user.profilePictureRoute = `http://localhost:3000/fotos/${req.user.foto}`;
-        } else {
-            console.log('The file does not exist.');
-            req.user.profilePictureRoute = `${req.user.foto}`;
-        }
+        // if(fs.existsSync(`./public/fotos/${req.user.foto}`)) {
+        //     console.log("The file exists.");
+        //     req.user.profilePictureRoute = `http://localhost:3000/fotos/${req.user.foto}`;
+        // } else {
+        // console.log('The file does not exist.');
+        res.locals.profilePictureRoute = `${req.user.foto}`;
+        // }
         
         if(req.user.tipoRegistro == 1 ){
             res.locals.name = `${req.user.nombre}  ${req.user.apellido}`;
@@ -109,6 +110,7 @@ app.use("/admin",adminRoutes);
 app.use("/tienda", tiendaRoutes);
 app.use("/participacion", participacionRoutes);
 app.use("/notificacion",notificaciones);
+app.use("/stack_estudio", stackRoutes);
 
 
 
