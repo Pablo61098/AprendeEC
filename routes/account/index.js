@@ -1,62 +1,71 @@
 
 const express = require('express'),
-      router = express.Router(),
-      mysql = require('mysql'),
-      middleware = require('../../middleware');
+    router = express.Router(),
+    mysql = require('mysql'),
+    middleware = require('../../middleware');
 
 
 
-const connection = mysql.createConnection({
-    host: 'localhost',
+const connection = mysql.createPool({
+    connectionLimit: 100,
+    host: process.env.LOCAL_MYSQL_HOST,
+    port: 3306,
     user: process.env.LOCAL_MYSQL_USER,
     password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: 'aprendecdb'
+    database: process.env.LOCAL_MYSQL_DB
 });
 
-connection.connect();
+connection.getConnection(function (err, conn) {
+    if (err) {
+        console.log('No se ha podido conectar.');
+        return callback(err);
+    } else {
+        console.log('Conectado a BD.');
+    }
+});
 
 
-router.get("/:userName/edit", middleware.isLoggedIn ,function(req, res){
+router.get("/:userName/edit", middleware.isLoggedIn, function (req, res) {
     console.log("\ntss up");
 
-    connection.query(`select * from redes where(username = '${req.params.userName}')`, function(err, results, fields){
-        if(err){
+    connection.query(`select * from redes where(username = '${req.params.userName}')`, function (err, results, fields) {
+        if (err) {
             return res.send(err);
         }
-        
-        return res.render("./account/cuenta", {user: req.user, redes: results});
+
+        return res.render("./account/cuenta", { user: req.user, redes: results });
 
     });
 });
 
-router.put("/:userName", middleware.isLoggedIn ,function(req, res){
+router.put("/:userName", middleware.isLoggedIn, function (req, res) {
     console.log("\n\ntss up");
     console.log(req.body);
 
     let acerca = req.body.acerca;
     let redes = req.body.redes;
-    
-    connection.query(`update usuario set acerca = '${acerca}' where username = '${req.params.userName}'`, function(err, results, fields){
-        if(err){
+
+    connection.query(`update usuario set acerca = '${acerca}' where username = '${req.params.userName}'`, function (err, results, fields) {
+        if (err) {
             return res.send(err);
         }
-        connection.query(`delete from redes where username = '${req.params.userName}'`, function(err2, results2, fields2){
-            if(err2){
+        connection.query(`delete from redes where username = '${req.params.userName}'`, function (err2, results2, fields2) {
+            if (err2) {
                 return res.send(err2);
             }
-            try{
+            try {
                 console.log(redes);
-                if(redes){
-                    for(let i=0; i<redes.length; i++){
-                        if(redes[i] != ""){
+                if (redes) {
+                    for (let i = 0; i < redes.length; i++) {
+                        if (redes[i] != "") {
                             let red = redes[i].split('.')[1];
                             connection.query(`insert into redes values ('${req.params.userName}', '${red}', '${redes[i]}')`);
                         }
                     }
                 }
-            }catch(err3){
+            } catch (err3) {
                 console.log("Ha ocurrido un error");
-                return res.send(err3);    
+                return res.send(err3);
             }
         });
     });
@@ -65,27 +74,27 @@ router.put("/:userName", middleware.isLoggedIn ,function(req, res){
     res.redirect(`/account/${req.params.userName}/edit`);
 });
 
-router.put("/:userName/picture", middleware.isLoggedIn,function(req, res){
+router.put("/:userName/picture", middleware.isLoggedIn, function (req, res) {
     console.log("\nHa editado la foto");
     console.log(req.params);
     console.log(req.body);
     console.log(req.files);
     console.log(process.env.PWD);
-    if(req.files){
+    if (req.files) {
         console.log("Si hay archivo");
 
         let foto = req.files.foto;
         let formato = req.files.foto.name.split('.')[1];
         let userName = res.locals.userName.replace(/\s/g, '');;
 
-        foto.mv(`./public/fotos/${userName}Foto.${formato}`, function(err){
-            if(err){
+        foto.mv(`./public/fotos/${userName}Foto.${formato}`, function (err) {
+            if (err) {
                 return res.send(err);
             }
-            connection.query(`update usuario set foto = 'http://localhost:3000/fotos/${userName}Foto.${formato}' where username = '${res.locals.userName}'`, function(err, results, fields){
-                if(err){
+            connection.query(`update usuario set foto = 'http://localhost:3000/fotos/${userName}Foto.${formato}' where username = '${res.locals.userName}'`, function (err, results, fields) {
+                if (err) {
                     return res.send(err);
-                }else{
+                } else {
                     console.log("Se ha actualizado el valor de usuario");
                     console.log(results);
                     return res.redirect(`/account/${userName}/edit`);
@@ -93,7 +102,7 @@ router.put("/:userName/picture", middleware.isLoggedIn,function(req, res){
             });
         });
 
-    }else{
+    } else {
         console.log("No ha subido ningun archivo");
     }
 });

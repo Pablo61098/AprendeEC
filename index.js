@@ -1,23 +1,32 @@
 const express = require("express"),
-      app = express(),
-      bodyParser = require("body-parser"),
-      fileUpload = require('express-fileupload'),
-      session = require("express-session"),
-      mysql = require("mysql"),
-      methodOverride = require("method-override")
-      fs = require('fs')
+    app = express(),
+    bodyParser = require("body-parser"),
+    fileUpload = require('express-fileupload'),
+    session = require("express-session"),
+    mysql = require("mysql"),
+    methodOverride = require("method-override")
+fs = require('fs')
     //   flash = require("connect-flash")
-      ;
+    ;
 
 
-const connection = mysql.createConnection({
-    host: 'localhost',
+const connection = mysql.createPool({
+    connectionLimit: 100,
+    host: process.env.LOCAL_MYSQL_HOST,
+    port: 3306,
     user: process.env.LOCAL_MYSQL_USER,
     password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: 'aprendecdb'
+    database: process.env.LOCAL_MYSQL_DB,
 });
 
-connection.connect();
+connection.getConnection(function (err, conn) {
+    if (err) {
+        console.log('No se ha podido conectar.');
+        return callback(err);
+    } else {
+        console.log('Conectado a BD.');
+    }
+});
 
 const sesionRoutes = require("./routes/sesion");
 const comprasRoutes = require("./routes/compras");
@@ -31,7 +40,7 @@ const notificaciones = require("./routes/notificaciones");
 const stackRoutes = require("./routes/stack_estudio");
 
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -43,7 +52,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge:  1000 * 60 * 60 * 24
+        maxAge: 1000 * 60 * 60 * 24
     }
 }));
 
@@ -52,17 +61,17 @@ app.use((req, res, next) => {
     console.log('\n0');
     console.log(req.session);
     console.log(res.locals);
-    if(!(req.session && req.session.userName)){
+    if (!(req.session && req.session.userName)) {
         return next();
     }
 
-    connection.query(`select * from usuario where(username = '${req.session.userName}')`, function(err, results, fields){
+    connection.query(`select * from usuario where(username = '${req.session.userName}')`, function (err, results, fields) {
         console.log('1');
-        if(err){
+        if (err) {
             console.log('2');
             return next(err);
         }
-        if(results.length == 0){
+        if (results.length == 0) {
             console.log('3');
             return next();
         }
@@ -72,7 +81,7 @@ app.use((req, res, next) => {
         user.contrasena = undefined;
         // console.log(user);
         req.user = user;
-        
+
         // if(fs.existsSync(`./public/fotos/${req.user.foto}`)) {
         //     console.log("The file exists.");
         //     req.user.profilePictureRoute = `http://localhost:3000/fotos/${req.user.foto}`;
@@ -80,23 +89,23 @@ app.use((req, res, next) => {
         // console.log('The file does not exist.');
         res.locals.profilePictureRoute = `${req.user.foto}`;
         // }
-        
-        if(req.user.tipoRegistro == 1 ){
+
+        if (req.user.tipoRegistro == 1) {
             res.locals.name = `${req.user.nombre}  ${req.user.apellido}`;
-        }else{
+        } else {
             res.locals.name = user.username;
         }
-        
+
         res.locals.userName = user.username;
         console.log(res.locals);
         console.log('5');
 
-        connection.query(`select * from usuario_admin_inst where username = '${req.session.userName}'`, function(err2, results2, fields2){
-            if(err2){
+        connection.query(`select * from usuario_admin_inst where username = '${req.session.userName}'`, function (err2, results2, fields2) {
+            if (err2) {
                 console.log('6');
                 return next(err2);
             }
-            if(results2.length == 0){
+            if (results2.length == 0) {
                 console.log('7');
                 return next();
             }
@@ -121,17 +130,17 @@ app.use(sesionRoutes);
 app.use("/compras", comprasRoutes);
 app.use("/account", accountRoutes);
 app.use(require('./routes/publicaciones'));
-app.use("/admin",adminRoutes);
+app.use("/admin", adminRoutes);
 app.use("/tienda", tiendaRoutes);
 app.use("/participacion", participacionRoutes);
 app.use("/ventas", ventasRoutes);
 app.use(rankingRoutes);
-app.use("/notificacion",notificaciones);
+app.use("/notificacion", notificaciones);
 app.use("/stack_estudio", stackRoutes);
 
 
 
-app.listen(process.env.PORT || 3000, process.env.IP ,function(){
+app.listen(process.env.PORT || 3000, process.env.IP, function () {
     console.log("Se ha iniciado un servidor en el puerto 3000");
 });
 

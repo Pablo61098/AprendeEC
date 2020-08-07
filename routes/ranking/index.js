@@ -1,49 +1,58 @@
 const express = require('express'),
-      router = express.Router(),
-      mysql = require('mysql'),
-      middleware = require('../../middleware');
+    router = express.Router(),
+    mysql = require('mysql'),
+    middleware = require('../../middleware');
 
 
-const connection = mysql.createConnection({
-    host: 'localhost',
+const connection = mysql.createPool({
+    connectionLimit: 100,
+    host: process.env.LOCAL_MYSQL_HOST,
+    port: 3306,
     user: process.env.LOCAL_MYSQL_USER,
     password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: 'aprendecdb'
+    database: process.env.LOCAL_MYSQL_DB
 });
 
-connection.connect();
+connection.getConnection(function (err, conn) {
+    if (err) {
+        console.log('No se ha podido conectar.');
+        return callback(err);
+    } else {
+        console.log('Conectado a BD.');
+    }
+});
 
 
-router.get("/ranking", function(req, res){
+router.get("/ranking", function (req, res) {
 
-    
 
-    connection.query(`select * from provincia`, function(err075, results075, fields075){
-        if(err075){
+
+    connection.query(`select * from provincia`, function (err075, results075, fields075) {
+        if (err075) {
             console.log(err075);
             return res.send(err075);
         }
-        connection.query(`select * from ciudad`, function(err3, results3, fields3){
-            if(err3){
+        connection.query(`select * from ciudad`, function (err3, results3, fields3) {
+            if (err3) {
                 console.log(err3);
                 return res.send(err3);
             }
-            connection.query(`select * from usuario INNER JOIN usuario_admin_inst ON usuario.username = usuario_admin_inst.username ORDER BY valoracion DESC`, function(err, results, fields){
-                if(err){
+            connection.query(`select * from usuario INNER JOIN usuario_admin_inst ON usuario.username = usuario_admin_inst.username ORDER BY valoracion DESC`, function (err, results, fields) {
+                if (err) {
                     console.log(err);
                     return res.send(err);
                 }
                 console.log(results);
                 let instituciones = [];
-                for(let i=0; i<results.length; i++){
-                    connection.query(`select * from institucion where id = ${results[i].id_institucion}`, function(err2, results2, fields2){
-                        if(err2){
+                for (let i = 0; i < results.length; i++) {
+                    connection.query(`select * from institucion where id = ${results[i].id_institucion}`, function (err2, results2, fields2) {
+                        if (err2) {
                             console.log(err2);
                             return res.send(err2);
                         }
                         results2[0].valoracion = results[i].valoracion;
                         instituciones.push(results2[0]);
-                        if(i == results.length-1){
+                        if (i == results.length - 1) {
                             console.log(instituciones);
                             res.render("./ranking/rankingU", { instituciones: instituciones, provincias: results075, cantones: results3 });
                         }
@@ -51,29 +60,29 @@ router.get("/ranking", function(req, res){
                 }
             });
         });
-        
+
     });
 });
 
-router.get("/ranking/canton/:tipo", function(req, res){
-    connection.query(`select * from usuario INNER JOIN usuario_admin_inst ON usuario.username = usuario_admin_inst.username ORDER BY valoracion DESC`, function(err, results, fields){
-        if(err){
+router.get("/ranking/canton/:tipo", function (req, res) {
+    connection.query(`select * from usuario INNER JOIN usuario_admin_inst ON usuario.username = usuario_admin_inst.username ORDER BY valoracion DESC`, function (err, results, fields) {
+        if (err) {
             console.log(err);
             return res.send(err);
         }
         console.log(results);
         let instituciones = [];
-        for(let i=0; i<results.length; i++){
-            connection.query(`select * from institucion where (id = ${results[i].id_institucion} && ciudad = ${req.params.tipo})`, function(err2, results2, fields2){
-                if(err2){
+        for (let i = 0; i < results.length; i++) {
+            connection.query(`select * from institucion where (id = ${results[i].id_institucion} && ciudad = ${req.params.tipo})`, function (err2, results2, fields2) {
+                if (err2) {
                     console.log(err2);
                     return res.send(err2);
                 }
-                if(results2.length > 0 ){
+                if (results2.length > 0) {
                     results2[0].valoracion = results[i].valoracion;
                     instituciones.push(results2[0]);
                 }
-                if(i == results.length-1){
+                if (i == results.length - 1) {
                     console.log(instituciones);
                     return res.send(instituciones);
                 }
@@ -82,25 +91,25 @@ router.get("/ranking/canton/:tipo", function(req, res){
     });
 });
 
-router.get("/ranking/provincia/:tipo", function(req, res){
-    connection.query(`select * from usuario INNER JOIN usuario_admin_inst ON usuario.username = usuario_admin_inst.username ORDER BY valoracion DESC`, function(err, results, fields){
-        if(err){
+router.get("/ranking/provincia/:tipo", function (req, res) {
+    connection.query(`select * from usuario INNER JOIN usuario_admin_inst ON usuario.username = usuario_admin_inst.username ORDER BY valoracion DESC`, function (err, results, fields) {
+        if (err) {
             console.log(err);
             return res.send(err);
         }
         console.log(results);
         let instituciones = [];
-        for(let i=0; i<results.length; i++){
-            connection.query(`select * from institucion where (id = ${results[i].id_institucion} && provincia = ${req.params.tipo})`, function(err2, results2, fields2){
-                if(err2){
+        for (let i = 0; i < results.length; i++) {
+            connection.query(`select * from institucion where (id = ${results[i].id_institucion} && provincia = ${req.params.tipo})`, function (err2, results2, fields2) {
+                if (err2) {
                     console.log(err2);
                     return res.send(err2);
                 }
-                if(results2.length > 0 ){
+                if (results2.length > 0) {
                     results2[0].valoracion = results[i].valoracion;
                     instituciones.push(results2[0]);
                 }
-                if(i == results.length-1){
+                if (i == results.length - 1) {
                     console.log(instituciones);
                     return res.send(instituciones);
                 }
@@ -111,6 +120,6 @@ router.get("/ranking/provincia/:tipo", function(req, res){
 
 
 module.exports = router;
-    
+
 
 

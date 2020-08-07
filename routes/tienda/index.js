@@ -15,15 +15,23 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-var conn = mysql.createConnection({
-    host: 'localhost',
+const conn = mysql.createPool({
+    connectionLimit: 100,
+    host: process.env.LOCAL_MYSQL_HOST,
+    port: 3306,
     user: process.env.LOCAL_MYSQL_USER,
     password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: 'aprendecdb',
-    multipleStatements: true
+    database: process.env.LOCAL_MYSQL_DB
 });
 
-conn.connect();
+conn.getConnection(function (err, conn) {
+    if (err) {
+        console.log('No se ha podido conectar.');
+        return callback(err);
+    } else {
+        console.log('Conectado a BD.');
+    }
+});
 
 function enviarPDFCorreo(mail, filename, content) {
     fs.appendFile(`${filename}.html`, content, function (err) {

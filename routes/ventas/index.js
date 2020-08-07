@@ -4,14 +4,23 @@ const mysql = require("mysql");
 const { connect } = require('../admin');
 var bigDecimal = require('js-big-decimal');
 
-const connection = mysql.createConnection({
-    host: 'localhost',
+const connection = mysql.createPool({
+    connectionLimit: 100,
+    host: process.env.LOCAL_MYSQL_HOST,
+    port: 3306,
     user: process.env.LOCAL_MYSQL_USER,
     password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: 'aprendecdb'
+    database: process.env.LOCAL_MYSQL_DB
 });
 
-connection.connect();
+connection.getConnection(function (err, conn) {
+    if (err) {
+        console.log('No se ha podido conectar.');
+        return callback(err);
+    } else {
+        console.log('Conectado a BD.');
+    }
+});
 
 
 router.get("/productos/", function(req, res){

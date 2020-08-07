@@ -34,14 +34,23 @@ const loginLink = oauth2Client.generateAuthUrl({
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const connection = mysql.createConnection({
-    host: 'localhost',
+const connection = mysql.createPool({
+    connectionLimit: 100,
+    host: process.env.LOCAL_MYSQL_HOST,
+    port: 3306,
     user: process.env.LOCAL_MYSQL_USER,
     password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: 'aprendecdb'
+    database: process.env.LOCAL_MYSQL_DB
 });
 
-connection.connect();
+connection.getConnection(function (err, conn) {
+    if (err) {
+        console.log('No se ha podido conectar.');
+        return callback(err);
+    } else {
+        console.log('Conectado a BD.');
+    }
+});
 
 router.get("/hola", middleware.isLoggedIn ,function(req, res){
     console.log("YOU ARE LOGGED IN");
@@ -343,7 +352,7 @@ router.post("/register", function(req, res){
                                             <label>Username: ${userName}</label>
                                             <br>
                                             <label>E-mail: ${correo}</label>
-                                            <div><a href="http://localhost:3000/register/aceptar/${userName}"><button>CONFIRMAR</button></a> <a href="http://localhost:3000/register/rechazar/${userName}"><button>RECHAZAR</button></a></div>
+                                            <div><a href="${process.env.SITE_URL}/register/aceptar/${userName}"><button>CONFIRMAR</button></a> <a href="http://localhost:3000/register/rechazar/${userName}"><button>RECHAZAR</button></a></div>
                                         </div>`,
                             };
                             sgMail.send(msg)
@@ -405,7 +414,7 @@ router.post("/register", function(req, res){
                                                 <label>Username: ${userName}</label>
                                                 <br>
                                                 <label>E-mail: ${correo}</label>
-                                                <div><a href="http://localhost:3000/register/aceptar/${userName}"><button>CONFIRMAR</button></a> <a href="http://localhost:3000/register/rechazar/${userName}"><button>RECHAZAR</button></a></div>
+                                                <div><a href="${process.env.SITE_URL}/register/aceptar/${userName}"><button>CONFIRMAR</button></a> <a href="http://localhost:3000/register/rechazar/${userName}"><button>RECHAZAR</button></a></div>
                                             </div>`,
                                 };
                                 sgMail.send(msg)

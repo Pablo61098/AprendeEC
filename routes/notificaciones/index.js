@@ -7,19 +7,23 @@ const request = require("request-promise")
 
 var mysql = require('mysql');
 const middlewareObj = require('../../middleware');
-const conn = mysql.createConnection({
-	host: 'localhost',
-	user: process.env.LOCAL_MYSQL_USER,
-	database : 'aprendecdb',
-	password: process.env.LOCAL_MYSQL_PASSWORD
+
+const conn = mysql.createPool({
+    connectionLimit: 100,
+    host: process.env.LOCAL_MYSQL_HOST,
+    port: 3306,
+    user: process.env.LOCAL_MYSQL_USER,
+    password: process.env.LOCAL_MYSQL_PASSWORD,
+    database: process.env.LOCAL_MYSQL_DB
 });
 
-conn.connect(function(err) {
-  if (err){
-  		console.error('Error connecting: ' + err.stack);
-        return;
-  }
-  console.log("Conectado a la base de datos!");
+conn.getConnection(function (err, conn) {
+    if (err) {
+        console.log('No se ha podido conectar.');
+        return callback(err);
+    } else {
+        console.log('Conectado a BD.');
+    }
 });
 
 
