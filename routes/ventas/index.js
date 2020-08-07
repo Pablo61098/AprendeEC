@@ -1,27 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require("mysql");
+const connection = require('../../connection/');
 const { connect } = require('../admin');
 var bigDecimal = require('js-big-decimal');
 var middleware = require("../../middleware");
-
-const connection = mysql.createPool({
-    connectionLimit: 100,
-    host: process.env.LOCAL_MYSQL_HOST,
-    port: 3306,
-    user: process.env.LOCAL_MYSQL_USER,
-    password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: process.env.LOCAL_MYSQL_DB
-});
-
-connection.getConnection(function (err, conn) {
-    if (err) {
-        console.log('No se ha podido conectar.');
-        return callback(err);
-    } else {
-        console.log('Conectado a BD.');
-    }
-});
 
 
 router.get("/productos/", middleware.isLoggedIn, function(req, res){

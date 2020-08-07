@@ -1,35 +1,18 @@
 var express = require("express");
 var router = express.Router();
-var mysql = require("mysql");
+const conn = require('../../connection/');
 var Prince = require("prince")
 var util = require("util")
 var fs = require('fs');
 var nodemailer = require('nodemailer');
 var middleware = require("../../middleware");
+const mysql = require('mysql');
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'aprendec.tienda@gmail.com',
         pass: process.env.TIENDA_MAIL_PASSWD
-    }
-});
-
-const conn = mysql.createPool({
-    connectionLimit: 100,
-    host: process.env.LOCAL_MYSQL_HOST,
-    port: 3306,
-    user: process.env.LOCAL_MYSQL_USER,
-    password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: process.env.LOCAL_MYSQL_DB
-});
-
-conn.getConnection(function (err, conn) {
-    if (err) {
-        console.log('No se ha podido conectar.');
-        return callback(err);
-    } else {
-        console.log('Conectado a BD.');
     }
 });
 

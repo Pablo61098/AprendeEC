@@ -1,25 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var mysql = require("mysql");
+const conn = require('../../connection/');
 var middleware = require("../../middleware");
-
-const conn = mysql.createPool({
-    connectionLimit: 100,
-    host: process.env.LOCAL_MYSQL_HOST,
-    port: 3306,
-    user: process.env.LOCAL_MYSQL_USER,
-    password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: process.env.LOCAL_MYSQL_DB
-});
-
-conn.getConnection(function (err, conn) {
-    if (err) {
-        console.log('No se ha podido conectar.');
-        return callback(err);
-    } else {
-        console.log('Conectado a BD.');
-    }
-});
+const mysql = require('mysql');
 
 router.get("/", middleware.isLoggedIn, function (req, res) {
     let sql = `select username, foto, valoracion from usuario where username = ${mysql.escape(res.locals.userName)}`;

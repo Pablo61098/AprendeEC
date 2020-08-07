@@ -185,25 +185,7 @@ router.use(function(req,res,next){
 	next();
 });
 
-var mysql = require('mysql')
-const conn = mysql.createPool({
-    connectionLimit: 100,
-    host: process.env.LOCAL_MYSQL_HOST,
-    port: 3306,
-    user: process.env.LOCAL_MYSQL_USER,
-    password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: process.env.LOCAL_MYSQL_DB
-});
-
-conn.getConnection(function (err, conn) {
-    if (err) {
-        console.log('No se ha podido conectar.');
-        return callback(err);
-    } else {
-        console.log('Conectado a BD.');
-    }
-});
-
+const conn = require('../../connection/');
 
 
 //Servicio para entregar la homepage

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const mysql = require("mysql");
+const connection = require('../../connection/');
 const sgMail = require('@sendgrid/mail');
 const bcrypt = require('bcryptjs');
 const middleware = require("../../middleware");
@@ -33,24 +33,6 @@ const loginLink = oauth2Client.generateAuthUrl({
 // console.log("\n\nSOY EL LINK: " + loginLink);
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-const connection = mysql.createPool({
-    connectionLimit: 100,
-    host: process.env.LOCAL_MYSQL_HOST,
-    port: 3306,
-    user: process.env.LOCAL_MYSQL_USER,
-    password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: process.env.LOCAL_MYSQL_DB
-});
-
-connection.getConnection(function (err, conn) {
-    if (err) {
-        console.log('No se ha podido conectar.');
-        return callback(err);
-    } else {
-        console.log('Conectado a BD.');
-    }
-});
 
 router.get("/hola", middleware.isLoggedIn ,function(req, res){
     console.log("YOU ARE LOGGED IN");

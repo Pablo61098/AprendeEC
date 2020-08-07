@@ -3,30 +3,11 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     fileUpload = require('express-fileupload'),
     session = require("express-session"),
-    mysql = require("mysql"),
+    connection = require("./connection"),
     methodOverride = require("method-override")
 fs = require('fs')
     //   flash = require("connect-flash")
     ;
-
-
-const connection = mysql.createPool({
-    connectionLimit: 100,
-    host: process.env.LOCAL_MYSQL_HOST,
-    port: 3306,
-    user: process.env.LOCAL_MYSQL_USER,
-    password: process.env.LOCAL_MYSQL_PASSWORD,
-    database: process.env.LOCAL_MYSQL_DB
-});
-
-connection.getConnection(function (err, conn) {
-    if (err) {
-        console.log('No se ha podido conectar.');
-        return callback(err);
-    } else {
-        console.log('Conectado a BD.');
-    }
-});
 
 const sesionRoutes = require("./routes/sesion");
 const comprasRoutes = require("./routes/compras");
@@ -143,7 +124,5 @@ app.use("/stack_estudio", stackRoutes);
 app.listen(process.env.PORT || 3000, process.env.IP, function () {
     console.log("Se ha iniciado un servidor en el puerto 3000");
 });
-
-
 
 //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
