@@ -63,7 +63,7 @@ function putNotify(noti){
 function escucharNotificaciones(){
     //Si hay algo en usuario activo me pongo a la escucha delas notificaciones
     if($('#usuarioActivo').text()){
-        var socket = io('http://localhost:4000');
+        var socket = io(`${process.env.SITE_URL}:4000`);
         socket.on($("#usuarioActivo").text(),function(sms){
             console.log(sms);
             contNotiNew++;
