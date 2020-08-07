@@ -15,8 +15,8 @@ oauth2Credentials={
     token_uri:"https://oauth2.googleapis.com/token",
     auth_provider_x509_cert_url:"https://www.googleapis.com/oauth2/v1/certs",
     client_secret:"jYWJx2cKuqJiHKJJFmuOwpSf",
-    redirect_uris:[`${process.env.SIDE_URL}/signin-google`],
-    javascript_origins:[`${process.env.SIDE_URL}`],
+    redirect_uris:[`${process.env.SITE_URL}/signin-google`],
+    javascript_origins:[`${process.env.SITE_URL}`],
     scopes: [
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/userinfo.profile",

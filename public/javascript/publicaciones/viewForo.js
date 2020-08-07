@@ -441,7 +441,7 @@ function listenToButtons(id_seccion){
 
 //Para las notificaciones
 function sendMessage( destinatario,tipo, id_foro,sms){
-    var socket = io(`${process.env.SITE_URL}:4000`);
+    var socket = io(`https://aprend-ec.herokuapp.com:4000`);
     // socket.emit($('#username_post').text(),{
     socket.emit("SMS",{
         "from" : $("#usuarioActivo").text(),
