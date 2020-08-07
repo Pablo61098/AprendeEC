@@ -70,7 +70,7 @@ router.put("/:userName/picture", middleware.isLoggedIn, function (req, res) {
             if (err) {
                 return res.send(err);
             }
-            connection.query(`update usuario set foto = 'http://localhost:3000/fotos/${userName}Foto.${formato}' where username = '${res.locals.userName}'`, function (err, results, fields) {
+            connection.query(`update usuario set foto = '${process.env.SITE_URL}/fotos/${userName}Foto.${formato}' where username = '${res.locals.userName}'`, function (err, results, fields) {
                 if (err) {
                     return res.send(err);
                 } else {
