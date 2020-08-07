@@ -17,8 +17,6 @@ $(function(){
 
     obtenerNotificaciones();
     escucharNotificaciones();
-    
-
 });
 
 function obtenerNotificaciones(){

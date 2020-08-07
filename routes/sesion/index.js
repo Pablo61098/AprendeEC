@@ -32,7 +32,6 @@ const loginLink = oauth2Client.generateAuthUrl({
 
 // console.log("\n\nSOY EL LINK: " + loginLink);
 
-
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const connection = mysql.createConnection({
@@ -49,6 +48,11 @@ router.get("/hola", middleware.isLoggedIn ,function(req, res){
     res.send("hola" + res.locals.userName);
 });
 
+
+router.get('/logout', function(req, res){
+    req.session.destroy();
+    res.redirect("/modPublicaciones");
+})
 
 router.get("/signin-google", function(req, res){
     console.log("\n\nHOLA ESTE ES LA INFOMRACION DE GOOGLE");
@@ -298,13 +302,15 @@ router.post("/register", function(req, res){
         let cedula = req.body.cedula;
         let ciudad = req.body.ciudad;
         let provincia = req.body.provincia;
+        let nombre = req.body.nombres;
+        let apellido = req.body.apellidos;
 
         if(req.body.universityId == '-1'){
             console.log(`${req.body.correo}`);
             let correo = `${req.body.correo}`;
 
-            connection.query(`insert into usuario(username, ciudad, provincia,contrasena, correo, cedula, acerca, valoracion, confirmado, tipoRegistro) 
-                values('${userName}', ${ciudad}, ${provincia},'${contrasena}', '${correo}', '${cedula}' ,'${acerca}',0, 0, 0)`, function(err, results, fields){
+            connection.query(`insert into usuario(username, nombre, apellido,ciudad, provincia,contrasena, correo, cedula, acerca, valoracion, confirmado, tipoRegistro) 
+                values('${userName}', '${nombre}', '${apellido}', ${ciudad}, ${provincia},'${contrasena}', '${correo}', '${cedula}' ,'${acerca}',0, 0, 0)`, function(err, results, fields){
                     if(err){
                         return res.send(err);
                     }else{
@@ -359,8 +365,8 @@ router.post("/register", function(req, res){
             let correo = `${req.body.correo}${req.body.correoDominio}`;
             let universityID = req.body.universityId;
 
-            connection.query(`insert into usuario(username, ciudad, provincia,contrasena, cedula, correo, acerca,valoracion, confirmado, tipoRegistro) 
-                values('${userName}', ${ciudad}, ${provincia},'${contrasena}', '${cedula}','${correo}', '${acerca}', 0, 0, 0)`, function(err, results, fields){
+            connection.query(`insert into usuario(username, nombre, apellido, ciudad, provincia,contrasena, cedula, correo, acerca,valoracion, confirmado, tipoRegistro) 
+                values('${userName}', '${nombre}', '${apellido}', ${ciudad}, ${provincia},'${contrasena}', '${cedula}','${correo}', '${acerca}', 0, 0, 0)`, function(err, results, fields){
 
                 if(err){
                     return res.send(err);

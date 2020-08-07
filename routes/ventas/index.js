@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require("mysql");
 const { connect } = require('../admin');
+var bigDecimal = require('js-big-decimal');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -141,8 +142,8 @@ router.get("/pedidos/:idProducto", function(req, res){
                 console.log("No hay pedidos de ese producto")
                 return res.send(results);
             }
-            let dineroTotal = 0
-            let cantidadTotalComprada = 0;
+            let dineroTotal = '0.00';
+            let cantidadTotalComprada = '0';
             for(let i=0; i<results.length; i++){
                 connection.query(`select * from carrito where fecha_hora_pago is not null && id = ${results[i].id_carrito}`, function(err2, results2, fields2){
                     if(err2){
@@ -150,8 +151,9 @@ router.get("/pedidos/:idProducto", function(req, res){
                         return res.send(err2);
                     }
                     if(results2.length > 0){
-                        dineroTotal = dineroTotal + (results[i].costo_unitario * results[i].cantidad);
-                        cantidadTotalComprada = cantidadTotalComprada + results[i].cantidad;
+                        
+                        dineroTotal = bigDecimal.add(dineroTotal, bigDecimal.multiply(    results[i].costo_unitario,results[i].cantidad ) );
+                        cantidadTotalComprada = bigDecimal.add(cantidadTotalComprada, results[i].cantidad);
                     }
                     if(i == results.length-1){
                         return res.send({producto: results0[0], dineroTotal: dineroTotal, cantidadTotalComprada:cantidadTotalComprada});
