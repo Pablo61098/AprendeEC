@@ -23,7 +23,7 @@ connection.getConnection(function (err, conn) {
 });
 
 
-router.get("/productos/", function(req, res){
+router.get("/productos/", middleware.isLoggedIn, function(req, res){
 
     connection.query(`select * from producto where username_inst = '${req.user.username}'`, function(err, results, fields){
         if(err){
@@ -35,7 +35,7 @@ router.get("/productos/", function(req, res){
 });
 
 
-router.get("/pedidos/", function(req, res){
+router.get("/pedidos/", middleware.isLoggedIn, function(req, res){
     connection.query(`select * from producto where username_inst = '${req.user.username}'`, function(err, results, fields){
         if(err){
             console.log("Error al sacar los productos");
@@ -45,7 +45,7 @@ router.get("/pedidos/", function(req, res){
     });
 });
 
-router.post("/productos/", function(req, res){
+router.post("/productos/", middleware.isLoggedIn, function(req, res){
 
     console.log(req.params);
     console.log(req.body);
@@ -82,7 +82,7 @@ router.post("/productos/", function(req, res){
 });
 
 
-router.delete('/productos/:idProducto', function(req, res){
+router.delete('/productos/:idProducto', middleware.isLoggedIn, function(req, res){
     console.log("\n\nhey it is deleting");
     connection.query(`update producto set eliminado=1 where id=${req.params.idProducto}`,function(err,results,fields){
         if(err){
@@ -95,7 +95,7 @@ router.delete('/productos/:idProducto', function(req, res){
     
 });
 
-router.put("/productos", function(req, res){
+router.put("/productos", middleware.isLoggedIn, function(req, res){
     console.log("\n\nSe esta haciendo una edicion de un producto");
     console.log(req.params);
     console.log(req.body);
@@ -131,7 +131,7 @@ router.put("/productos", function(req, res){
     });
 });
 
-router.get("/pedidos/:idProducto", function(req, res){
+router.get("/pedidos/:idProducto", middleware.isLoggedIn, function(req, res){
     console.log("\n\nSe ha hecho una peticion de informacion de un producto")
     console.log(req.params);
     console.log(req.body);
